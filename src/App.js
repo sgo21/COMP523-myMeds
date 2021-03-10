@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import {db} from './firebase'
 
 function App() {
+  const [name, setName] = useState("");
+
+  const handleSubmit =(e) => {
+    e.preventDefault();
+
+    db.collection('user').add({
+      name:name,
+    })
+    .then(() => {
+      alert('Got It');
+    })
+    .catch(error => {
+      alert(error.mesage);
+    })
+
+  };
+
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label> Name</label>
+      <input 
+      placeholder='Hello'
+      value={name} 
+      onChange={(e) => setName(e.target.value)}/> 
+      
+
+      <button type='submit'>Submit</button>
+    </form>
   );
 }
 
