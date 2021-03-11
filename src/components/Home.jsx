@@ -28,19 +28,21 @@ const Home = () => {
 
     return (
     <div className="Home">
+      <div>
           <Header/>
-  
-      <form onSubmit={handleSubmit}>
-        <label> Username</label>
-        <input 
-        placeholder='Hello'
-        value={name} 
-        onChange={(e) => setName(e.target.value)}/> 
-        
-  
-        <button type='submit'>Submit</button>
-      </form>
-  
+      </div>
+      <div class="submit">
+        <form onSubmit={handleSubmit}>
+          <label> Username</label>
+          <input 
+          placeholder='Hello'
+          value={name} 
+          onChange={(e) => setName(e.target.value)}/> 
+          
+    
+          <button type='submit'>Submit</button>
+        </form>
+      </div>
       </div>
 
     
