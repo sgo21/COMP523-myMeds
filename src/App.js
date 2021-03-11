@@ -52,11 +52,15 @@ import NavbarContainer from './components/NavbarContainer.jsx'
 import './App.css';
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Header from './components/Header.jsx'
 
 
 function App() {
   return (
     <div className="App">
+       <div>
+          <Header/>
+      </div>  
       <NavbarContainer/>
     </div>
   );

@@ -14,7 +14,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import MyProfile from './MyProfile.jsx';
 import Home from './Home.jsx';
-import LogIn from './Login.jsx';
+import LogIn from './LogIn.jsx';
 import Signup from './Signup.js';
 import { AuthProvider } from "../contexts/AuthContext"
 import PrivateRoute from "./PrivateRoute"
@@ -41,10 +41,9 @@ const NavbarContainer = () => {
             <BrowserRouter>
                 <Switch id="bodyContent">
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/my-profile" component={MyProfile} />
                     <Route exact path="/LogIn" component={LogIn} />
                     <Route exact path="/SignUp" component={Signup} />
-                    <PrivateRoute exact path='/dashboard' component={Dashboard}></PrivateRoute>
+                    <PrivateRoute exact path="/my-profile"component={MyProfile}></PrivateRoute>
                 </Switch>
             </BrowserRouter>
         </AuthProvider>
