@@ -30,7 +30,7 @@ const Home = () => {
     <div className="Home">
       <div>
           <Header/>
-      </div>
+      </div>  
       <div class="submit">
         <form onSubmit={handleSubmit}>
           <label> Username</label>
