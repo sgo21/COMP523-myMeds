@@ -16,7 +16,7 @@ const LogIn = () => {
 
     db.collection('user').add({
       name:username,
-      name:password,
+      password:password,
     })
     .then(() => {
       alert('Got It');
