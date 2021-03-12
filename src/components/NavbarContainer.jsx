@@ -10,14 +10,22 @@ import Signup from '../pages/Signup.js';
 import { AuthProvider } from "../contexts/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import Dashboard from './Dashboard.js';
- import Header from './Header'
+import logo from '../img/test.svg'
 
 const NavbarContainer = () => {
     return (
          <div >
-             <Header/>
-            <Navbar sticky="top" className="navbar" expand="md" collapseOnSelect>
-       
+            <Navbar sticky="top" className="navbar" expand="md" collapseOnSelect bg='primary' variant='dark'>
+                <Navbar.Brand href="/">
+                    <img
+                        src={logo}
+                        width="40"
+                        height="40"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
+
                 <Navbar.Toggle></Navbar.Toggle>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto roboto">
