@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
-import Header from './Header.jsx'
+import Header from '../components/Header.jsx'
 import {db} from '../firebase'
-import './Home.css';
+import '../css/Home.css';
+import NavbarContainer from '../components/NavbarContainer'
 
 const Home = () => {
 
@@ -27,9 +28,10 @@ const Home = () => {
 
 
     return (
-    <div className="Home">
+    <div className='home'>
       <div>
           <Header/>
+          <NavbarContainer/>
       </div>  
       <div class="submit">
         <form onSubmit={handleSubmit}>
