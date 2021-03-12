@@ -10,7 +10,7 @@ import Signup from '../pages/Signup.js';
 import { AuthProvider } from "../contexts/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import Dashboard from './Dashboard.js';
- 
+ import Header from './Header'
 
 const NavbarContainer = () => {
     return (
@@ -39,7 +39,8 @@ const NavbarContainer = () => {
     //         </BrowserRouter>
     //     </AuthProvider>
     // </>
-        <div >
+         <div >
+             <Header/>
             <Navbar sticky="top" className="navbar" expand="md" collapseOnSelect>
        
                 <Navbar.Toggle></Navbar.Toggle>

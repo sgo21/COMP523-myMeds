@@ -30,7 +30,6 @@ const Home = () => {
     return (
     <div className='home'>
       <div>
-          <Header/>
           <NavbarContainer/>
       </div>  
       <div class="submit">
