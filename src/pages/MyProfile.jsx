@@ -3,6 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import '../css/MyProfile.css';
+import NavbarContainer from '../components/NavbarContainer'
+import Header from '../components/Header'
 
 export default function MyProfile() {
   const [error, setError] = useState("")
@@ -22,6 +24,10 @@ export default function MyProfile() {
 
   return (
     <>
+      <div>
+        <Header/>
+        <NavbarContainer/>
+      </div>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>

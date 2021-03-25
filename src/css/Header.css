@@ -1,9 +1,12 @@
 .fixed-header{
     width: 100%;
+    height: 15vh;
     position: fixed;        
     background: skyblue;
-    padding: 10px 0;
-    color: #fff;
-    top: 0;
-    margin-bottom: 20px;
+    padding-top: 10vw;
+    color: white;
+}
+
+.fixed-header img {
+    size: 10%;
 }

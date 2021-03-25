@@ -4,52 +4,73 @@ import Header from '../components/Header.jsx'
 import {db} from '../firebase'
 import '../css/Home.css';
 import NavbarContainer from '../components/NavbarContainer'
+import { Form, Button, Card, Alert } from "react-bootstrap"
+import { queryAllByAltText } from '@testing-library/dom';
+
 
 const Home = () => {
 
 
 
-    const [name, setName] = useState("");
+    const [query, setQuery] = useState("");
+    const [results, setResultsArray] = useState([]);
 
-    const handleSubmit =(e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
-  
-      db.collection('user').add({
-        name:name,
+
+      db.collection("drug").where("genericName", '==', query).get().then((querySnapshot) => {
+        if (querySnapshot.empty) {
+          alert("No matching documents");
+          return;
+        } 
+            
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data().genericName);
+          let searchResults = [];
+          searchResults.push(doc.data().genericName);
+          // results.push(doc.data().genericName);
+
+          setResultsArray(oldArray => [...oldArray, searchResults])
+          console.log(results);
+
+        });
       })
-      .then(() => {
-        alert('Got It');
-      })
-      .catch(error => {
-        alert(error.mesage);
-      })
-  
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+
+
+
     };
+
 
 
     return (
       <div className='home'>
         <div>
+          <Header />
           <NavbarContainer/>
         </div>  
         
         <div class="submit">
-          <form onSubmit={handleSubmit}>
-            <label> Username</label>
-            <input 
-            placeholder='Hello'
-            value={name} 
-            onChange={(e) => setName(e.target.value)}/> 
+          <Form onSubmit={handleSubmit}>
+            <Form.Label> Drug Name</Form.Label>
+            <Form.Control className="form-control-lg"
+            placeholder='Enter a Medication Name or Symptom'
+            value={query} 
+            onChange={(e) => setQuery(e.target.value)}/> 
           
     
-            <button type='submit'>Submit</button>
-          </form>
+            <Button className="text-center mt-3" type='submit'>Submit</Button>
+          </Form>
+        </div>
+        <div className="search-results">
+          {results}
         </div>
         
       </div>
       
-
-    
     )
 }
 

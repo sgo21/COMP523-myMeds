@@ -1,13 +1,32 @@
 .Navlink {
     margin-left: auto;
-    font-family: 'Open Sans';
+    /* font-family: 'Open Sans'; */
     display: block;
     font-size: 23px;
     line-height: 1.28571em;
     font-weight: 800;
     background: none;
     border-radius: 0;
-    border-bottom: 2px solid transparent;
+    color: white;
     padding-bottom: 8px;
+}
 
+.Navlink a {
+    color: white;
+}
+
+.home-nav-link {
+    text-align:left;
+    float:left
+
+}
+
+.fixed-header{
+    width: 100%;
+    position: fixed;        
+    background: skyblue;
+    padding: 10px 0;
+    color: white;
+    top: 0;
+    margin-bottom: 20px;
 }
