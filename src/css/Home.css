@@ -1,0 +1,12 @@
+.submit{
+    margin-top: 20px; 
+}
+
+.home {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/pill.jpg); 
+    padding-top: 10px;
+    height: 570px;
+    background-color: #333;
+    background-size: cover;
+    background-position: 50%;
+}

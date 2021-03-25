@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import './MyProfile.css';
+import '../css/MyProfile.css';
 
 export default function MyProfile() {
   const [error, setError] = useState("")
@@ -14,7 +14,7 @@ export default function MyProfile() {
 
     try {
       await logout()
-      history.push("/login")
+      history.push("/")
     } catch {
       setError("Failed to log out")
     }

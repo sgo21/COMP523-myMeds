@@ -1,68 +1,29 @@
-// import React, { useState } from 'react';
-// import NavbarContainer from './components/NavbarContainer.jsx'
-// import Header from './components/Header.jsx'
-// import {db} from './firebase'
-// import './App.css';
-
-
-// function App() {
-//   const [name, setName] = useState("");
-
-//   const handleSubmit =(e) => {
-//     e.preventDefault();
-
-//     db.collection('user').add({
-//       name:name,
-//     })
-//     .then(() => {
-//       alert('Got It');
-//     })
-//     .catch(error => {
-//       alert(error.mesage);
-//     })
-
-//   };
-
-  
-
-//   return (
-//     <div className="App">
-//         <Header/>
-//         <NavbarContainer/>
-
-//     <form onSubmit={handleSubmit}>
-//       <label> Username</label>
-//       <input 
-//       placeholder='Hello'
-//       value={name} 
-//       onChange={(e) => setName(e.target.value)}/> 
-      
-
-//       <button type='submit'>Submit</button>
-//     </form>
-
-//     </div>
-//   );
-// }
-
-
-// export default App;
-
 import NavbarContainer from './components/NavbarContainer.jsx'
 import './App.css';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from './components/Header.jsx'
+import { AuthProvider } from "./contexts/AuthContext"
+import PrivateRoute from "./components/PrivateRoute"
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import MyProfile from './pages/MyProfile.jsx';
+import Home from './pages/Home.jsx';
+import LogIn from './pages/LogIn.jsx';
+import Signup from './pages/Signup.js';
 
 
 function App() {
   return (
-    <div className="App">
-       <div>
-          <Header/>
-      </div>  
-      <NavbarContainer/>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Switch id="bodyContent">
+          <Route exact path="/" component={Home} />
+          <Route exact path="/LogIn" component={LogIn} />
+          <Route exact path="/SignUp" component={Signup} />
+          <PrivateRoute exact path="/my-profile" component={MyProfile}
+          ></PrivateRoute>
+        </Switch>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -1,0 +1,13 @@
+.Navlink {
+    margin-left: auto;
+    font-family: 'Open Sans';
+    display: block;
+    font-size: 23px;
+    line-height: 1.28571em;
+    font-weight: 800;
+    background: none;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 8px;
+
+}
