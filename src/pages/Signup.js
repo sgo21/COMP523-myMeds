@@ -37,7 +37,6 @@ export default function Signup() {
   return (
     <>
       <div>
-        <Header/>
         <NavbarContainer/>
       </div>
       <Card className="sign-up text-left m-5 mx-auto border-0">

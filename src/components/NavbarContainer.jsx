@@ -9,20 +9,25 @@ import { AuthProvider } from "../contexts/AuthContext"
 import PrivateRoute from "./PrivateRoute"
 import Dashboard from './Dashboard.js';
 import '../css/NavbarContainer.css'
+import { ReactComponent as Logo } from '../img/logo.svg';
+
 
 const NavbarContainer = () => {
     return (
-         <div >
-            <h1>MyMeds</h1>
-        
-            <Navbar sticky="top" className="navbar" expand="md" collapseOnSelect variant='light'>
+         <div className="navbar-header">        
+            <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
+                <Navbar.Brand href="/">
+                    <Logo width="75" height="75" className="d-inline-block mb-3"/> 
+                    <h1 className="logo-text">My Meds</h1>
+                </Navbar.Brand>
                 <Navbar.Toggle></Navbar.Toggle>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="Navlink">
-                        <div className="home-nav-link"><Nav.Link className="home-nav-link" href="/">My Meds</Nav.Link></div>
+                    <Nav className="nav mr-auto">
+                        {/* <Nav.Link href="/">Home</Nav.Link> */}
                         <Nav.Link href="/my-profile">My Profile</Nav.Link>
                         <Nav.Link href="/LogIn" >Log In</Nav.Link>
                         <Nav.Link href="/SignUp">Sign Up</Nav.Link>
+                  
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

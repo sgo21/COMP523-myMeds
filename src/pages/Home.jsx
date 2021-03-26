@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
-import Header from '../components/Header.jsx'
 import {db} from '../firebase'
 import '../css/Home.css';
 import NavbarContainer from '../components/NavbarContainer'
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Form, Button, Row, Col} from "react-bootstrap"
 import { queryAllByAltText } from '@testing-library/dom';
 
 
@@ -49,13 +48,13 @@ const Home = () => {
     return (
       <div className='home'>
         <div>
-          <Header />
           <NavbarContainer/>
         </div>  
         
-        <div class="submit">
+        <div className="submit">
           <Form onSubmit={handleSubmit}>
-            <Form.Label> Drug Name</Form.Label>
+          <Form.Row>
+            <Form.Label>Find Reviews on Medicine From Real People Just Like You!</Form.Label>
             <Form.Control className="form-control-lg"
             placeholder='Enter a Medication Name or Symptom'
             value={query} 
@@ -63,6 +62,7 @@ const Home = () => {
           
     
             <Button className="text-center mt-3" type='submit'>Submit</Button>
+            </Form.Row>
           </Form>
         </div>
         <div className="search-results">

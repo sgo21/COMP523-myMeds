@@ -1,27 +1,20 @@
-.Navlink {
+.navbar-header {
     margin-left: auto;
-    /* font-family: 'Open Sans'; */
-    display: block;
-    font-size: 23px;
-    line-height: 1.28571em;
-    font-weight: 800;
-    background: none;
-    border-radius: 0;
-    color: white;
-    padding-bottom: 8px;
+    font-size: 20px;
 }
 
-.Navlink a {
-    color: white;
+.nav-link {
+    transform: translateY(-4px);
 }
 
-.home-nav-link {
-    text-align:left;
-    float:left
-
+.logo-text {
+    display:inline;
+    margin-left: 20px;
 }
 
-.fixed-header{
+
+
+/* .fixed-header{s
     width: 100%;
     position: fixed;        
     background: skyblue;
@@ -29,4 +22,5 @@
     color: white;
     top: 0;
     margin-bottom: 20px;
-}
+} */
+

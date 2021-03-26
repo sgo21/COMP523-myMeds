@@ -25,7 +25,6 @@ export default function MyProfile() {
   return (
     <>
       <div>
-        <Header/>
         <NavbarContainer/>
       </div>
       <Card>
