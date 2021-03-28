@@ -16,13 +16,13 @@ const NavbarContainer = () => {
     return (
          <div className="navbar-header">        
             <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
-                <Navbar.Brand href="/">
+                <Navbar.Brand className="pl-3" href="/">
                     <Logo width="75" height="75" className="d-inline-block mb-3"/> 
                     <h1 className="logo-text">My Meds</h1>
                 </Navbar.Brand>
                 <Navbar.Toggle></Navbar.Toggle>
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="nav mr-auto">
+                <Navbar.Collapse className="pr-3" id="responsive-navbar-nav">
+                    <Nav className="nav ml-auto">
                         {/* <Nav.Link href="/">Home</Nav.Link> */}
                         <Nav.Link href="/my-profile">My Profile</Nav.Link>
                         <Nav.Link href="/LogIn" >Log In</Nav.Link>

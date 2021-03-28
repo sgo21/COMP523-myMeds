@@ -1,10 +1,9 @@
-import NavbarContainer from './components/NavbarContainer.jsx'
 import './App.css';
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "./contexts/AuthContext"
 import PrivateRoute from "./components/PrivateRoute"
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import MyProfile from './pages/MyProfile.jsx';
 import Home from './pages/Home.jsx';
 import LogIn from './pages/LogIn.jsx';

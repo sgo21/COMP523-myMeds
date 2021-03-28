@@ -2,75 +2,91 @@
 import React, { useState } from 'react';
 import {db} from '../firebase'
 import '../css/Home.css';
+import { Form, Button, Row, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
-import { Form, Button, Row, Col} from "react-bootstrap"
-import { queryAllByAltText } from '@testing-library/dom';
-
+import MedCard from '../components/MedCard'
+import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
 
-
-
     const [query, setQuery] = useState("");
-    const [results, setResultsArray] = useState([]);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [resultsArray, setResultsArray] = useState([]);
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
+    // functions to standardize query's caseing
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
+    }
+    function titleCase(str) {
+      return str.replace(/[^\ \/\-\_]+/g, capitalize);
+    }
 
-      db.collection("drug").where("genericName", '==', query).get().then((querySnapshot) => {
+    const getData = async () => {
+      // searches through genericNames docs first. If no matches, searches brandNames doc next, and so on.
+      if (query !== "" ) {
+        let querySnapshot = await db.collection("drug").where("genericName", '==', query.toLowerCase()).get();
         if (querySnapshot.empty) {
-          alert("No matching documents");
-          return;
-        } 
-            
+          console.log("No matching genericName docs");
+          querySnapshot = await db.collection("drug").where("brandName", '==', titleCase(query)).get()
+          if (querySnapshot.empty) {
+            console.log("No matching brandName docs");
+            querySnapshot = await db.collection("drug").where("indication", '==', titleCase(query)).get()
+            if (querySnapshot.empty) {
+              console.log("No matching indication docs")
+              setAlertMessage("No matching medications found!")
+              return;
+            }
+          }
+        }
+        setResultsArray([]);
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data().genericName);
-          let searchResults = [];
-          searchResults.push(doc.data().genericName);
-          // results.push(doc.data().genericName);
+          setResultsArray(resultsArray => 
+            [...resultsArray, ...[{genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
+          );
+        })
+        setAlertMessage("")
+      }
+    }      
+      
+    const onChange = e => {
+      setQuery(e.target.value);
+    }
 
-          setResultsArray(oldArray => [...oldArray, searchResults])
-          console.log(results);
-
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-
-
-
+    const onSubmit = e => {
+      e.preventDefault();
+      console.log("The search query is " + query);
+      getData();
     };
 
-
-
     return (
-      <div className='home'>
+      <div className='home-container'>
         <div>
           <NavbarContainer/>
         </div>  
         
-        <div className="submit">
-          <Form onSubmit={handleSubmit}>
-          <Form.Row>
-            <Form.Label>Find Reviews on Medicine From Real People Just Like You!</Form.Label>
-            <Form.Control className="form-control-lg"
+        <div className="med-search-form">
+          <Form onSubmit={onSubmit}>
+          <Form.Row className="align-items-center">
+            <Col>
+            {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
+            <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
+            <Form.Control className="search-bar text-center form-control-lg"
             placeholder='Enter a Medication Name or Symptom'
             value={query} 
-            onChange={(e) => setQuery(e.target.value)}/> 
+            onChange={onChange}/> 
           
-    
-            <Button className="text-center mt-3" type='submit'>Submit</Button>
+            <Col className="text-center">
+              <Button className="mt-4" size="lg" type='submit'>Submit</Button>
+            </Col>
+            </Col>
             </Form.Row>
           </Form>
         </div>
-        <div className="search-results">
-          {results}
-        </div>
-        
+
+        <CardDeck className="med-search-card-deck align-items-center">
+          {resultsArray !== [] && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
+        </CardDeck>
       </div>
-      
     )
 }
 

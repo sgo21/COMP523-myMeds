@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import '../css/MyProfile.css';
 import NavbarContainer from '../components/NavbarContainer'
-import Header from '../components/Header'
 
 export default function MyProfile() {
   const [error, setError] = useState("")
