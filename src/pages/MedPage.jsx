@@ -1,0 +1,55 @@
+import React, { useState, useEffect } from 'react';
+import {Button} from "react-bootstrap"
+import {db} from '../firebase'
+import '../css/Home.css';
+import NavbarContainer from '../components/NavbarContainer'
+import { useHistory } from "react-router-dom";
+import '../css/MedPage.css';
+
+
+function MedPage ({ medId }) {
+
+  const history = useHistory();
+  const [genericName, setGenericName] = useState("Generic Name");
+  const [brandName, setBrandName] = useState("Brand Name");
+  const [indication, setIndication] = useState("Med Type");
+  const [reviewsArray, setReviewsArray] = useState([]);
+ 
+  useEffect(() => {
+    async function getData() {
+      // You can await here
+      const doc = await db.collection('drug').doc(medId).get();
+      setGenericName(doc.data().genericName);
+      setBrandName(doc.data().brandName);
+      setIndication(doc.data().indication);
+    }
+    getData();
+  }, [medId]); 
+
+    // functions to standardize query's caseing
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
+    }
+
+    function titleCase(str) {
+      return str.replace(/[^\ \/\-\_]+/g, capitalize);
+    }
+
+    return (<div className="med-page-container">
+        <div>
+          <NavbarContainer/>
+        </div>
+           
+        <div className="med-page-content">
+            <Button onClick={e => {history.replace(`/`);}} className="my-3" variant="primary"> Back to Home</Button>
+            <h1>{titleCase(genericName)}</h1> 
+            <br></br>
+            <strong>Brand Names:</strong> {brandName}
+            <br></br>
+            <strong>Medicine Type:</strong> {indication}
+            <br></br>
+            <strong>reviews go here?</strong>
+          </div>
+        </div >)}
+
+export default MedPage;        
