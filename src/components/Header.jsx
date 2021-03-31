@@ -3,8 +3,8 @@ import '../css/Header.css';
 
 const Header = () => {
     return (<>
-    <div class="fixed-header">
-        <h1>MyMeds</h1>
+    <div class="header">
+         <h1>My Meds</h1>
     </div>
     </>)
 }
