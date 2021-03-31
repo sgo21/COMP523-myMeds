@@ -6,12 +6,14 @@ import { Form, Button, Row, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import { v4 as uuidv4 } from 'uuid';
+import ReviewForm from '../components/ReviewForm'
 
 const Home = () => {
 
     const [query, setQuery] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
+    var doc_id;
 
     // functions to standardize query's caseing
     function capitalize(str) {
@@ -43,6 +45,7 @@ const Home = () => {
           setResultsArray(resultsArray => 
             [...resultsArray, ...[{genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
           );
+          console.log(doc.id);
         })
         setAlertMessage("")
       }
@@ -86,6 +89,9 @@ const Home = () => {
         <CardDeck className="med-search-card-deck align-items-center">
           {resultsArray !== [] && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
+        <div>
+          <ReviewForm/>
+        </div>  
       </div>
     )
 }
