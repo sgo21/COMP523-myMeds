@@ -57,27 +57,27 @@ export default function ReviewForm({medId}) {
           <strong></strong> {genericName}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="Symptom">
-              <input 
+              <Form.Control 
                 placeholder='Enter Symptom'
                 value={symtpom} 
                 onChange={(e) => setSymptom(e.target.value)}/>
             </Form.Group>
             <Form.Group id="Review">
-                <input 
+                <Form.Control 
                 placeholder='Enter Symptom'
                 value={review} 
                 onChange={(e) => setReview(e.target.value)}/>
             </Form.Group>
         
             <Form.Group id="Rating">
-                <input 
+                <Form.Control
                 placeholder='Enter Rating '
                 value={rating} 
                 onChange={(e) => setRating(e.target.value)}/>
             </Form.Group>
 
             <Button className="w-100" type="submit">
-              Enter
+              Post Review
             </Button>
           </Form>
         </Card.Body>

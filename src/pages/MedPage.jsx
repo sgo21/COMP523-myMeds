@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Button} from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import {db} from '../firebase'
 import '../css/Home.css';
 import NavbarContainer from '../components/NavbarContainer'
@@ -24,6 +24,15 @@ function MedPage ({ medId }) {
       setGenericName(doc.data().genericName);
       setBrandName(doc.data().brandName);
       setIndication(doc.data().indication);
+
+
+      const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
+      setReviewsArray([]);
+      reviewsSnapshot.forEach((doc) => {
+          setReviewsArray(reviewsArray => 
+            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom}]]
+          );
+        })
     }
     getData();
   }, [medId]); 
@@ -50,9 +59,16 @@ function MedPage ({ medId }) {
             <br></br>
             <strong>Medicine Type:</strong> {indication}
             <br></br>
+            <Button className="mt-3">
+              Write a Review
+            </Button>
             <div>
               <ReviewForm key={uuidv4()} medId={medId} />
             </div>
+            <div className="align-items-center">
+              {reviewsArray !== [] && reviewsArray.map(med => <p>{med.user}<br></br>{med.review}</p>)}
+            </div>
+
           </div>
         </div >)}
 
