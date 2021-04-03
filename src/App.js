@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx';
 import LogIn from './pages/LogIn.jsx';
 import Signup from './pages/Signup.js';
 import MedPage from './pages/MedPage.jsx';
+import ReviewForm from "./components/ReviewForm"
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/LogIn" component={LogIn} />
           <PrivateRoute exact path="/my-profile" component={MyProfile}
           ></PrivateRoute>
+          <PrivateRoute component={ReviewForm}></PrivateRoute>
         </Switch>
       </BrowserRouter>
     </AuthProvider>

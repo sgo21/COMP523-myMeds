@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "react-bootstrap"
-import {db} from '../firebase'
-import '../css/Home.css';
-import NavbarContainer from '../components/NavbarContainer'
 import { useHistory } from "react-router-dom";
-import '../css/MedPage.css';
+import {db} from '../firebase'
+import { Button } from "react-bootstrap"
+import NavbarContainer from '../components/NavbarContainer'
 import ReviewForm from 'components/ReviewForm';
+import PrivateRoute from "../components/PrivateRoute"
+import '../css/Home.css';
+import '../css/MedPage.css';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -16,7 +17,16 @@ function MedPage ({ medId }) {
   const [brandName, setBrandName] = useState("Brand Name");
   const [indication, setIndication] = useState("Med Type");
   const [reviewsArray, setReviewsArray] = useState([]);
- 
+  const [showReviewForm, setShowReviewForm] = useState(false)
+  
+  const onClick = () => {
+    if (showReviewForm) {
+      setShowReviewForm(false);
+    } else { 
+      setShowReviewForm(true)
+    }
+  }
+
   useEffect(() => {
     async function getData() {
       // You can await here
@@ -50,20 +60,21 @@ function MedPage ({ medId }) {
         <div>
           <NavbarContainer/>
         </div>
+
+        <div className="back-button outline-primary p-3">
+          <Button onClick={e => {history.replace(`/`);}} className="my-3" variant="primary"> Back to Home</Button>
+        </div>
            
-        <div className="med-page-content">
-            <Button onClick={e => {history.replace(`/`);}} className="my-3" variant="primary"> Back to Home</Button>
+        <div className="med-page-content text-center">
             <h1>{titleCase(genericName)}</h1> 
             <br></br>
             <strong>Brand Names:</strong> {brandName}
             <br></br>
             <strong>Medicine Type:</strong> {indication}
             <br></br>
-            <Button className="mt-3">
-              Write a Review
-            </Button>
-            <div>
-              <ReviewForm key={uuidv4()} medId={medId} />
+            <div className="med-page-review-form-container">
+              <Button onClick={onClick} className="mt-3"> Write a Review </Button>
+              { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null }
             </div>
             <div className="align-items-center">
               {reviewsArray !== [] && reviewsArray.map(med => <p>{med.user}<br></br>{med.review}</p>)}
