@@ -5,6 +5,8 @@ import '../css/Home.css';
 import NavbarContainer from '../components/NavbarContainer'
 import { useHistory } from "react-router-dom";
 import '../css/MedPage.css';
+import ReviewForm from 'components/ReviewForm';
+import { v4 as uuidv4 } from 'uuid';
 
 
 function MedPage ({ medId }) {
@@ -48,7 +50,9 @@ function MedPage ({ medId }) {
             <br></br>
             <strong>Medicine Type:</strong> {indication}
             <br></br>
-            <strong>reviews go here?</strong>
+            <div>
+              <ReviewForm key={uuidv4()} medId={medId} />
+            </div>
           </div>
         </div >)}
 
