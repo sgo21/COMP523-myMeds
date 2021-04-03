@@ -67,7 +67,7 @@ export default function Signup() {
                 value={name} 
                 onChange={(e) => setName(e.target.value)}/>
             </Form.Group>
-
+            <Form.Row>
             <Form.Group id="Race">
               <Form.Label>Race</Form.Label>
               <Form.Control
@@ -76,37 +76,45 @@ export default function Signup() {
                 onChange={(e) => setRace(e.target.value)}/>
             </Form.Group>
 
-            {/* <Form.Group id="Sex">
-              <Form.Label>Sex</Form.Label>
-              <Form.Control
-                placeholder='Enter Sex '
-                value={sex} 
-                onChange={(e) => setSex(e.target.value)}/>
-            </Form.Group> */}
-                
-            <Form.Group id="Age">
-              <Form.Label>Age</Form.Label>
-              <Form.Control
-                placeholder='Enter Age '
-                value={age} 
-                onChange={(e) => setAge(e.target.value)}/>
+              {/* <Form.Group id="Sex">
+                <Form.Label>Sex</Form.Label>
+                <Form.Control
+                  placeholder='Enter Sex '
+                  value={sex} 
+                  onChange={(e) => setSex(e.target.value)}/>
+              </Form.Group> */}
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Sex</Form.Label>
+                <Form.Control as="select" ref={sexRef}>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Other</option>
+                </Form.Control>
             </Form.Group>
-
+                  
+              <Form.Group id="Age">
+                <Form.Label>Age</Form.Label>
+                <Form.Control
+                  placeholder='Enter Age '
+                  value={age} 
+                  onChange={(e) => setAge(e.target.value)}/>
+              </Form.Group>
+            </Form.Row>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
+            <Form.Row>
+              <Form.Group id="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" ref={passwordRef} required />
+              </Form.Group>
 
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
-            </Form.Group>
-            
+              <Form.Group id="password-confirm">
+                <Form.Label>Password Confirmation</Form.Label>
+                <Form.Control type="password" ref={passwordConfirmRef} required />
+              </Form.Group>
+            </Form.Row>
             {/* <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Sex</Form.Label>
               <Form.Control as="select"
@@ -119,14 +127,7 @@ export default function Signup() {
               </Form.Control>
             </Form.Group> */}
 
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Sex</Form.Label>
-              <Form.Control as="select" ref={sexRef}>
-                <option>Female</option>
-                <option>Male</option>
-                <option>Other</option>
-              </Form.Control>
-            </Form.Group>
+
 
             <Button disabled={loading} className="w-100" type="submit">
               Sign Up
