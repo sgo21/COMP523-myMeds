@@ -41,7 +41,7 @@ const Home = () => {
         setResultsArray([]);
         querySnapshot.forEach((doc) => {
           setResultsArray(resultsArray => 
-            [...resultsArray, ...[{genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
+            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
           );
         })
         setAlertMessage("")
