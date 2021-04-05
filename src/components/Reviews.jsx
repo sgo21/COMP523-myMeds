@@ -26,7 +26,7 @@ function Reviews ({ review }) {
                 
                 <Media.Body>
                     <h5>{name}</h5>
-                    <Box component="fieldset" borderColor="transparent">
+                    <Box component="fieldset" mb= {2} borderColor="transparent">
                         <Typography component="legend">Demographic: {age}, {sex}, {race}</Typography>
                         <Rating name="read-only" value={rating} readOnly />
                         <p> {reviewDescrip} </p>
