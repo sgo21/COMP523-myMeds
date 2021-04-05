@@ -38,8 +38,8 @@ export default function ReviewForm() {
       const location = window.location.href.split("/");
       const ids = location[location.length - 1]
 
-      
-      db.collection('drug').doc(ids).collection("Review").doc(currentUser.email).set({
+      //doc(currentUser.email).set
+      db.collection('drug').doc(ids).collection("Review").add({
         name: name,
         age: age,
         sex: sex,
