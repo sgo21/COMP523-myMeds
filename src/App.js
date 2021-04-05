@@ -21,8 +21,7 @@ function App() {
           <Route exact path={`/home/:medId`} render={props => <MedPage {...props.match.params} />} />
           <Route exact path="/SignUp" component={Signup} />
           <Route exact path="/LogIn" component={LogIn} />
-          <PrivateRoute exact path="/my-profile" component={MyProfile}
-          ></PrivateRoute>
+          <PrivateRoute exact path="/my-profile" component={MyProfile}></PrivateRoute>
           <PrivateRoute component={ReviewForm}></PrivateRoute>
         </Switch>
       </BrowserRouter>

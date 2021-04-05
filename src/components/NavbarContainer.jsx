@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import MyProfile from '../pages/MyProfile.jsx';
-import Home from '../pages/Home.jsx';
-import LogIn from '../pages/LogIn.jsx';
-import Signup from '../pages/Signup.js';
-import { AuthProvider } from "../contexts/AuthContext"
-import PrivateRoute from "./PrivateRoute"
-import Dashboard from './Dashboard.js';
 import '../css/NavbarContainer.css'
 import { ReactComponent as Logo } from '../img/logo.svg';
 
