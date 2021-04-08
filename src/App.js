@@ -8,21 +8,18 @@ import MyProfile from './pages/MyProfile.jsx';
 import Home from './pages/Home.jsx';
 import LogIn from './pages/LogIn.jsx';
 import Signup from './pages/Signup.js';
-import MedPage from './pages/MedPage.jsx';
-import ReviewForm from "./components/ReviewForm"
 
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Switch>
+        <Switch id="bodyContent">
           <Route exact path="/" component={Home} />
-          <Route exact path={`/home/:medId`} render={props => <MedPage {...props.match.params} />} />
-          <Route exact path="/SignUp" component={Signup} />
           <Route exact path="/LogIn" component={LogIn} />
-          <PrivateRoute exact path="/my-profile" component={MyProfile}></PrivateRoute>
-          <PrivateRoute component={ReviewForm}></PrivateRoute>
+          <Route exact path="/SignUp" component={Signup} />
+          <PrivateRoute exact path="/my-profile" component={MyProfile}
+          ></PrivateRoute>
         </Switch>
       </BrowserRouter>
     </AuthProvider>
