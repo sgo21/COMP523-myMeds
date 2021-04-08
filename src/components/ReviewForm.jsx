@@ -15,7 +15,7 @@ export default function ReviewForm() {
   const [race, setRace] = useState("");
   const [sex, setSex] = useState("");
   const [age, setAge] = useState("");
-  const [symtpom, setSymptom] = useState("");
+  const [symptom, setSymptom] = useState("");
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
@@ -44,13 +44,13 @@ export default function ReviewForm() {
         age: age,
         sex: sex,
         race: race,
-        symtpom: symtpom,
+        symptom: symptom,
         review: review,
         rating: rating,
       })
       .then(() => {
         alert('Got It(');
-        console.log(name, age, sex, race, symtpom, race, review, rating, ids);
+        console.log(name, age, sex, race, symptom, race, review, rating, ids);
       })
       .catch(error => {
         alert(error.mesage);
@@ -66,7 +66,7 @@ export default function ReviewForm() {
             <Form.Group id="Symptom">
               <Form.Control 
                 placeholder='What symptom(s) were you treating?'
-                value={symtpom} 
+                value={symptom} 
                 onChange={(e) => setSymptom(e.target.value)}/>
             </Form.Group>
             <Form.Group id="Review">
