@@ -44,6 +44,7 @@ export default function ReviewForm({medId}) {
 
     const handleSubmit =(e) => {
        e.preventDefault();
+<<<<<<< HEAD
   
       db.collection('drug').doc(idName).collection("Review").add({
         name:name,
@@ -53,6 +54,21 @@ export default function ReviewForm({medId}) {
         symtpom:symtpom,
         review:review,
         rating:rating,
+=======
+      
+      const location = window.location.href.split("/");
+      const ids = location[location.length - 1]
+
+      
+      db.collection('drug').doc(ids).collection("Review").doc(currentUser.email).set({
+        name: name,
+        age: age,
+        sex: sex,
+        race: race,
+        symtpom: symtpom,
+        review: review,
+        rating: rating,
+>>>>>>> parent of 1ed8964 (Final for 4/5)
       })
       .then(() => {
         alert('Got It(');
