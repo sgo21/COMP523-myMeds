@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import '../css/Header.css';
 import {Button, Card} from "react-bootstrap"
-
+import { useHistory } from "react-router-dom";
 
 function MedCard ({ med }) {
   
@@ -10,6 +10,15 @@ function MedCard ({ med }) {
     const genericName = med.genericName;
     const brandName = med.brandName;
     const indication = med.indication;
+    const medId = med.medId;
+
+    const history = useHistory();
+
+    const routeChange = () =>{ 
+      console.log(medId + " button clicked")
+      let path = "home/"+ medId; 
+      history.push(path);
+    }
 
     async function handleReview() {
       // setError("")
