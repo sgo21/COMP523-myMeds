@@ -27,7 +27,6 @@ export default function NavbarContainer() {
                         <Nav className="nav ml-auto">
                             {/* <Nav.Link href="/">Home</Nav.Link> */}
                             <Nav.Link href="/my-profile">{currentUser.email}</Nav.Link>
-                            <Nav.Link href="/SignUp">Sign Up</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
