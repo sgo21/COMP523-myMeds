@@ -11,7 +11,7 @@ export default function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
-  const [alert, setAlert] = useState("")
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
@@ -19,12 +19,12 @@ export default function Login() {
     e.preventDefault()
 
     try {
-      setAlert("")
+      setError("")
       setLoading(true)
       await login(emailRef.current.value, passwordRef.current.value)
       history.push("/my-profile")
     } catch {
-      setAlert("Failed to log in")
+      setError("Failed to log in")
     }
 
     setLoading(false)
@@ -38,7 +38,7 @@ export default function Login() {
       <Card className="sign-up text-left m-5 mx-auto border-0">
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
-          {alert && <Alert variant="danger">{alert}</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
