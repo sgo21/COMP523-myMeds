@@ -17,9 +17,15 @@ function App() {
         <Switch id="bodyContent">
           <Route exact path="/" component={Home} />
           <Route exact path="/LogIn" component={LogIn} />
+<<<<<<< HEAD
           <Route exact path="/SignUp" component={Signup} />
           <PrivateRoute exact path="/my-profile" component={MyProfile}
           ></PrivateRoute>
+=======
+          <PrivateRoute exact path="/my-profile" component={MyProfile}
+          ></PrivateRoute>
+          <PrivateRoute component={ReviewForm}></PrivateRoute>
+>>>>>>> parent of 5adec61 (Idk man)
         </Switch>
       </BrowserRouter>
     </AuthProvider>
