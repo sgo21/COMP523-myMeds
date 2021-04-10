@@ -2,14 +2,15 @@
 import React, { useState } from 'react';
 import {db} from '../firebase'
 import '../css/Home.css';
-import { Form, Button, Row, Col, Alert, CardDeck} from "react-bootstrap"
+import { Form, Button, Row, ToggleButton, ToggleButtonGroup, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
+import ProfileCard from '../components/ProfileCard'
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
-
     const [query, setQuery] = useState("");
+    const [search, setSearch] = useState();
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
 
@@ -18,7 +19,15 @@ const Home = () => {
       return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
     }
     function titleCase(str) {
+      console.log(str)
       return str.replace(/[^\ \/\-\_]+/g, capitalize);
+    }
+    //function to standardize name
+    function namify(str) {
+      let char = str.toLowerCase();
+      char.replace(/\s/g, '')
+      console.log(char)
+      return char
     }
 
     const getData = async () => {
@@ -46,16 +55,47 @@ const Home = () => {
         })
         setAlertMessage("")
       }
-    }      
-      
+    }
+
+    const getDataProfiles = async () => {
+      if (query !== "") {
+        // for now, only spacing matters
+        // let querySnapshot = await db.collection("User").where("name", "!=", "").get();
+        // console.log(query)
+        // console.log("Here!" + titleCase(query))
+        let querySnapshot = await db.collection("User").where("name", '==', titleCase(query)).get();
+        if (querySnapshot.empty) {
+          console.log("No users with that name found");
+        }
+        setResultsArray([]);
+        querySnapshot.forEach((doc) => {
+          setResultsArray(resultsArray =>
+            [...resultsArray, ...[{email: doc.id, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex}]]
+          );
+        })
+      }
+      console.log(resultsArray);
+    }
+
+    const handleChange = e => {
+      console.log(e)
+      setSearch(e)
+      // setSearch(e.target.value)
+    }
     const onChange = e => {
       setQuery(e.target.value);
     }
 
     const onSubmit = e => {
       e.preventDefault();
+      if(search == 2) {
+        getDataProfiles();
+      } else {
+        getData();
+      }
       console.log("The search query is " + query);
-      getData();
+      console.log(resultsArray)
+      console.log("The search paramaters are " + search)
     };
 
     return (
@@ -71,9 +111,16 @@ const Home = () => {
             {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
             <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
             <Form.Control className="search-bar text-center form-control-lg"
-            placeholder='Enter a Medication Name or Symptom'
+            placeholder='Enter a Medication Name or Profile Name'
             value={query} 
             onChange={onChange}/> 
+
+            <Col className="text-center">
+              <ToggleButtonGroup type="radio" name="options" defaultValue={1} onChange={handleChange} id="filter">
+                <ToggleButton value={1}>Medications</ToggleButton>
+                <ToggleButton value={2}>Profiles</ToggleButton>
+              </ToggleButtonGroup>
+            </Col>
           
             <Col className="text-center">
               <Button className="mt-4" size="lg" type='submit'>Submit</Button>
@@ -84,7 +131,8 @@ const Home = () => {
         </div>
 
         <CardDeck className="med-search-card-deck align-items-center">
-          {resultsArray !== [] && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
+          {resultsArray !== [] && search !== 2 && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
+          {resultsArray !== [] && search !== 1 && resultsArray.map(profile => <ProfileCard key={profile.email} profile={profile} />)}
         </CardDeck>
       </div>
     )
