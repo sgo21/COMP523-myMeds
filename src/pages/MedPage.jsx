@@ -19,6 +19,7 @@ function MedPage ({ medId }) {
   const [reviewsArray, setReviewsArray] = useState([]);
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [averageOverallRating, setAverageOverallRating] = useState(0);
+  const [indexRating, setindexRating] = useState(0);
   var total = 0;
   var index = 0;
   const [noReviews, setNoReviews] = useState(true);
@@ -53,6 +54,7 @@ function MedPage ({ medId }) {
       reviewsSnapshot.forEach((doc) => {
         total = total + doc.data().rating;
         index = index + 1;
+        setindexRating(index);
       })
       if(index == 0){
         setNoReviews(true);
@@ -65,6 +67,12 @@ function MedPage ({ medId }) {
     }
     getData();
   }, [medId]); 
+
+  db.collection("drug").doc(medId).set({
+    rating:averageOverallRating,
+    reviews:indexRating,
+  }, 
+  {merge: true})
 
   // helper function to round ratings to nearest tenths place
   function roundTenths(num, place) {
