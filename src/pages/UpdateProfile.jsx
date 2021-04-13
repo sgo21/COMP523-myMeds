@@ -6,7 +6,7 @@ import '../css/MyProfile.css';
 import {db} from '../firebase'
 import NavbarContainer from '../components/NavbarContainer'
 
-export default function MyProfile() {
+export default function UpdateProfile() {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
   const history = useHistory()
@@ -46,7 +46,7 @@ export default function MyProfile() {
       </div>
       <Card className="my-profile text-left m-5 mx-auto border-0">
         <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
+          <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
           <br/>

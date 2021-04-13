@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
-import {db} from '../firebase'
+import {db, timeNow} from '../firebase'
 import { Form, Button, Card } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
@@ -47,6 +47,7 @@ export default function ReviewForm() {
         symtpom: symtpom,
         review: review,
         rating: rating,
+        createdAt: timeNow,
       })
       .then(() => {
         alert('Got It(');
