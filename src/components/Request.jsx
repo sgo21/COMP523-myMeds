@@ -50,7 +50,7 @@ export default function RequestForm() {
       <div>
         <Card className="review text-left m-5 mx-auto border-0">
           <Card.Body>
-            <h2 className="text-center mb-4">Review</h2>
+            <h2 className="text-center mb-4">Request</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group id="Drug">
                 <Form.Control 
