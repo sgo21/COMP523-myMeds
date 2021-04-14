@@ -3,3 +3,7 @@
     padding-left: 100px;
 }
 
+.show-whitespace {
+    white-space: pre;
+}
+

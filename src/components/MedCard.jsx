@@ -1,14 +1,16 @@
 import React, {} from 'react';
 import {Button, Card} from "react-bootstrap"
 import { useHistory } from "react-router-dom";
+import Rating from '@material-ui/lab/Rating';
 
 
 function MedCard ({ med }) {
-  
+    
+    const medId = med.medId;
     const genericName = med.genericName;
     const brandName = med.brandName;
     const indication = med.indication;
-    const medId = med.medId;
+    const rating = med.rating;
 
     const history = useHistory();
 
@@ -21,7 +23,11 @@ function MedCard ({ med }) {
     return (<div>
           <Card className="text-center my-3" border="primary" style={{ width: '18rem' }}>
             <Card.Body>
-              <Card.Title>{genericName}</Card.Title>
+              <Card.Title><strong>{genericName}</strong></Card.Title>
+              <Card.Text>
+                <Rating className="size-small" name="read-only" precision={0.5} value={rating} readOnly />
+                {/* <strong>Average Rating:</strong> {rating} */}
+              </Card.Text>
               <Card.Text>
                 <strong>Brand Names:</strong> {brandName}
               </Card.Text>

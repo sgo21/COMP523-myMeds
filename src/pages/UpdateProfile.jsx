@@ -57,7 +57,6 @@ export default function UpdateProfile() {
           <strong>Race:</strong> {race}
           <br/>
           <strong>Sex:</strong> {sex}
-
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>

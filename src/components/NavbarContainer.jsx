@@ -16,9 +16,8 @@ const NavbarContainer = () => {
                 <Navbar.Collapse className="pr-3" id="responsive-navbar-nav">
                     <Nav className="nav ml-auto">
                         <Nav.Link href="/my-profile">My Profile</Nav.Link>
-                        <Nav.Link href="/LogIn" >Log In</Nav.Link>
-                        <Nav.Link href="/SignUp">Sign Up</Nav.Link>
-                  
+                        <Nav.Link href="/log-in" >Log In</Nav.Link>
+                        <Nav.Link href="/sign-up">Sign Up</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
