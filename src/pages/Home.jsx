@@ -6,6 +6,7 @@ import { Form, Button, Row, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import { v4 as uuidv4 } from 'uuid';
+import RequestForm from '../components/Request'
 
 const Home = () => {
 
@@ -86,6 +87,9 @@ const Home = () => {
         <CardDeck className="med-search-card-deck align-items-center">
           {resultsArray !== [] && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
+        <div>
+          <RequestForm/>
+        </div>
       </div>
     )
 }
