@@ -20,8 +20,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path={`/home/:medId`} render={props => <MedPage {...props.match.params} />} />
-          <Route exact path="/SignUp" component={Signup} />
-          <Route exact path="/LogIn" component={LogIn} />
+          <Route exact path="/sign-up" component={Signup} />
+          <Route exact path="/log-in" component={LogIn} />
           <PrivateRoute exact path="/my-profile" component={MyProfile}></PrivateRoute>
           <PrivateRoute exact path="/update-profile" component={UpdateProfile}></PrivateRoute>
           <PrivateRoute component={ReviewForm}></PrivateRoute>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {db} from '../firebase'
 import '../css/Home.css';
@@ -33,7 +32,7 @@ const Home = () => {
     }
 
     const getData = async () => {
-      // searches through genericNames docs first. If no matches, searches brandNames doc next, and so on.
+      // searches through docs for query match in 'genericName' first. If no matches, searches for query match in 'brandNames' next, and so on.
       if (query !== "" ) {
         let querySnapshot = await db.collection("drug").where("genericName", '==', query.toLowerCase()).get();
         if (querySnapshot.empty) {
@@ -49,11 +48,14 @@ const Home = () => {
             }
           }
         }
+        // stores the docs that match user query as objects in resultsArray
         setResultsArray([]);
         querySnapshot.forEach((doc) => {
           setResultsArray(resultsArray => 
-            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
+            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication, rating:doc.data().rating}]]
           );
+          console.log(doc.data().rating)
+
         })
         setAlertMessage("")
       }
@@ -81,11 +83,12 @@ const Home = () => {
             <Col>
             {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
             <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
-            <Form.Control className="search-bar text-center form-control-lg"
-            placeholder='Enter a Medication Name or Symptom'
-            value={query} 
-            onChange={onChange}/> 
-          
+            <Form.Control  
+              className="search-bar text-center form-control-lg"
+              placeholder='Enter a Medication Name or Symptom'
+              value={query} 
+              onChange={onChange}
+            /> 
             <Col className="text-center">
               <Button className="mt-4" size="lg" type='submit'>Search</Button>
                 <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>

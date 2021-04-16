@@ -45,19 +45,24 @@ export default function MyProfile() {
         <NavbarContainer/>
       </div>
       <Card className="my-profile text-left m-5 mx-auto border-0">
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
+        <Card.Body className="my-profile-content">
+          <h2 className="text-center mb-4">My Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <br/>
-          <strong>Name:</strong> {name}
-          <br/>
-          <strong>Age:</strong> {age}
-          <br/>
-          <strong>Race:</strong> {race}
-          <br/>
-          <strong>Sex:</strong> {sex}
-
+          <Card.Text>
+            <strong>Email:</strong> {currentUser.email}
+          </Card.Text>
+          <Card.Text>
+            <strong>Name:</strong> {name}
+          </Card.Text>
+          <Card.Text>
+            <strong>Age:</strong> {age}
+          </Card.Text>
+          <Card.Text>
+            <strong>Race:</strong> {race}
+          </Card.Text>
+          <Card.Text>
+            <strong>Sex:</strong> {sex}
+          </Card.Text> 
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>
