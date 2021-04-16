@@ -5,19 +5,30 @@ import { Form, Button, Row, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import { v4 as uuidv4 } from 'uuid';
+import RequestForm from '../components/Request'
 
 const Home = () => {
 
     const [query, setQuery] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
-
+    const [showRequestForm, setShowRequestForm] = useState(false)
+  
     // functions to standardize query's caseing
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
     }
     function titleCase(str) {
       return str.replace(/[^\ \/\-\_]+/g, capitalize);
+    }
+
+    // toggles the request a new medication form component on button click
+    const onClick = () => {
+      if (showRequestForm) {
+        setShowRequestForm(false);
+      } else { 
+        setShowRequestForm(true)
+      }
     }
 
     const getData = async () => {
@@ -79,7 +90,9 @@ const Home = () => {
               onChange={onChange}
             /> 
             <Col className="text-center">
-              <Button className="mt-4" size="lg" type='submit'>Submit</Button>
+              <Button className="mt-4" size="lg" type='submit'>Search</Button>
+                <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
+                { showRequestForm ? <RequestForm/> : null }
             </Col>
             </Col>
             </Form.Row>
@@ -89,6 +102,7 @@ const Home = () => {
         <CardDeck className="med-search-card-deck align-items-center">
           {resultsArray !== [] && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
+
       </div>
     )
 }
