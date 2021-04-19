@@ -6,6 +6,7 @@ import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import { v4 as uuidv4 } from 'uuid';
 import RequestForm from '../components/Request'
+import PrivateRoute from "../components/PrivateRoute"
 
 const Home = () => {
 
@@ -92,7 +93,7 @@ const Home = () => {
             <Col className="text-center">
               <Button className="mt-4" size="lg" type='submit'>Search</Button>
                 <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
-                { showRequestForm ? <RequestForm/> : null }
+                { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null }
             </Col>
             </Col>
             </Form.Row>
