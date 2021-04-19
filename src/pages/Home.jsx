@@ -15,7 +15,7 @@ const Home = () => {
     const [resultsArray, setResultsArray] = useState([]);
     const [showRequestForm, setShowRequestForm] = useState(false)
   
-    // functions to standardize query's caseing
+    // helper functions to standardize query's caseing
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
     }
@@ -23,7 +23,7 @@ const Home = () => {
       return str.replace(/[^\ \/\-\_]+/g, capitalize);
     }
 
-    // toggles the request a new medication form component on button click
+    // toggles the "request a new medication" form component on button click
     const onClick = () => {
       if (showRequestForm) {
         setShowRequestForm(false);
@@ -60,15 +60,16 @@ const Home = () => {
         })
         setAlertMessage("")
       }
-    }      
-      
+    }   
+
+    // updates query variable every time user types into the search bar  
     const onChange = e => {
       setQuery(e.target.value);
     }
 
+    // when search button is pressed, call getData() to fetch the search results
     const onSubmit = e => {
       e.preventDefault();
-      console.log("The search query is " + query);
       getData();
     };
 
