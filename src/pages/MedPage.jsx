@@ -62,7 +62,7 @@ function MedPage ({ medId }) {
         index = index + 1;
         setindexRating(index);
       })
-      if(index == 0){
+      if(index === 0){
         setNoReviews(true);
       }else{
         setNoReviews(false);
@@ -107,12 +107,12 @@ function MedPage ({ medId }) {
            
         <div className="med-page-content text-left">
             <h1>{genericName}</h1> 
-            {noReviews == false && 
+            {noReviews === false && 
               <div> 
                 <Rating size="large" name="read-only" precision={0.5} value={averageOverallRating} readOnly />
                 <h6 className="show-whitespace"><strong> {averageOverallRating}</strong> out of 5</h6>
             </div>}
-            {noReviews == true && <h6>No Reviews</h6>}
+            {noReviews === true && <h6>No Reviews</h6>}
             <br></br>
             <strong>Brand Names:</strong> {brandName}
             <br></br>

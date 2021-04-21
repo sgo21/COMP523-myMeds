@@ -24,7 +24,7 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value)
       history.push("/my-profile")
     } catch {
-      setAlert("Failed to log in")
+      setAlert("Invalid email or password.")
     }
 
     setLoading(false)
@@ -38,7 +38,9 @@ export default function Login() {
       <Card className="sign-up text-left m-5 mx-auto border-0">
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
-          {alert && <Alert variant="danger">{alert}</Alert>}
+          <p className="text-center"><hr/>Log into your MyMeds account to start posting reviews, view your profile, 
+            and access other features such as requesting new medications to be included on MyMeds! <hr/ ></p>
+          {alert && <Alert className="text-center" variant="danger">{alert}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>

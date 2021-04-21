@@ -11,10 +11,12 @@
     margin: auto;
 }
 .search-bar {
-    /* border-radius: 50px; */
     justify-content: center;
-    margin-left: 12%;
     max-width:75%
+}
+
+.sort-by-dropdown {
+    justify-content: center;
 }
 
 .med-search-form {
