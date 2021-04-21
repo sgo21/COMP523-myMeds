@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
 import {db, timeNow} from '../firebase'
-import { Form, Button, Card } from "react-bootstrap"
+import { Form, Button, Card, Alert } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
 
 export default function RequestForm() {
     const { currentUser } = useAuth()
-  
+
+    const [alert, setAlert] = useState("")
     const [name, setName] = useState("");
-    const [drug, setDrug] = useState("");
-    const [brandName, setbrandName] = useState("");
+    const [genericName, setGenericName] = useState("");
+    const [brandName, setBrandName] = useState("");
     const [indication, setIndication] = useState("");
-    const [medicationClass, setMedicationClass] = useState("");
-    const [dea, setDea] = useState(0);
-  
+    const [medicationClass, setMedicationClass] = useState("");  
   
     useEffect(() => {
       async function getUserData() {
@@ -27,55 +26,64 @@ export default function RequestForm() {
   
       const handleSubmit =(e) => {
          e.preventDefault();
-  
-        //doc(currentUser.email).set
-        db.collection('Requests').add({
+         setAlert("")
+
+         db.collection('Requests').add({
           name: name,
           createdAt: timeNow,
-          genericName: drug,
+          genericName: genericName,
           brandName: brandName,
           indication: indication,
           medicationClass: medicationClass,
         })
         .then(() => {
-          alert('Got It(');
-          //console.log(name, age, sex, race, symtpom, race, review, rating, ids);
+          setAlert("Your request has been submitted for approval, thanks!")
         })
         .catch(error => {
-          alert(error.mesage);
+          setAlert("Invalid request.")
         })
       };
       
     return (
       <div>
-        <Card className="review text-left m-5 mx-auto border-0">
+        <Card className="review text-left m-3 mx-auto border-0">
           <Card.Body>
-            <h2 className="text-center mb-4">Request</h2>
+            <h2 className="text-center mb-4">Request a Medication</h2>
+
+            <p className="text-center"><hr/>Don't see your medication? 
+            Fill out this form to request a medication to be included onto My Meds.<hr/></p>
+
+            {alert && <Alert className="text-center" variant="primary">{alert}</Alert>}
+
             <Form onSubmit={handleSubmit}>
-              <Form.Group id="Drug">
+              <Form.Group id="genericName">
+                <Form.Label>What is the generic name of the requested medication?</Form.Label>
                 <Form.Control 
-                  placeholder='What Drug do you want to add?'
-                  value={drug} 
-                  onChange={(e) => setDrug(e.target.value)}/>
+                  value={genericName} 
+                  onChange={(e) => setGenericName(e.target.value)}/>
               </Form.Group>
+
               <Form.Group id="brandName">
+                <Form.Label>What is the brand name(s) of the requested medication?</Form.Label>
                   <Form.Control
-                  placeholder='What is the Brand Name for the Durg?'
-                  value={brandName} 
-                  onChange={(e) => setbrandName(e.target.value)}/>
+                    value={brandName} 
+                    onChange={(e) => setBrandName(e.target.value)}/>
               </Form.Group>
+
               <Form.Group id="indication">
+                  <Form.Label>What symptom(s) does the requested medication treat?</Form.Label>
                   <Form.Control
-                  placeholder='What Symptom does this drug treat?'
-                  value={indication} 
-                  onChange={(e) => setIndication(e.target.value)}/>
+                    value={indication} 
+                    onChange={(e) => setIndication(e.target.value)}/>
               </Form.Group>
+
               <Form.Group id="indication">
-                  <Form.Control
-                  placeholder='What is the medication class of the drug?'
+                <Form.Label>What is the medication class of the requested medication?</Form.Label>
+                <Form.Control
                   value={medicationClass} 
                   onChange={(e) => setMedicationClass(e.target.value)}/>
               </Form.Group>
+
               <Button className="w-100" type="submit">
                 Send Request
               </Button>
