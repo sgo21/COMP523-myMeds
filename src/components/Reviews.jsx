@@ -94,7 +94,10 @@ function Reviews({ review }) {
               Demographic: {age}, {sex}, {race}
             </Typography>
             <div>
-              <Rating name="read-only" value={rating} readOnly /> {timeFormat}
+              <Rating name="read-only" value={rating} readOnly />
+              <Typography component="legend">
+                {timeFormat}
+              </Typography>
             </div>
             
             <p> 
