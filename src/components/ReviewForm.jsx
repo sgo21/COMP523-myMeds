@@ -48,10 +48,12 @@ export default function ReviewForm() {
         review: review,
         rating: rating,
         createdAt: timeNow,
+        likeUsers: [],
+        likeNumber: 0,
       })
       .then(() => {
         alert('Got It(');
-        console.log(name, age, sex, race, symtpom, race, review, rating, ids);
+        console.log(name, age, sex, race, symtpom, race, review, rating, ids, timeNow);
       })
       .catch(error => {
         alert(error.mesage);
