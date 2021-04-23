@@ -54,6 +54,8 @@ function MedPage ({ medId }) {
           );
         })
 
+        console.log(reviewsArray);
+
       // calculate average rating
       let total = 0;
       let index = 0;

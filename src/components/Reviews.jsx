@@ -19,7 +19,8 @@ function Reviews({ review }) {
   const symptom = review.symptom;
   const rating = review.rating;
   const reviewDescrip = review.review;
-  const time = review.createdAt;
+  const time = review.time.toDate();
+  const timeFormat = ('0' + (time.getMonth()+1)).slice(-2) + '/' + time.getDate() + '/' +  time.getFullYear();
 
  const [likeState, setlikeState] = useState(false);
 
@@ -28,6 +29,7 @@ function Reviews({ review }) {
   async function handleLiking() {
       setlikeState(!likeState);
       alert(likeState ? 'Clicked - 1' : 'Clicked + 1');
+
   }
 
   return (
@@ -41,7 +43,7 @@ function Reviews({ review }) {
 
         <Media.Body>
           <h5>
-            {name} {review.createdAt}
+            {name} {timeFormat} 
           </h5>
           <Box component="fieldset" mb={2} borderColor="transparent">
             <Typography component="legend">
