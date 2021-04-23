@@ -10,6 +10,7 @@ import LogIn from './pages/LogIn.jsx';
 import Signup from './pages/Signup.js';
 import MedPage from './pages/MedPage.jsx';
 import UpdateProfile from './pages/UpdateProfile.jsx';
+import Faq from './pages/Faq.jsx';
 import ReviewForm from "./components/ReviewForm"
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path={`/home/:medId`} render={props => <MedPage {...props.match.params} />} />
           <Route exact path="/sign-up" component={Signup} />
           <Route exact path="/log-in" component={LogIn} />
+          <Route exact path="/faq" component={Faq} />
           <PrivateRoute exact path="/my-profile" component={MyProfile}></PrivateRoute>
           <PrivateRoute exact path="/update-profile" component={UpdateProfile}></PrivateRoute>
           <PrivateRoute component={ReviewForm}></PrivateRoute>

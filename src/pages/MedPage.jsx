@@ -23,6 +23,7 @@ function MedPage ({ medId }) {
   const [indexRating, setindexRating] = useState(0);
   const [noReviews, setNoReviews] = useState(true);
   const [loaded, setLoaded] = useState(false);
+  const [description, setDescription] = useState("");
   
   function onLoad() {
     console.log('loaded');
@@ -44,6 +45,8 @@ function MedPage ({ medId }) {
       setGenericName(doc.data().genericName);
       setBrandName(doc.data().brandName);
       setIndication(doc.data().indication);
+      setDescription(doc.data().description);
+
 
       // getting all the reviews for this page's medicine 
       const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
@@ -119,6 +122,8 @@ function MedPage ({ medId }) {
             <strong>Brand Names:</strong> {brandName}
             <br></br>
             <strong>Medicine Type:</strong> {indication}
+            <br></br>
+            <strong></strong> {description}
             <br></br>
 
             <div className="med-page-review-form-container mb-5">

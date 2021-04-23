@@ -5,8 +5,10 @@ import { Form, Button, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import { v4 as uuidv4 } from 'uuid';
-import RequestForm from '../components/Request'
+import RequestForm from '../components/RequestForm'
 import PrivateRoute from "../components/PrivateRoute"
+import Footer from '../components/Footer'
+
 
 const Home = () => {
 
@@ -108,7 +110,10 @@ const Home = () => {
             <Form.Row className="justify-content-center" >
               <Button className="mt-3" size="lg" type='submit'>Search</Button>
                 <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
-								{ showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null }            </Form.Row>
+            </Form.Row>
+            <Form.Row className="justify-content-center">
+								  { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null } 
+            </Form.Row>
           </Form>
         </div>
 
@@ -121,6 +126,10 @@ const Home = () => {
                                                             .sort((a, b) => b.rating - a.rating)
                                                             .map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
+
+        <div>
+          <Footer/>
+        </div> 
 
       </div>
     )
