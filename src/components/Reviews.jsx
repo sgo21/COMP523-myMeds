@@ -10,8 +10,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import { db, update } from "../firebase";
-import { useAuth } from "../contexts/AuthContext"
-
+import { useAuth } from "../contexts/AuthContext";
 
 function Reviews({ review }) {
   const reviewId = review.user;
@@ -29,51 +28,53 @@ function Reviews({ review }) {
     time.getDate() +
     "/" +
     time.getFullYear();
-  
+
   const [likeNumber, setlikeNumber] = useState(review.likeNumber);
   const likeUsers = review.likeUsers;
 
-  const { currentUser } = useAuth()
+  const { currentUser } = useAuth();
 
-  const [likeState, setlikeState] = useState(likeUsers.includes(currentUser.email) ? true : false);
+  const [likeState, setlikeState] = useState(
+    likeUsers.includes(currentUser.email) ? true : false
+  );
 
   const history = useHistory();
-
-
 
   async function handleLiking() {
     setlikeState(!likeState);
 
     const location = window.location.href.split("/");
-    const ids = location[location.length - 1]
+    const ids = location[location.length - 1];
 
-    const reviewRef = db.collection('drug').doc(ids).collection('Review').doc(reviewId);
+    const reviewRef = db
+      .collection("drug")
+      .doc(ids)
+      .collection("Review")
+      .doc(reviewId);
 
     if (!likeState) {
       reviewRef.update({
-        likeNumber: update.increment(1)
+        likeNumber: update.increment(1),
       });
 
       reviewRef.update({
-        likeUsers: update.arrayUnion(currentUser.email)
+        likeUsers: update.arrayUnion(currentUser.email),
       });
 
-      setlikeNumber(likeNumber+1);
-      alert('add done')
-    } else if (likeState){
-     
+      setlikeNumber(likeNumber + 1);
+      alert("add done");
+    } else if (likeState) {
       reviewRef.update({
-        likeNumber: update.increment(-1)
+        likeNumber: update.increment(-1),
       });
 
       reviewRef.update({
-        likeUsers: update.arrayRemove(currentUser.email)
+        likeUsers: update.arrayRemove(currentUser.email),
       });
 
-      setlikeNumber(likeNumber-1);
-      alert('delete done')
+      setlikeNumber(likeNumber - 1);
+      alert("delete done");
     }
-
   }
 
   return (
@@ -86,30 +87,34 @@ function Reviews({ review }) {
         />
 
         <Media.Body>
-          <h5>
-            {name}
-          </h5>
+          <h5>{name}</h5>
           <Box component="fieldset" mb={2} borderColor="transparent">
             <Typography component="legend">
               Demographic: {age}, {sex}, {race}
             </Typography>
-            <div>
-              <Rating name="read-only" value={rating} readOnly />
-              <Typography component="legend">
-                {timeFormat}
-              </Typography>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <Rating name="read-only" value={rating} readOnly/>   
+              <div>&nbsp;</div>
+              <div>&nbsp;</div>
+              {timeFormat}
             </div>
-            
-            <p> 
-              {reviewDescrip} 
-            </p>
 
-            <IconButton
+            <p>{reviewDescrip}</p>
+
+            <IconButton 
               aria-label="delete"
               color="primary"
               onClick={handleLiking}
+              className = 'likeButton'
             >
-              {likeNumber}{likeState ? <ThumbUpIcon /> : <ThumbUpAltOutlinedIcon />}
+              {likeState ? <ThumbUpIcon /> : <ThumbUpAltOutlinedIcon />}
+              {likeNumber}
             </IconButton>
           </Box>
         </Media.Body>
