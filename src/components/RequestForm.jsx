@@ -50,8 +50,8 @@ export default function RequestForm() {
           <Card.Body>
             <h2 className="text-center mb-4">Request a Medication</h2>
 
-            <p className="text-center"><hr/>Don't see your medication? 
-            Fill out this form to request a medication to be included onto My Meds.<hr/></p>
+            <p className="text-center">Don't see your medication? 
+            Fill out this form to request a medication to be included onto My Meds.</p>
 
             {alert && <Alert className="text-center" variant="primary">{alert}</Alert>}
 
@@ -77,15 +77,15 @@ export default function RequestForm() {
                     onChange={(e) => setIndication(e.target.value)}/>
               </Form.Group>
 
-              <Form.Group id="indication">
+              <Form.Group id="medicationClass">
                 <Form.Label>What is the medication class of the requested medication?</Form.Label>
                 <Form.Control
                   value={medicationClass} 
                   onChange={(e) => setMedicationClass(e.target.value)}/>
               </Form.Group>
 
-              <Button className="w-100" type="submit">
-                Send Request
+              <Button onClick={handleSubmit} className="w-100" type="submit">
+              Send Request
               </Button>
             </Form>
           </Card.Body>
