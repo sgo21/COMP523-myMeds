@@ -88,7 +88,16 @@ function Reviews({ review }) {
 
         <Media.Body>
           <h5>{name}</h5>
-          <Box component="fieldset" mb={2} borderColor="transparent">
+          <Box
+            component="fieldset"
+            mb={2}
+            borderColor="transparent"
+            style={{
+              overflowWrap: "break-word",
+              textOverflow: "ellipsis",
+              width: "80%",
+            }}
+          >
             <Typography component="legend">
               Demographic: {age}, {sex}, {race}
             </Typography>
@@ -99,7 +108,7 @@ function Reviews({ review }) {
                 flexWrap: "wrap",
               }}
             >
-              <Rating name="read-only" value={rating} readOnly/>   
+              <Rating name="read-only" value={rating} readOnly />
               <div>&nbsp;</div>
               <div>&nbsp;</div>
               {timeFormat}
@@ -107,11 +116,11 @@ function Reviews({ review }) {
 
             <p>{reviewDescrip}</p>
 
-            <IconButton 
+            <IconButton
               aria-label="delete"
               color="primary"
               onClick={handleLiking}
-              className = 'likeButton'
+              className="likeButton"
             >
               {likeState ? <ThumbUpIcon /> : <ThumbUpAltOutlinedIcon />}
               {likeNumber}
