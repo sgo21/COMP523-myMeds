@@ -65,7 +65,7 @@ export default function ReviewForm() {
         age: age,
         sex: sex,
         race: race,
-        symtpom: symptom,
+        symptom: symptom,
         review: review,
         rating: rating,
         genericName: genericName,
@@ -75,7 +75,7 @@ export default function ReviewForm() {
       })
       .then(() => {
         alert('Got It(');
-        console.log(name, age, sex, race, symtpom, race, review, rating, ids, timeNow);
+        console.log(name, age, sex, race, symptom, race, review, rating, ids, timeNow);
       })
       .catch(error => {
         alert(error.mesage);
