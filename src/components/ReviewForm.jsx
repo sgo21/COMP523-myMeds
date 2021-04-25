@@ -59,6 +59,8 @@ export default function ReviewForm() {
         review: review,
         rating: rating,
         createdAt: timeNow,
+        likeUsers: [],
+        likeNumber: 0,
       })
       db.collection('User').doc(currentUser.email).collection("Review").add({
         name: name,
