@@ -37,7 +37,7 @@ function ProfileCard ({ profile }) {
               <Card.Text>
                 <strong>Ethnicity:</strong> {race}
               </Card.Text>
-              <Button onClick={routeChange} variant="primary">View Reviews & More Info</Button>
+              <Button onClick={routeChange} variant="primary">View Profile</Button>
             </Card.Body>
           </Card> 
         </div>)}
