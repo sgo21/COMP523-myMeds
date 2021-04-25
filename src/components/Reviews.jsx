@@ -100,6 +100,8 @@ function Reviews({ review }) {
           >
             <Typography component="legend">
               Demographic: {age}, {sex}, {race}
+              <br></br>
+              Symptom: {symptom}
             </Typography>
             <div
               style={{
@@ -109,9 +111,9 @@ function Reviews({ review }) {
               }}
             >
               <Rating name="read-only" value={rating} readOnly />
-              <div>&nbsp;</div>
-              <div>&nbsp;</div>
-              {timeFormat}
+              <Typography component="legend">
+                {timeFormat}
+              </Typography>
             </div>
 
             <p>{reviewDescrip}</p>

@@ -100,6 +100,7 @@ const Home = () => {
     }
 
     const handleChange = e => {
+      setQuery("")
       console.log(e)
       setSearch(e)
       // setSearch(e.target.value)
@@ -173,7 +174,7 @@ const Home = () => {
 
         <CardDeck className="med-search-card-deck align-items-center">
           {resultsArray !== [] && search !== 2 && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
-          {resultsArray !== [] && search !== 1 && resultsArray.map(profile => <ProfileCard key={profile.email} profile={profile} />)}
+          {resultsArray !== [] && search === 2 && resultsArray.map(profile => <ProfileCard key={profile.email} profile={profile} />)}
           {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray
                                                             .sort((a, b) => a.rating - b.rating)
                                                             .map(med => <MedCard key={uuidv4()} med={med} />)}
