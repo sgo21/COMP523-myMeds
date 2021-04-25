@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import { ReactComponent as Logo } from '../img/logo.svg';
 import '../css/Reviews.css';
 
-function Reviews ({ review }) {
+function ProfileReviews ({ review }) {
     const name = review.name;
     const age = review.age;
     const sex = review.sex;
@@ -15,6 +15,7 @@ function Reviews ({ review }) {
     const symptom = review.symptom;
     const rating = review.rating;
     const reviewDescrip  = review.review;
+    const genericName = review.genericName;
 
 
     const history = useHistory();
@@ -25,10 +26,9 @@ function Reviews ({ review }) {
                 <Logo width="40" height="40" className="logo d-inline-block mb-3 mr-3"/> 
                 
                 <Media.Body>
-                    <h5>{name}</h5>
+                    <h5>{genericName}</h5>
                     <Box component="fieldset" mb= {2} borderColor="transparent" style={{overflowWrap: 'break-word', textOverflow: "ellipsis", width: '50%'}}>
                         <Typography component="legend">Demographic: {age}, {sex}, {race}</Typography>
-                        <Typography component="legend">Symptoms: {symptom}</Typography>
                         <Rating name="read-only" value={rating} readOnly />
                         <p> {reviewDescrip} </p>
                     </Box>
@@ -37,4 +37,4 @@ function Reviews ({ review }) {
             </Media>
     </div>)}
 
-export default Reviews;        
+export default ProfileReviews;        

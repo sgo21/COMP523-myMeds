@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {db} from '../firebase'
 import '../css/Home.css';
@@ -7,14 +6,20 @@ import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
 import ProfileCard from '../components/ProfileCard'
 import { v4 as uuidv4 } from 'uuid';
+import RequestForm from '../components/RequestForm'
+import PrivateRoute from "../components/PrivateRoute"
+import Footer from '../components/Footer'
+
 
 const Home = () => {
     const [query, setQuery] = useState("");
     const [search, setSearch] = useState();
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
+    const [showRequestForm, setShowRequestForm] = useState(false)
+    const [sortBy, setSortBy] = useState("");
 
-    // functions to standardize query's caseing
+    // helper functions to standardize query's caseing
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
     }
@@ -30,8 +35,17 @@ const Home = () => {
       return char
     }
 
+    // toggles the "request a new medication" form component on button click
+    const onClick = () => {
+      if (showRequestForm) {
+        setShowRequestForm(false);
+      } else { 
+        setShowRequestForm(true)
+      }
+    }
+
     const getData = async () => {
-      // searches through genericNames docs first. If no matches, searches brandNames doc next, and so on.
+      // searches through docs for query match in 'genericName' first. If no matches, searches for query match in 'brandNames' next, and so on.
       if (query !== "" ) {
         let querySnapshot = await db.collection("drug").where("genericName", '==', query.toLowerCase()).get();
         if (querySnapshot.empty) {
@@ -47,10 +61,18 @@ const Home = () => {
             }
           }
         }
+        // goes through each of the retrieved query matched docs, and stores each as an object in resultsArray
         setResultsArray([]);
         querySnapshot.forEach((doc) => {
+          // normalizes rating and reviewsAmt values, so that if a med's does not have reviews and has an undefined overall rating value, those are saved as 0
+          let rating = doc.data().rating;
+          if (rating === undefined) { rating = 0 };
+
+          let reviewsAmt = doc.data().reviews;
+          if (reviewsAmt === undefined) { reviewsAmt = 0 };
+
           setResultsArray(resultsArray => 
-            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication}]]
+            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication, rating:rating, reviewsAmt: reviewsAmt}]]
           );
         })
         setAlertMessage("")
@@ -86,6 +108,7 @@ const Home = () => {
       setQuery(e.target.value);
     }
 
+    // when search button is pressed, calls getData() to fetch the search results
     const onSubmit = e => {
       e.preventDefault();
       if(search == 2) {
@@ -99,7 +122,7 @@ const Home = () => {
     };
 
     return (
-      <div className='home-container'>
+<div className='home-container'>
         <div>
           <NavbarContainer/>
         </div>  
@@ -108,12 +131,24 @@ const Home = () => {
           <Form onSubmit={onSubmit}>
           <Form.Row className="align-items-center">
             <Col>
-            {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
-            <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
-            <Form.Control className="search-bar text-center form-control-lg"
-            placeholder='Enter a Medication Name or Profile Name'
-            value={query} 
-            onChange={onChange}/> 
+               {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
+              <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
+            <Form.Row className="justify-content-center align-items-center text-center">
+              <Form.Control size="lg" className="search-bar text-center"
+              placeholder='Enter a Medication Name or Symptom'
+              value={query} 
+              onChange={onChange}/> 
+            </Form.Row >
+            <Form.Row className="sort-by-dropdown text-center mt-3">
+              <Form.Group>
+                    <Form.Control defaultValue='' as="select" onChange ={e => setSortBy(e.target.value)}>
+                        <option key='noSortSelected' value='' hidden>Sort By</option>
+                        <option value=''>Sort By: None</option>
+                        <option value="asc-rating">Sort By: Ascending Rating</option>
+                        <option value="desc-rating">Sort By: Descending Rating</option>
+                    </Form.Control>
+              </Form.Group>
+            </Form.Row>
 
             <Col className="text-center">
               <ToggleButtonGroup type="radio" name="options" defaultValue={1} onChange={handleChange} id="filter">
@@ -122,9 +157,12 @@ const Home = () => {
               </ToggleButtonGroup>
             </Col>
           
-            <Col className="text-center">
-              <Button className="mt-4" size="lg" type='submit'>Submit</Button>
-            </Col>
+           <Form.Row className="justify-content-center" >
+              <Button className="mt-3" size="lg" type='submit'>Search</Button>
+                <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
+            </Form.Row>
+            <Form.Row className="justify-content-center">
+								  { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null } 
             </Col>
             </Form.Row>
           </Form>
@@ -133,7 +171,18 @@ const Home = () => {
         <CardDeck className="med-search-card-deck align-items-center">
           {resultsArray !== [] && search !== 2 && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
           {resultsArray !== [] && search !== 1 && resultsArray.map(profile => <ProfileCard key={profile.email} profile={profile} />)}
+          {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray
+                                                            .sort((a, b) => a.rating - b.rating)
+                                                            .map(med => <MedCard key={uuidv4()} med={med} />)}
+          {resultsArray !== [] && sortBy === 'desc-rating' && resultsArray
+                                                            .sort((a, b) => b.rating - a.rating)
+                                                            .map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
+
+        <div>
+          <Footer/>
+        </div> 
+
       </div>
     )
 }

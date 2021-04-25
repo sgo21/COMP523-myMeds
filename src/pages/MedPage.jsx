@@ -8,6 +8,7 @@ import Reviews from '../components/Reviews';
 import PrivateRoute from "../components/PrivateRoute"
 import '../css/Home.css';
 import '../css/MedPage.css';
+import Rating from '@material-ui/lab/Rating';
 
 
 function MedPage ({ medId }) {
@@ -19,10 +20,15 @@ function MedPage ({ medId }) {
   const [reviewsArray, setReviewsArray] = useState([]);
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [averageOverallRating, setAverageOverallRating] = useState(0);
-  var total = 0;
-  var index = 0;
+  const [indexRating, setindexRating] = useState(0);
   const [noReviews, setNoReviews] = useState(true);
-
+  const [loaded, setLoaded] = useState(false);
+  const [description, setDescription] = useState("");
+  
+  function onLoad() {
+    console.log('loaded');
+    setLoaded(true);
+  }
 
   const onClick = () => {
     if (showReviewForm) {
@@ -39,6 +45,8 @@ function MedPage ({ medId }) {
       setGenericName(doc.data().genericName);
       setBrandName(doc.data().brandName);
       setIndication(doc.data().indication);
+      setDescription(doc.data().description);
+
 
       // getting all the reviews for this page's medicine 
       const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
@@ -50,11 +58,14 @@ function MedPage ({ medId }) {
         })
 
       // calculate average rating
+      let total = 0;
+      let index = 0;
       reviewsSnapshot.forEach((doc) => {
         total = total + doc.data().rating;
         index = index + 1;
+        setindexRating(index);
       })
-      if(index == 0){
+      if(index === 0){
         setNoReviews(true);
       }else{
         setNoReviews(false);
@@ -66,6 +77,13 @@ function MedPage ({ medId }) {
     getData();
   }, [medId]); 
 
+  // pushing the average rating that was just calculated to the database
+  db.collection("drug").doc(medId).set({
+    rating:averageOverallRating,
+    reviews:indexRating,
+  }, 
+  {merge: true})
+
   // helper function to round ratings to nearest tenths place
   function roundTenths(num, place) {
     if( !place) place = 0;
@@ -73,12 +91,11 @@ function MedPage ({ medId }) {
     return Math.round(num*pow)/pow;
 }
 
-  // helper functions to standardize query's caseing
-  function capitalize(str) {
+  // // helper functions to standardize text caseing
+  async function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
   }
-
-  function titleCase(str) {
+  async function titleCase(str) {
     return str.replace(/[^\ \/\-\_]+/g, capitalize);
   }
 
@@ -92,19 +109,22 @@ function MedPage ({ medId }) {
         </div>
            
         <div className="med-page-content text-left">
-            <h1>{titleCase(genericName)}</h1> 
-
-            {console.log(averageOverallRating)}
-            {noReviews == false && <h6>{averageOverallRating} / 5</h6>}
-            {noReviews == true && <h6>No Reviews</h6>}
-           
+            <h1>{genericName}</h1> 
+            {noReviews === false && 
+              <div> 
+                <Rating size="large" name="read-only" precision={0.5} value={averageOverallRating} readOnly />
+                <h6 className="show-whitespace"><strong> {averageOverallRating}</strong> out of 5</h6>
+            </div>}
+            {noReviews === true && <h6>No Reviews</h6>}
             <br></br>
             <strong>Brand Names:</strong> {brandName}
             <br></br>
             <strong>Medicine Type:</strong> {indication}
             <br></br>
+            <strong></strong> {description}
+            <br></br>
 
-            <div className="med-page-review-form-container mb-4">
+            <div className="med-page-review-form-container mb-5">
               <Button onClick={onClick} className="mt-3"> Write a Review </Button>
               { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null }
             </div>

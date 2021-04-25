@@ -13,5 +13,6 @@ firebase.initializeApp({
   
 var db = firebase.firestore();
 var auth = firebase.auth()
+var timeNow = firebase.firestore.Timestamp.now();
 
-export {db, auth};
+export {db, auth, timeNow};

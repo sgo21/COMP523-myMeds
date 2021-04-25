@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
-import {db} from '../firebase'
+import {db, timeNow} from '../firebase'
 import { Form, Button, Card } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
@@ -9,8 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function ReviewForm() {
-  const { currentUser } = useAuth()
-
+  const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
   const [sex, setSex] = useState("");
@@ -18,6 +17,7 @@ export default function ReviewForm() {
   const [symptom, setSymptom] = useState("");
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [genericName, setGenericName] = useState("");
 
 
   useEffect(() => {
@@ -30,7 +30,18 @@ export default function ReviewForm() {
       setAge(userDoc.data().age);
     }
       getUserData();
-  }, []);  
+  }, []); 
+
+  const location = window.location.href.split("/");
+  const ids = location[location.length - 1]
+  useEffect(() => {
+    async function getUserData() {
+      // You can await here
+      const userDoc = await db.collection('drug').doc(ids).get();
+      setGenericName(userDoc.data().genericName);
+    }
+      getUserData();
+  }, []); 
 
     const handleSubmit =(e) => {
        e.preventDefault();
@@ -47,6 +58,18 @@ export default function ReviewForm() {
         symptom: symptom,
         review: review,
         rating: rating,
+        createdAt: timeNow,
+      })
+      db.collection('User').doc(currentUser.email).collection("Review").add({
+        name: name,
+        age: age,
+        sex: sex,
+        race: race,
+        symtpom: symtpom,
+        review: review,
+        rating: rating,
+        genericName: genericName,
+        createdAt: timeNow,
       })
       .then(() => {
         alert('Got It(');
