@@ -85,23 +85,23 @@ function MedPage ({ profileID }) {
         </div>
            
         <div className="med-page-content text-left">
-            <Card className="my-profile text-left m-5 mx-auto border-0">
-                <Card.Body className="my-profile-content">
-                    <h2 className="text-center mb-4"></h2> {name}
-                    <Card.Text>
-                        <strong>Email:</strong> {profileID}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Age:</strong> {age}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Race:</strong> {race}
-                    </Card.Text>
-                    <Card.Text>
-                        <strong>Sex:</strong> {sex}
-                    </Card.Text> 
-                </Card.Body>
-            </Card>
+        <Card className="text-center my-3" border="primary" style={{ width: '18rem' }}>
+            <Card.Body>
+              <Card.Title>{name}</Card.Title>
+              <Card.Text>
+                <strong>Email:</strong> {profileID}
+              </Card.Text>
+              <Card.Text>
+                <strong>Age:</strong> {age}
+              </Card.Text>
+              <Card.Text>
+                <strong>Gender:</strong> {sex}
+              </Card.Text>
+              <Card.Text>
+                <strong>Ethnicity:</strong> {race}
+              </Card.Text>
+            </Card.Body>
+          </Card> 
             
             <div className="reviews-container text-left">
               <ul className="list-unstyled">

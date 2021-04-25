@@ -17,7 +17,7 @@ function ProfileCard ({ profile }) {
 
     const routeChange = () =>{ 
       console.log(profileID + " button clicked")
-      let path = "home/"+ profileID; 
+      let path = "home/user/"+ profileID; 
       history.push(path);
     }
 

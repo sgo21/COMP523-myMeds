@@ -18,7 +18,7 @@ function MedCard ({ med }) {
 
     const routeChange = () =>{ 
       console.log(medId + " button clicked")
-      let path = "home/"+ medId; 
+      let path = "home/med/"+ medId; 
       history.push(path);
     }
 
