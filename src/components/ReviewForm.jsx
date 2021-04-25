@@ -9,15 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function ReviewForm() {
-  const { currentUser } = useAuth()
-
+  const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
   const [sex, setSex] = useState("");
   const [age, setAge] = useState("");
-  const [symtpom, setSymptom] = useState("");
+  const [symptom, setSymptom] = useState("");
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [genericName, setGenericName] = useState("");
 
 
   useEffect(() => {
@@ -30,7 +30,18 @@ export default function ReviewForm() {
       setAge(userDoc.data().age);
     }
       getUserData();
-  }, []);  
+  }, []); 
+
+  const location = window.location.href.split("/");
+  const ids = location[location.length - 1]
+  useEffect(() => {
+    async function getUserData() {
+      // You can await here
+      const userDoc = await db.collection('drug').doc(ids).get();
+      setGenericName(userDoc.data().genericName);
+    }
+      getUserData();
+  }, []); 
 
     const handleSubmit =(e) => {
        e.preventDefault();
@@ -44,9 +55,20 @@ export default function ReviewForm() {
         age: age,
         sex: sex,
         race: race,
-        symtpom: symtpom,
+        symptom: symptom,
         review: review,
         rating: rating,
+        createdAt: timeNow,
+      })
+      db.collection('User').doc(currentUser.email).collection("Review").add({
+        name: name,
+        age: age,
+        sex: sex,
+        race: race,
+        symtpom: symptom,
+        review: review,
+        rating: rating,
+        genericName: genericName,
         createdAt: timeNow,
         likeUsers: [],
         likeNumber: 0,
@@ -69,7 +91,7 @@ export default function ReviewForm() {
             <Form.Group id="Symptom">
               <Form.Control 
                 placeholder='What symptom(s) were you treating?'
-                value={symtpom} 
+                value={symptom} 
                 onChange={(e) => setSymptom(e.target.value)}/>
             </Form.Group>
             <Form.Group id="Review">

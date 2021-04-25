@@ -33,6 +33,10 @@
     height: 100%;
 }
 
+.text-center #filter{
+    padding-top: 3vw;
+}
 .btn-circle {
     border-radius: 35px;
+
 }

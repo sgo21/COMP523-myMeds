@@ -12,6 +12,7 @@ import MedPage from './pages/MedPage.jsx';
 import UpdateProfile from './pages/UpdateProfile.jsx';
 import Faq from './pages/Faq.jsx';
 import ReviewForm from "./components/ReviewForm"
+import ProfilePage from "./pages/ProfilePage"
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path={`/home/:medId`} render={props => <MedPage {...props.match.params} />} />
+          <Route exact path={`/home/user/:profileID`} render={props => <ProfilePage {...props.match.params} />} />
+          <Route exact path={`/home/med/:medId`} render={props => <MedPage {...props.match.params} />} />
           <Route exact path="/sign-up" component={Signup} />
           <Route exact path="/log-in" component={LogIn} />
           <Route exact path="/faq" component={Faq} />

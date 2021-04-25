@@ -63,7 +63,7 @@ export default function Signup() {
             <Form.Group id="Name">
               <Form.Label>Name</Form.Label>
               <Form.Control
-                placeholder='Enter Name '
+                placeholder='Enter Name (Ex: John Smith)'
                 value={name} 
                 onChange={(e) => setName(e.target.value)}/>
             </Form.Group>
