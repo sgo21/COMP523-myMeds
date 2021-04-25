@@ -53,9 +53,11 @@ function MedPage ({ medId }) {
       setReviewsArray([]);
       reviewsSnapshot.forEach((doc) => {
           setReviewsArray(reviewsArray => 
-            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex}]]
+            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, time: doc.data().createdAt, likeNumber: doc.data().likeNumber, likeUsers: doc.data().likeUsers}]]
           );
         })
+
+        console.log(reviewsArray);
 
       // calculate average rating
       let total = 0;
