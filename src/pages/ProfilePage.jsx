@@ -35,7 +35,6 @@ function MedPage ({ profileID }) {
       setAge(doc.data().age);
       setRace(doc.data().race);
       setSex(doc.data().sex);
-      setEmail(doc.data().email);
 
 
       // getting all the reviews for this page's medicine 
@@ -90,7 +89,7 @@ function MedPage ({ profileID }) {
                 <Card.Body className="my-profile-content">
                     <h2 className="text-center mb-4"></h2> {name}
                     <Card.Text>
-                        <strong>Email:</strong> {email}
+                        <strong>Email:</strong> {profileID}
                     </Card.Text>
                     <Card.Text>
                         <strong>Age:</strong> {age}

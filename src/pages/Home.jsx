@@ -159,10 +159,13 @@ const Home = () => {
           
            <Form.Row className="justify-content-center" >
               <Button className="mt-3" size="lg" type='submit'>Search</Button>
+            </Form.Row>
+            <Form.Row className="justify-content-center" >
                 <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
             </Form.Row>
             <Form.Row className="justify-content-center">
 								  { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null } 
+            </Form.Row>
             </Col>
             </Form.Row>
           </Form>

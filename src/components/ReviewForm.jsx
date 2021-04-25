@@ -65,7 +65,7 @@ export default function ReviewForm() {
         age: age,
         sex: sex,
         race: race,
-        symtpom: symtpom,
+        symtpom: symptom,
         review: review,
         rating: rating,
         genericName: genericName,

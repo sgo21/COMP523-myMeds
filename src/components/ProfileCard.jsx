@@ -9,15 +9,15 @@ function ProfileCard ({ profile }) {
     const race = profile.race; 
     const sex = profile.sex;
     const age = profile.age;
-    const email = profile.email;
+    const profileID = profile.email;
 
     // necessary for future implementation of:
     // redirect to certain profiles / add to saved users
     const history = useHistory();
 
     const routeChange = () =>{ 
-      console.log(email + " button clicked")
-      let path = "home/"+ email; 
+      console.log(profileID + " button clicked")
+      let path = "home/"+ profileID; 
       history.push(path);
     }
 
