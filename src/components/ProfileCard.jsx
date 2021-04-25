@@ -9,15 +9,17 @@ function ProfileCard ({ profile }) {
     const race = profile.race; 
     const sex = profile.sex;
     const age = profile.age;
+    const email = profile.email;
 
     // necessary for future implementation of:
     // redirect to certain profiles / add to saved users
-    // const history = useHistory();
-    // const routeChange = () =>{ 
-    //   console.log(medId + " button clicked")
-    //   let path = "home/"+ medId; 
-    //   history.push(path);
-    // }
+    const history = useHistory();
+
+    const routeChange = () =>{ 
+      console.log(email + " button clicked")
+      let path = "home/"+ email; 
+      history.push(path);
+    }
 
     return (<div>
           <Card className="text-center my-3" border="primary" style={{ width: '18rem' }}>
@@ -35,7 +37,7 @@ function ProfileCard ({ profile }) {
               <Card.Text>
                 <strong>Ethnicity:</strong> {race}
               </Card.Text>
-              {/* <Button onClick={routeChange} variant="primary">View Reviews & More Info</Button> */}
+              <Button onClick={routeChange} variant="primary">View Reviews & More Info</Button>
             </Card.Body>
           </Card> 
         </div>)}
