@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Card, Media } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -34,13 +34,20 @@ function Reviews({ review }) {
 
   const { currentUser } = useAuth();
 
+  const checkEmail = currentUser == null ? 'no email' : currentUser.email
+
   const [likeState, setlikeState] = useState(
-    likeUsers.includes(currentUser.email) ? true : false
+    likeUsers.includes(checkEmail) ? true : false
   );
+
 
   const history = useHistory();
 
   async function handleLiking() {
+
+    if (checkEmail == 'no email') {
+      return history.push("/log-in")
+    } else {
     setlikeState(!likeState);
 
     const location = window.location.href.split("/");
@@ -75,6 +82,7 @@ function Reviews({ review }) {
       setlikeNumber(likeNumber - 1);
       alert("delete done");
     }
+  }
   }
 
   return (
