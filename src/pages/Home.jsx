@@ -10,6 +10,7 @@ import PrivateRoute from "../components/PrivateRoute"
 import Footer from '../components/Footer'
 
 
+
 const Home = () => {
 
     const [query, setQuery] = useState("");
@@ -91,12 +92,16 @@ const Home = () => {
           <Form onSubmit={onSubmit}>
               {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
               <h3 className="text-center mb-4">Find Reviews on Medicine From Real People Like You!</h3>
+
+
             <Form.Row className="justify-content-center align-items-center text-center">
               <Form.Control size="lg" className="search-bar text-center"
               placeholder='Enter a Medication Name or Symptom'
               value={query} 
               onChange={onChange}/> 
             </Form.Row >
+          
+
             <Form.Row className="sort-by-dropdown text-center mt-3">
               <Form.Group>
                     <Form.Control defaultValue='' as="select" onChange ={e => setSortBy(e.target.value)}>
