@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Button, Card, Alert } from "react-bootstrap"
+import {Form, FormGroup, FormText, Input, Label, FormFeedback, Row, Col } from 'reactstrap'
 import { useAuth } from "../contexts/AuthContext.js"
 import { Link, useHistory } from "react-router-dom"
 import '../css/SignUp.css';
 import NavbarContainer from '../components/NavbarContainer'
-import Header from '../components/Header'
 import {db} from '../firebase'
+import { validateString, validateNumeric, validatePassword,validateEmail,validatePasswordFeedback } from '../helpers/validation.jsx';
 
 export default function Signup() {
   const emailRef = useRef()
@@ -23,30 +24,33 @@ export default function Signup() {
   const [age, setAge] = useState("");
   const [race, setRace] = useState("");
   const [sex, setSex] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
 
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
-    }
+    // if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    //   return setError("Passwords do not match")
+    // }
 
     try {
       setError("")
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
-      db.collection('User').doc(emailRef.current.value).set({
-        email:emailRef.current.value,
+      await signup(email, password)
+      db.collection('User').doc(email).set({
+        email:email,
         name:name,
         race:race,
-        sex:sexRef.current.value,
+        sex:sex,
         age:age,
       })
       history.push("/")
     } catch {
-      setError("Failed to create an account")
+      setError("Failed to Create an Account")
     }
-
     setLoading(false)
   }
 
@@ -60,82 +64,127 @@ export default function Signup() {
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="Name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                placeholder='Enter Name (Ex: John Smith)'
+
+            <FormGroup id="Name">
+              <Label>Name</Label>
+              <Input
+                type="text"
                 value={name} 
-                onChange={(e) => setName(e.target.value)}/>
-            </Form.Group>
-            <Form.Row>
-            <Form.Group id="Race">
-              <Form.Label>Race</Form.Label>
-              <Form.Control
-                placeholder='Enter Race '
-                value={race} 
-                onChange={(e) => setRace(e.target.value)}/>
-            </Form.Group>
+                onChange={(e) => setName(e.target.value)}
+              />
+              <FormText>E.g. your full name, or feel free to use just your first name, nickname, pseudonym, etc.</FormText>          
+            </FormGroup>
 
-              {/* <Form.Group id="Sex">
-                <Form.Label>Sex</Form.Label>
-                <Form.Control
-                  placeholder='Enter Sex '
-                  value={sex} 
-                  onChange={(e) => setSex(e.target.value)}/>
-              </Form.Group> */}
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Sex</Form.Label>
-                <Form.Control as="select" ref={sexRef}>
-                  <option>Female</option>
-                  <option>Male</option>
-                  <option>Other</option>
-                </Form.Control>
-            </Form.Group>
-                  
-              <Form.Group id="Age">
-                <Form.Label>Age</Form.Label>
-                <Form.Control
-                  placeholder='Enter Age '
-                  value={age} 
-                  onChange={(e) => setAge(e.target.value)}/>
-              </Form.Group>
-            </Form.Row>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Row>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" ref={passwordRef} required />
-              </Form.Group>
+            <Row form>
+              <Col> 
+                <FormGroup id="Age">
+                  <Label>Age</Label>
+                  <Input
+                    value={age} 
+                    onChange={(e) => setAge(e.target.value)}
+                    valid={validateNumeric(age)}
+                    invalid={age.length > 0 && !validateNumeric(age)}/>
+                  <FormFeedback>
+                      Age must be a numeric value
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
 
-              <Form.Group id="password-confirm">
-                <Form.Label>Password Confirmation</Form.Label>
-                <Form.Control type="password" ref={passwordConfirmRef} required />
-              </Form.Group>
-            </Form.Row>
-            {/* <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Sex</Form.Label>
-              <Form.Control as="select"
-                placeholder='Enter Sex '
-                value={sex} 
-                onChange={(e) => setSex(e.target.value)}>
-                <option>Female</option>
-                <option>Male</option>
-                <option>Other</option>
-              </Form.Control>
-            </Form.Group> */}
+              <Col>
+                <FormGroup id="Race">
+                  <Label>Race</Label>
+                  <Input
+                    value={race} 
+                    onChange={(e) => setRace(e.target.value)}
+                    valid={validateString(race)}
+                    invalid={race.length > 0 && !validateString(race)}/>
+                </FormGroup>
+              </Col>
 
+              <Col>
+                <FormGroup id="Sex">
+                    <Label>Sex</Label>
+                    <Input type="select" ref={sexRef} onChange ={e => setSex(e.target.value)}>
+                      <option key='defaultView' value='' hidden></option>
+                      <option value='Female'>Female</option>
+                      <option value='Male'>Male</option>
+                      <option value='Other'>Other</option>
+                    </Input>
+                </FormGroup>
+              </Col>
+            </Row>
 
+            <FormGroup id="email">
+              <Label>Email</Label>
+              <Input 
+                placeholder="youremail@domain.com" 
+                type="email" 
+                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef} 
+                valid={validateEmail(email)}
+                invalid={email.length > 0 && !validateEmail(email)}
+                required 
+              />
+              <FormFeedback>
+                Email is invalid
+              </FormFeedback>
+            </FormGroup>
 
-            <Button disabled={loading} className="w-100" type="submit">
+            <Row form>
+              <Col>
+                <FormGroup id="password">
+                  <Label>Password</Label>
+                  <Input 
+                    type="password" 
+                    ref={passwordRef} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    valid={validatePassword(password)}
+                    invalid={password.length > 0 && !validatePassword(password)}
+                    required 
+                  />
+                  <FormFeedback>
+                    {validatePasswordFeedback(password)}
+                  </FormFeedback>                  
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup id="password-confirm">
+                  <Label>Confirm Password</Label>
+                  <Input 
+                    type="password" 
+                    ref={passwordConfirmRef} 
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                    valid={(password === passwordConfirm) && validatePassword(passwordConfirm)}
+                    invalid={(passwordConfirm.length > 0) && (!(password === passwordConfirm) || !validatePassword(passwordConfirm))}
+                    required  
+                  />
+                  <FormFeedback>
+                    Passwords do not match
+                  </FormFeedback>   
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Button 
+              type="submit"
+              disabled={loading 
+                || (age.length > 0 && !validateNumeric(age)) 
+                || (race.length > 0 && !validateString(race))
+                || (email.length > 0 && !validateEmail(email))
+                || (password.length > 0 && !validatePassword(password))
+                || ((passwordConfirm.length > 0) && (!(password === passwordConfirm) || !validatePassword(passwordConfirm)))
+              } 
+              className="w-100 mt-3" 
+              style={{borderRadius:20}}
+            >
               Sign Up
             </Button>
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
+
+      <div className="w-100 text-center mb-4">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
     </>

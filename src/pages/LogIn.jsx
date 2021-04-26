@@ -8,6 +8,9 @@ import Header from '../components/Header'
 
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
@@ -21,10 +24,10 @@ export default function Login() {
     try {
       setAlert("")
       setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
+      await login(email, password)
       history.push("/my-profile")
     } catch {
-      setAlert("Invalid email or password.")
+      setAlert("Invalid email or password")
     }
 
     setLoading(false)
@@ -38,19 +41,33 @@ export default function Login() {
       <Card className="sign-up text-left m-5 mx-auto border-0">
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
+          
           <p className="text-center"><hr/>Log into your MyMeds account to start posting reviews, view your profile, 
             and access other features such as requesting new medications to be included on MyMeds! <hr/ ></p>
           {alert && <Alert className="text-center" variant="danger">{alert}</Alert>}
+          
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control 
+                type="email" 
+                ref={emailRef} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+              />
             </Form.Group>
+            
             <Form.Group id="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control 
+                type="password" 
+                ref={passwordRef} 
+                onChange={(e) => setPassword(e.target.value)}
+                required 
+              />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            
+            <Button type="submit" disabled={loading} className="w-100 mt-3" style={{borderRadius:20}}>
               Log In
             </Button>
           </Form>
@@ -59,8 +76,9 @@ export default function Login() {
           </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+
+      <div className="w-100 text-center mb-4">
+        Need an account? <Link to="/sign-up">Sign Up</Link>
       </div>
     </>
   )

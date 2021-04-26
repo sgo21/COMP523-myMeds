@@ -3,6 +3,7 @@ import {Button, Card} from "react-bootstrap"
 import { useHistory } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import '../css/MedCard.css';
+import Alert from '@material-ui/lab/Alert';
 
 
 function MedCard ({ med }) {
@@ -25,7 +26,8 @@ function MedCard ({ med }) {
     return (<div>
           <Card bg="light" className="text-center my-3" border="primary" style={{ width: '18rem' }}>
             <Card.Body>
-              <Card.Title><strong>{genericName}</strong></Card.Title>
+              {(reviewsAmt > 0) && (rating <= 2) && <Alert severity="warning" color="error">This medication is red flagged for low reviews</Alert>}
+              <Card.Title className="mt-3"><strong>{genericName}</strong></Card.Title>
               <Card.Text className="med-card-rating-display">
                 <Rating name="read-only" precision={0.5} value={rating} readOnly />
                 <br/>

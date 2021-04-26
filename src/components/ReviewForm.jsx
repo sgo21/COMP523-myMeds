@@ -22,81 +22,78 @@ export default function ReviewForm() {
 
   useEffect(() => {
     async function getUserData() {
-      // You can await here
       const userDoc = await db.collection('User').doc(currentUser.email).get();
       setName(userDoc.data().name);
       setRace(userDoc.data().race);
       setSex(userDoc.data().sex);
       setAge(userDoc.data().age);
+
+      const medDoc = await db.collection('drug').doc(ids).get();
+      setGenericName(medDoc.data().genericName);
     }
       getUserData();
-  }, []); 
+  }, [currentUser.email]); 
 
   const location = window.location.href.split("/");
   const ids = location[location.length - 1]
-  useEffect(() => {
-    async function getUserData() {
-      // You can await here
-      const userDoc = await db.collection('drug').doc(ids).get();
-      setGenericName(userDoc.data().genericName);
-    }
-      getUserData();
-  }, []); 
 
-    const handleSubmit =(e) => {
-       e.preventDefault();
+  const handleSubmit=(e) => {
+    e.preventDefault();
       
-      const location = window.location.href.split("/");
-      const ids = location[location.length - 1]
+    const location = window.location.href.split("/");
+    const ids = location[location.length - 1]
 
-      //doc(currentUser.email).set
-      db.collection('drug').doc(ids).collection("Review").add({
-        name: name,
-        age: age,
-        sex: sex,
-        race: race,
-        symptom: symptom,
-        review: review,
-        rating: rating,
-        createdAt: timeNow,
-        likeUsers: [],
-        likeNumber: 0,
-      })
-      db.collection('User').doc(currentUser.email).collection("Review").add({
-        name: name,
-        age: age,
-        sex: sex,
-        race: race,
-        symptom: symptom,
-        review: review,
-        rating: rating,
-        genericName: genericName,
-        createdAt: timeNow,
-        likeUsers: [],
-        likeNumber: 0,
-      })
-      .then(() => {
-        alert('Got It(');
-        console.log(name, age, sex, race, symptom, race, review, rating, ids, timeNow);
-      })
-      .catch(error => {
-        alert(error.mesage);
-      })
-    };
+    //doc(currentUser.email).set
+    db.collection('drug').doc(ids).collection("Review").add({
+      name: name,
+      age: age,
+      sex: sex,
+      race: race,
+      symptom: symptom,
+      review: review,
+      rating: rating,
+      createdAt: timeNow,
+      likeUsers: [],
+      likeNumber: 0,
+    })
+    db.collection('User').doc(currentUser.email).collection("Review").add({
+      name: name,
+      age: age,
+      sex: sex,
+      race: race,
+      symptom: symptom,
+      review: review,
+      rating: rating,
+      genericName: genericName,
+      createdAt: timeNow,
+      likeUsers: [],
+      likeNumber: 0,
+    })
+    .then(() => {
+      alert('Got It(');
+      console.log(name, age, sex, race, symptom, race, review, rating, ids, timeNow);
+    })
+    .catch(error => {
+      alert(error.mesage);
+    })
+  };
     
   return (
     <div>
       <Card className="review text-left m-5 mx-auto border-0">
         <Card.Body>
           <h2 className="text-center mb-4">Review</h2>
+
           <Form onSubmit={handleSubmit}>
             <Form.Group id="Symptom">
+              <Form.Label>What symptom(s) were you treating?</Form.Label>
               <Form.Control 
-                placeholder='What symptom(s) were you treating?'
                 value={symptom} 
                 onChange={(e) => setSymptom(e.target.value)}/>
             </Form.Group>
+
             <Form.Group id="Review">
+                <Form.Label>Review:</Form.Label>
                 <Form.Control
                 as = "textarea"
                 rows = {3} 
@@ -113,17 +110,15 @@ export default function ReviewForm() {
             </Form.Group> */}
 
             <Box component="fieldset" mb={3} borderColor="transparent">
-              <Typography component="legend">Rating</Typography>
+              <Typography component="legend">Rating:</Typography>
                <Rating
                 name="simple-controlled"
                 value={rating}
-                onChange={(event, newRating) => {
-                  setRating(newRating);
-                }}
+                onChange={(event, newRating) => {setRating(newRating);}}
               />
             </Box>
 
-            <Button className="w-100" type="submit">
+            <Button className="w-100" type="submit" disabled = {(review.length <= 0) || (symptom.length <= 0) || (rating == undefined)}>
               Post Review
             </Button>
           </Form>

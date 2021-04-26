@@ -9,6 +9,8 @@ import PrivateRoute from "../components/PrivateRoute"
 import '../css/Home.css';
 import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
+import Alert from '@material-ui/lab/Alert';
+import { capitalize, titleCase } from '../helpers/casing.jsx';
 
 
 function MedPage ({ medId }) {
@@ -42,11 +44,10 @@ function MedPage ({ medId }) {
     async function getData() {
       // getting data for this page's medicine
       const doc = await db.collection('drug').doc(medId).get();
-      setGenericName(doc.data().genericName);
-      setBrandName(doc.data().brandName);
+      setGenericName(titleCase(doc.data().genericName));
+      setBrandName(titleCase(doc.data().brandName));
       setIndication(doc.data().indication);
       setDescription(doc.data().description);
-
 
       // getting all the reviews for this page's medicine 
       const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
@@ -59,7 +60,7 @@ function MedPage ({ medId }) {
 
         console.log(reviewsArray);
 
-      // calculate average rating
+      // calculating the average rating for this page's medicine
       let total = 0;
       let index = 0;
       reviewsSnapshot.forEach((doc) => {
@@ -67,9 +68,10 @@ function MedPage ({ medId }) {
         index = index + 1;
         setindexRating(index);
       })
+
       if(index === 0){
         setNoReviews(true);
-      }else{
+      } else {
         setNoReviews(false);
         let ratingAverage = total/index;
         ratingAverage = roundTenths(ratingAverage, 2);
@@ -77,7 +79,7 @@ function MedPage ({ medId }) {
       }
     }
     getData();
-  }, [medId]); 
+  }); 
 
   // pushing the average rating that was just calculated to the database
   db.collection("drug").doc(medId).set({
@@ -93,14 +95,6 @@ function MedPage ({ medId }) {
     return Math.round(num*pow)/pow;
 }
 
-  // // helper functions to standardize text caseing
-  async function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
-  }
-  async function titleCase(str) {
-    return str.replace(/[^\ \/\-\_]+/g, capitalize);
-  }
-
     return (<div className="med-page-container">
         <div>
           <NavbarContainer/>
@@ -112,7 +106,8 @@ function MedPage ({ medId }) {
            
         <div className="med-page-content text-left">
             <h1>{genericName}</h1> 
-            {noReviews === false && 
+            {(!noReviews) && (averageOverallRating <= 2) && <Alert severity="warning" color="error">This medication is red flagged for low reviews</Alert>}
+            {!noReviews && 
               <div> 
                 <Rating size="large" name="read-only" precision={0.5} value={averageOverallRating} readOnly />
                 <h6 className="show-whitespace"><strong> {averageOverallRating}</strong> out of 5</h6>
