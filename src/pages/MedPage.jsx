@@ -122,7 +122,7 @@ function MedPage ({ medId }) {
             <br></br>
 
             <div className="med-page-review-form-container mb-5">
-              <Button onClick={onClick} className="mt-3"> Write a Review </Button>
+              <Button onClick={onClick} className="mt-3" style={{borderRadius:20}}> Write a Review </Button>
               { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null }
             </div>
             

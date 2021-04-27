@@ -118,7 +118,7 @@ export default function ReviewForm() {
               />
             </Box>
 
-            <Button className="w-100" type="submit" disabled = {(review.length <= 0) || (symptom.length <= 0) || (rating == undefined)}>
+            <Button type="submit" className="w-100" style={{borderRadius:20}} disabled = {(review.length <= 0) || (symptom.length <= 0) || (rating == undefined)}>
               Post Review
             </Button>
           </Form>
