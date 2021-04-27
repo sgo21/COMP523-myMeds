@@ -9,6 +9,9 @@
 
 .home-container {
     margin: auto;
+    /* background-image: url(../img/background.jpg); 
+    background-position: center;
+    background-size: cover; */
 }
 
 .search-bar {

@@ -4,18 +4,16 @@ import { Accordion, Card } from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import Footer from '../components/Footer'
 
-
 const Faq = () => {
 
-    
     return (<div className='home-container'>
         <div>
           <NavbarContainer/>
         </div>  
         
         <div className="faq-content">
-            <h2 className="m-5 text-center">Frequently Asked Questions (FAQ)</h2>
-            <Accordion className="m-5">
+            <h2 className="display-4 m-5 text-center">Frequently Asked Questions (FAQ)</h2>
+            <Accordion className="m-5" style={{backgroundColor: '#FFFFFF'}}>
                 <div className= "text-left mx-auto">
                     <Accordion.Toggle as={Card.Header} eventKey="0">
                         How do I post a review?

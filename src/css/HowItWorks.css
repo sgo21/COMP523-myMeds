@@ -1,0 +1,20 @@
+.how-to-card {
+    border-radius: 25px;
+}
+
+.how-to-title {
+    color: #FFFFFF
+}
+
+.highlight {
+    color:#87C5F9;
+}
+
+.jumbotron {
+    background-color: #157AF6;
+    margin-top: 5%
+}
+
+.bold {
+    font-weight: 500;
+}

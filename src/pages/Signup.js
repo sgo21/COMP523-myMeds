@@ -59,12 +59,18 @@ export default function Signup() {
       <div>
         <NavbarContainer/>
       </div>
-      <Card className="sign-up text-left m-5 mx-auto border-0">
+      <Card className="sign-up text-left mt-5 mx-auto border-0" bg="light">
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
 
+          <hr/>
+          <p className="text-center">Create a MyMeds account to start posting reviews, view your profile, 
+            and access other features such as requesting new medications to be included on MyMeds!</p>
+          <hr/>
+
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          <Form onSubmit={handleSubmit}>
             <FormGroup id="Name">
               <Label>Name</Label>
               <Input
@@ -181,12 +187,11 @@ export default function Signup() {
               Sign Up
             </Button>
           </Form>
+          <div className="text-center m-4">
+            Already have an account? <Link to="/login">Log In</Link>
+          </div>
         </Card.Body>
       </Card>
-
-      <div className="w-100 text-center mb-4">
-        Already have an account? <Link to="/login">Log In</Link>
-      </div>
     </>
   )
 }

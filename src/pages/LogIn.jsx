@@ -4,7 +4,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import NavbarContainer from '../components/NavbarContainer'
-import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 
 export default function Login() {
@@ -38,12 +38,15 @@ export default function Login() {
       <div>
         <NavbarContainer/>
       </div> 
-      <Card className="sign-up text-left m-5 mx-auto border-0">
+      <Card className="sign-up text-left mt-5 mx-auto border-0" bg="light"> 
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
-          
-          <p className="text-center"><hr/>Log into your MyMeds account to start posting reviews, view your profile, 
-            and access other features such as requesting new medications to be included on MyMeds! <hr/ ></p>
+
+          <hr/>
+          <p className="text-center">Log into your MyMeds account to start posting reviews, view your profile, 
+            and access other features such as requesting new medications to be included on MyMeds!</p>
+          <hr/>
+
           {alert && <Alert className="text-center" variant="danger">{alert}</Alert>}
           
           <Form onSubmit={handleSubmit}>
@@ -71,15 +74,20 @@ export default function Login() {
               Log In
             </Button>
           </Form>
+          
           <div className="w-100 text-center mt-3">
             <Link to="/forgot-password">Forgot Password?</Link>
           </div>
         </Card.Body>
       </Card>
 
-      <div className="w-100 text-center mb-4">
+      <div className="w-100 text-center m-4">
         Need an account? <Link to="/sign-up">Sign Up</Link>
       </div>
+
+      {/* <div>
+        <Footer/>
+      </div>  */}
     </>
   )
 }

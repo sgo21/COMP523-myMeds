@@ -26,6 +26,7 @@ export default function NavbarContainer() {
                     <Navbar.Collapse className="pr-3" id="responsive-navbar-nav">
                         <Nav className="nav ml-auto">
                             <Nav.Link href="/my-profile">My Profile</Nav.Link>
+                            <Nav.Link href="/faq">FAQ</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -44,6 +45,7 @@ export default function NavbarContainer() {
                         <Nav className="nav ml-auto">
                             <Nav.Link href="/log-in" >Log In</Nav.Link>
                             <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+                            <Nav.Link href="/faq">FAQ</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

@@ -11,6 +11,7 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import { db, update } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Reviews({ review }) {
   const reviewId = review.user;
@@ -80,12 +81,12 @@ function Reviews({ review }) {
   return (
     <div>
       <Media as="li">
-        <Logo
-          width="40"
-          height="40"
-          className="logo d-inline-block mb-3 mr-3"
-        />
 
+        <AccountCircleIcon 
+          className="d-inline-block mb-3 mr-3" 
+          style={{fontSize:'45px'}}
+        />
+        
         <Media.Body>
           <h5>{name}</h5>
           <Box

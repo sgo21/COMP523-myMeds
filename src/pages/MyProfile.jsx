@@ -6,6 +6,7 @@ import '../css/MyProfile.css';
 import {db} from '../firebase'
 import NavbarContainer from '../components/NavbarContainer'
 import ProfileReviews from '../components/ProfileReviews';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export default function MyProfile() {
   const [error, setError] = useState("")
@@ -54,9 +55,11 @@ export default function MyProfile() {
       <div>
         <NavbarContainer/>
       </div>
-      <Card className="my-profile text-left mt-5 mb-4 mx-auto border-0">
+      <Card className="my-profile text-left mt-5 mx-auto border-0" bg="light">
+        <div className="text-center mt-3"><AccountCircleIcon style={{fontSize:'65px'}} /></div>
         <Card.Body className="my-profile-content">
           <h2 className="text-center mb-4">My Profile</h2>
+          <hr/>
           {error && <Alert variant="danger">{error}</Alert>}
           <Card.Text>
             <strong>Email:</strong> {currentUser.email}
@@ -74,19 +77,14 @@ export default function MyProfile() {
             <strong>Sex:</strong> {sex}
           </Card.Text> 
         </Card.Body>
+        <h6 className="mx-4 mb-4"><strong>My Reviews:</strong> {reviewsArray.length === 0 && "No reviews yet!"}</h6> 
+        <ul>
+          {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
+        </ul>
       </Card>
-      <h6 className="text-center mb-4"><strong>My Reviews:</strong></h6> 
-      <Row className="reviews-container justify-content-center text-left">
-        {reviewsArray.length === 0 && "No reviews yet!"}
-        <Col md={{offset: 4}}>
-          <ul>
-            {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
-          </ul>
-        </Col>
-      </Row>
 
-      <div className="text-center" >
-        <Link to="/update-profile" className="btn btn-primary w-50" style={{borderRadius:20}}>
+      <div className="text-center m-3">
+        <Link to="/update-profile" className="btn btn-primary" style={{borderRadius:20}}>
           Update Profile
         </Link>            
       </div>

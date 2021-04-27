@@ -80,7 +80,7 @@ export default function ReviewForm() {
     
   return (
     <div>
-      <Card className="review text-left m-5 mx-auto border-0">
+      <Card className="review text-left m-5 mx-auto border-0" bg="light">
         <Card.Body>
           <h2 className="text-center mb-4">Review</h2>
 

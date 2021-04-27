@@ -10,7 +10,7 @@ import '../css/Home.css';
 import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
 import Alert from '@material-ui/lab/Alert';
-import { capitalize, titleCase } from '../helpers/casing.jsx';
+import { titleCase } from '../helpers/casing.jsx';
 
 
 function MedPage ({ medId }) {
