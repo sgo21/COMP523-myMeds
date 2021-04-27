@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { ReactComponent as Logo } from '../img/logo.svg';
 import '../css/Reviews.css';
-import { titleCase } from '../helpers/casing.jsx';
+import { titleCase } from '../helpers/formatting.jsx';
 
 function ProfileReviews ({ review }) {
     const name = review.name;

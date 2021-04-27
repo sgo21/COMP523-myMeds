@@ -11,7 +11,7 @@ import PrivateRoute from "../components/PrivateRoute"
 import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
 import Alert from '@material-ui/lab/Alert';
-import { titleCase } from '../helpers/casing.jsx';
+import { titleCase, roundTenths } from '../helpers/formatting.jsx';
 import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
 
 
@@ -58,40 +58,33 @@ function MedPage ({ medId }) {
           );
         })
 
-      // // calculating the average rating for this page's medicine
-      // let total = 0;
-      // let index = 0;
-      // reviewsSnapshot.forEach((doc) => {
-      //   total = total + doc.data().rating;
-      //   index = index + 1;
-      //   setindexRating(index);
-      // })
+      // calculating the average rating for this page's medicine
+      let total = 0;
+      let index = 0;
+      reviewsSnapshot.forEach((doc) => {
+        total = total + doc.data().rating;
+        index = index + 1;
+        setindexRating(index);
+      })
 
-      // if(index === 0){
-      //   setNoReviews(true);
-      // } else {
-      //   setNoReviews(false);
-      //   let ratingAverage = total/index;
-      //   ratingAverage = roundTenths(ratingAverage, 2);
-      //   setAverageOverallRating(ratingAverage)
-      // }
+      if(index === 0){
+        setNoReviews(true);
+      } else {
+        setNoReviews(false);
+        let ratingAverage = total/index;
+        ratingAverage = roundTenths(ratingAverage, 2);
+        setAverageOverallRating(ratingAverage)
+      }
     }
     getData();
   }); 
 
-  // // pushing the average rating that was just calculated to the database
-  // db.collection("drug").doc(medId).set({
-  //   rating:averageOverallRating,
-  //   reviews:indexRating,
-  // }, 
-  // {merge: true})
-
-//   // helper function to round ratings to nearest tenths place
-//   function roundTenths(num, place) {
-//     if( !place) place = 0;
-//     let pow = Math.pow(10,place);
-//     return Math.round(num*pow)/pow;
-// }
+  // pushing the average rating that was just calculated to the database
+  db.collection("drug").doc(medId).set({
+    rating:averageOverallRating,
+    reviews:indexRating,
+  }, 
+  {merge: true})
 
     return (
       <div className="med-page-container">

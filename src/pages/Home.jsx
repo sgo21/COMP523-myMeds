@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import RequestForm from '../components/RequestForm'
 import Footer from '../components/Footer'
 import HowItWorks from '../components/HowItWorks'
-import { titleCase } from '../helpers/casing.jsx';
+import { titleCase } from '../helpers/formatting.jsx';
 
 
 const Home = () => {
