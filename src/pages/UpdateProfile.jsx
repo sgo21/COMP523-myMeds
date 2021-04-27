@@ -41,7 +41,7 @@ export default function RequestForm() {
         age:age,
       })
       .then(() => {
-        history.push("/my-profile")
+        history.replace("/my-profile")
       })
       .catch(error => {
         alert(error.mesage);
@@ -53,7 +53,7 @@ export default function RequestForm() {
         <div>
           <NavbarContainer/>
         </div>
-        <Card className="review text-left m-5 mx-auto border-0">
+        <Card className="review text-left m-5 mx-auto border-0" bg="light">
           <Card.Body>
             <h2 className="text-center mb-4">Update My Profile</h2>
 

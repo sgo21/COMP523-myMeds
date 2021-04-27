@@ -59,7 +59,7 @@ export default function MyProfile() {
         <div className="text-center mt-3">
           <AccountCircleIcon style={{fontSize:'65px', color: '#79BBF9'}}/>
         </div>
-        <Card.Body className="my-profile-content">
+        <Card.Body className="my-profile-content text-center">
           <h2 className="text-center mb-4">My Profile</h2>
           <hr/>
           {error && <Alert variant="danger">{error}</Alert>}

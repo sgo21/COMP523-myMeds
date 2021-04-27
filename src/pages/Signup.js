@@ -42,7 +42,7 @@ export default function Signup() {
         sex:sex,
         age:age,
       })
-      history.push("/")
+      history.replace("/")
     } catch {
       setError("Failed to Create an Account")
     }
