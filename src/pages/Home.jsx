@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {db} from '../firebase'
+import { useAuth } from "../contexts/AuthContext"
+import { useHistory } from "react-router-dom"
 import '../css/Home.css';
 import { Form, Button, Row, ToggleButton, ToggleButtonGroup, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
@@ -7,7 +9,6 @@ import MedCard from '../components/MedCard'
 import ProfileCard from '../components/ProfileCard'
 import { v4 as uuidv4 } from 'uuid';
 import RequestForm from '../components/RequestForm'
-import PrivateRoute from "../components/PrivateRoute"
 import Footer from '../components/Footer'
 import HowItWorks from '../components/HowItWorks'
 import { titleCase } from '../helpers/casing.jsx';
@@ -18,17 +19,10 @@ const Home = () => {
     const [search, setSearch] = useState();
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
-    const [showRequestForm, setShowRequestForm] = useState(false)
     const [sortBy, setSortBy] = useState("");
-
-    // toggles the "request a new medication" form component on button click
-    const onClick = () => {
-      if (showRequestForm) {
-        setShowRequestForm(false);
-      } else { 
-        setShowRequestForm(true)
-      }
-    }
+    
+    const history = useHistory()
+    const {currentUser} = useAuth();
 
     const getData = async () => {
       // searches through docs for query match in 'genericName' first. If no matches, searches for query match in 'brandNames' next, and so on.
@@ -139,14 +133,21 @@ const Home = () => {
               </Col> */}
             
               <Form.Row className="justify-content-center" >
-                  <Button type='submit' className="mt-3" size="lg" style={{borderRadius:25}} >Search</Button>
+                <Button type='submit' className="mt-3" size="lg" style={{borderRadius:25}} >Search</Button>
               </Form.Row>
 
-              <Form.Row className="justify-content-center" >
+              {/* <Form.Row className="justify-content-center" >
                 <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
               </Form.Row>
               <Form.Row className="justify-content-center">
                 { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null } 
+              </Form.Row> */}
+               <Form.Row className="justify-content-center">
+                { (currentUser !== null) ? <RequestForm/> 
+                  : <Button onClick={() => history.push('/log-in')} className="mt-3 " variant="link"> 
+                      Request a Medication
+                    </Button>
+                }
               </Form.Row>
               </Col>
             </Form.Row>

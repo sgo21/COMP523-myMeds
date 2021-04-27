@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom";
 import {db} from '../firebase'
 import { Button } from "react-bootstrap"
@@ -15,7 +16,7 @@ import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
 
 
 function MedPage ({ medId }) {
-
+  const {currentUser} = useAuth();
   const history = useHistory();
   const [genericName, setGenericName] = useState("Generic Name");
   const [brandName, setBrandName] = useState("Brand Name");
@@ -126,8 +127,13 @@ function MedPage ({ medId }) {
             {description}
 
             <div className="med-page-review-form-container mb-5">
-              <Button onClick={onClick} className="rounded-button mt-3"> Write a Review </Button>
-              { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null }
+              {/* <Button onClick={onClick} className="rounded-button mt-3"> Write a Review </Button>
+              { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null } */}
+                { (currentUser !== null) ? <ReviewForm/> 
+                  : <Button onClick={() => history.push('/log-in')} className="rounded-button mt-3 "> 
+                      Write a Review
+                    </Button>
+                }
             </div>
             
             <div className="reviews-container text-left">

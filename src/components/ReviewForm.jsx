@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
 import {db, timeNow} from '../firebase'
-import { Form, Button, Card } from "react-bootstrap"
+import { Form, Button, Modal } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
@@ -21,10 +21,15 @@ export default function ReviewForm() {
   const [genericName, setGenericName] = useState("");
   const [indexRating, setindexRating] = useState(0);
   const [averageOverallRating, setAverageOverallRating] = useState(0);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const location = window.location.href.split("/");
   const medId = location[location.length - 1]
-  
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   useEffect(() => {
     async function getUserData() {
       const userDoc = await db.collection('User').doc(currentUser.email).get();
@@ -42,7 +47,9 @@ export default function ReviewForm() {
   
   const handleSubmit=(e) => {
     e.preventDefault();
-      
+    setLoading(true)
+    handleClose();
+
     const location = window.location.href.split("/");
     const medId = location[location.length - 1]
 
@@ -105,11 +112,20 @@ export default function ReviewForm() {
   };
     
   return (
-    <div>
-      <Card className="review text-left m-5 mx-auto border-0" bg="light">
-        <Card.Body>
-          <h2 className="text-center mb-4">Review</h2>
-
+    <>
+      <Button onClick={handleShow} className="mt-3 " style={{borderRadius:25}}> 
+        Post a Review
+      </Button>
+      <Modal 
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <strong>Write a Review</strong>
+        </Modal.Header>
+        <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group id="Symptom">
               <Form.Label>What symptom(s) were you treating?</Form.Label>
@@ -144,12 +160,20 @@ export default function ReviewForm() {
               />
             </Box>
 
-            <Button type="submit" className="w-100" style={{borderRadius:20}} disabled = {(review.length <= 0) || (symptom.length <= 0) || (rating == undefined)}>
+            <Button 
+              type="submit" 
+              className="w-100" 
+              style={{borderRadius:20}} 
+              disabled = { loading 
+                || (review.length <= 0) 
+                || (symptom.length <= 0) 
+                || (rating == undefined)}
+              >
               Post Review
             </Button>
           </Form>
-        </Card.Body>
-      </Card>
-    </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }

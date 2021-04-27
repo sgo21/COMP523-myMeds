@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
 import {db, timeNow} from '../firebase'
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Form, Button, Alert, Modal } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
 
@@ -14,45 +14,58 @@ export default function RequestForm() {
     const [brandName, setBrandName] = useState("");
     const [indication, setIndication] = useState("");
     const [medicationClass, setMedicationClass] = useState("");  
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
   
     useEffect(() => {
       async function getUserData() {
-        // You can await here
         const userDoc = await db.collection('User').doc(currentUser.email).get();
         setName(userDoc.data().name);
       }
         getUserData();
     }, []);  
   
-      const handleSubmit =(e) => {
-         e.preventDefault();
-         setAlert("")
+    const handleSubmit =(e) => {
+      e.preventDefault();
+      setAlert("")
 
-         db.collection('Requests').add({
-          name: name,
-          createdAt: timeNow,
-          genericName: genericName,
-          brandName: brandName,
-          indication: indication,
-          medicationClass: medicationClass,
-        })
-        .then(() => {
-          setAlert("Your request has been submitted for approval, thanks!")
-        })
-        .catch(error => {
-          setAlert("Invalid request.")
-        })
-      };
+      db.collection('Requests').add({
+        name: name,
+        createdAt: timeNow,
+        genericName: genericName,
+        brandName: brandName,
+        indication: indication,
+        medicationClass: medicationClass,
+      })
+      .then(() => {
+        setAlert("Your request has been submitted for approval, thanks!")
+      })
+      .catch(error => {
+        setAlert("Invalid request.")
+      })
+    };
       
     return (
-      <div>
-        <Card className="review text-left m-3 mx-auto border-0">
-          <Card.Body>
-            <h2 className="text-center mb-4">Request a Medication</h2>
+      <>
+        <Button onClick={handleShow} className="mt-3 " variant="link"> 
+          Request a Medication
+        </Button>
 
+        <Modal 
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <strong className="text-center">Request a Medication</strong>
+          </Modal.Header>
+          <Modal.Body>
             <p className="text-center">Don't see your medication? 
             Fill out this form to request a medication to be included onto My Meds.</p>
-
+            <hr/>
             {alert && <Alert className="text-center" variant="primary">{alert}</Alert>}
 
             <Form onSubmit={handleSubmit}>
@@ -84,12 +97,12 @@ export default function RequestForm() {
                   onChange={(e) => setMedicationClass(e.target.value)}/>
               </Form.Group>
 
-              <Button onClick={handleSubmit} className="w-100" type="submit">
-              Send Request
+              <Button onClick={handleSubmit} type="submit" className="my-3 w-100" style={{borderRadius:20}}>
+                Send Request
               </Button>
             </Form>
-          </Card.Body>
-        </Card>
-      </div>
+          </Modal.Body>
+        </Modal>
+      </>
     );
-  }
+}
