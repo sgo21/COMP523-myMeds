@@ -1,4 +1,4 @@
-export const data = [
+const rawData = [
     {
       "Generic Name": "acetaminophen and codeine",
       "Brand Name": "Tylenol with Codeine",
@@ -700,3 +700,10 @@ export const data = [
       "DEA": ""
     }
    ]
+
+export var aww = []  
+for(var i = 0; i < rawData.length; i++) {
+    var obj = rawData[i];
+    aww.push(obj["Generic Name"])
+    aww.push(obj['Brand Name'])
+}
