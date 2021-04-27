@@ -79,7 +79,9 @@ export default function MyProfile() {
             <strong>Sex:</strong> {sex}
           </Card.Text> 
         </Card.Body>
-        <h6 className="mx-4 mb-4"><strong>My Reviews:</strong> {reviewsArray.length === 0 && "No reviews yet!"}</h6> 
+        <hr/>
+        <h5 className="text-center mx-4 mb-4"><strong>My Reviews:</strong></h5> 
+        {reviewsArray.length === 0 && <Card.Text className="text-center">No Reviews Yet!</Card.Text>}
         <ul>
           {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
         </ul>
