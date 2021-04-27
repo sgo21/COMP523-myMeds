@@ -26,7 +26,7 @@ const HowItWorks = () => {
                         <Card.Title><span className="highlight">Search</span> for medications by name or symptom</Card.Title>
                         <hr/>
                         <Card.Text>
-                            Our search feature allows you to find medications by symptom or specific name.
+                            Our search feature lets you find medications by symptom or specific name.
                             To make gauging medication quality easier, poorly rated medications are red-flagged, 
                             and you can also sort your medication search results by ascending or descending rating.
                         </Card.Text>
@@ -39,8 +39,8 @@ const HowItWorks = () => {
                         <hr/>
                         <Card.Text>
                             After navigating to the page for your medication of interest (by clicking on the 
-                            "View Reviews & More Info" button), you can now post reviews for it, and view ratings and reviews 
-                            for that medication from other users of similar and varied demographic background or medical history.
+                            "View Reviews & More Info" button), you can now post reviews for it, and view its ratings 
+                            and reviews from other users of similar and varied demographic background or medical history.
                         </Card.Text>
                         </Card.Body>
                     </Card>

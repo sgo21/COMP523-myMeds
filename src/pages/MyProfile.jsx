@@ -56,7 +56,9 @@ export default function MyProfile() {
         <NavbarContainer/>
       </div>
       <Card className="my-profile text-left mt-5 mx-auto border-0" bg="light">
-        <div className="text-center mt-3"><AccountCircleIcon style={{fontSize:'65px'}} /></div>
+        <div className="text-center mt-3">
+          <AccountCircleIcon style={{fontSize:'65px', color: '#79BBF9'}}/>
+        </div>
         <Card.Body className="my-profile-content">
           <h2 className="text-center mb-4">My Profile</h2>
           <hr/>

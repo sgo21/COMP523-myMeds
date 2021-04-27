@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext"
+import { useHistory } from "react-router-dom"
 import {db} from '../firebase'
 import { Form, FormGroup, FormText, Input, Label, FormFeedback } from 'reactstrap'
 import { Button, Card } from "react-bootstrap"
@@ -15,7 +16,8 @@ export default function RequestForm() {
     const [race, setRace] = useState("");
     const [sex, setSex] = useState("")
     // const sexRef = useRef();
-
+    
+    const history = useHistory()
 
     useEffect(() => {
       async function getUserData() {
@@ -32,8 +34,6 @@ export default function RequestForm() {
   
     const handleSubmit =(e) => {
       e.preventDefault();
-  
-      //doc(currentUser.email).set
       db.collection('User').doc(currentUser.email).set({
         name:name,
         sex:sex,
@@ -41,8 +41,7 @@ export default function RequestForm() {
         age:age,
       })
       .then(() => {
-        alert('Got It(');
-        //console.log(name, age, sex, race, symtpom, race, review, rating, ids);
+        history.push("/my-profile")
       })
       .catch(error => {
         alert(error.mesage);
