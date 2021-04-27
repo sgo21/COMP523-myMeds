@@ -40,7 +40,7 @@ export default function RequestForm() {
         medicationClass: medicationClass,
       })
       .then(() => {
-        setAlert("Your request has been submitted for approval, thanks!")
+        setAlert("Your request has been submitted for approval, thanks! You can close out, or edit your request and re-submit.")
       })
       .catch(error => {
         setAlert("Invalid request.")
