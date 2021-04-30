@@ -44,7 +44,7 @@ export default function RequestForm() {
         history.replace("/my-profile")
       })
       .catch(error => {
-        alert(error.mesage);
+        // alert(error.mesage);
       })
     };
       

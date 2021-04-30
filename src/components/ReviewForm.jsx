@@ -54,7 +54,7 @@ export default function ReviewForm() {
     const medId = location[location.length - 1]
 
     //doc(currentUser.email).set
-    db.collection('drug').doc(medId).collection("Review").add({
+    db.collection('drug').doc(medId).collection("Review").doc(currentUser.email).set({
       name: name,
       age: age,
       sex: sex,
@@ -66,7 +66,7 @@ export default function ReviewForm() {
       likeUsers: [],
       likeNumber: 0,
     })
-    db.collection('User').doc(currentUser.email).collection("Review").add({
+    db.collection('User').doc(currentUser.email).collection("Review").doc(medId).set({
       name: name,
       age: age,
       sex: sex,
@@ -107,7 +107,7 @@ export default function ReviewForm() {
       {merge: true})
     })
     .catch(error => {
-      alert(error.mesage);
+      // alert(error.mesage);
     })
   };
     

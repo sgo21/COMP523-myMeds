@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Button, Card, Media } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Button, Media } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { ReactComponent as Logo } from "../img/logo.svg";
 import "../css/Reviews.css";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
@@ -35,13 +34,20 @@ function Reviews({ review }) {
 
   const { currentUser } = useAuth();
 
+  const checkEmail = currentUser == null ? 'no email' : currentUser.email
+
+
   const [likeState, setlikeState] = useState(
-    likeUsers.includes(currentUser.email) ? true : false
+    likeUsers.includes(checkEmail) ? true : false
   );
 
   const history = useHistory();
 
   async function handleLiking() {
+
+    if (checkEmail == 'no email') {
+      return history.push("/log-in")
+    } else {
     setlikeState(!likeState);
 
     const location = window.location.href.split("/");
@@ -63,7 +69,7 @@ function Reviews({ review }) {
       });
 
       setlikeNumber(likeNumber + 1);
-      alert("add done");
+
     } else if (likeState) {
       reviewRef.update({
         likeNumber: update.increment(-1),
@@ -74,8 +80,14 @@ function Reviews({ review }) {
       });
 
       setlikeNumber(likeNumber - 1);
-      alert("delete done");
     }
+  }
+  }
+
+  const routeChange = () =>{ 
+    console.log(reviewId + " button clicked")
+    let path = "home/user/" + reviewId; 
+    history.replace("/" + path);
   }
 
   return (
@@ -86,9 +98,12 @@ function Reviews({ review }) {
           className="d-inline-block mb-3 mr-3" 
           style={{fontSize:'45px'}}
         />
-        
+
         <Media.Body>
-          <h5>{name}</h5>
+          {/* <Button onClick={routeChange} variant="link" >{name}</Button>
+          <Button onClick={() => history.replace("/home/user/" + reviewId)} variant="link">{name}</Button> */}
+          <h5><Link to={"/home/user/" + reviewId}>{name}</Link></h5>
+
           <Box
             component="fieldset"
             mb={2}
@@ -121,7 +136,8 @@ function Reviews({ review }) {
 
             <IconButton
               aria-label="delete"
-              color="primary"
+              size = "small"
+              edge = "start"
               onClick={handleLiking}
               className="likeButton"
             >

@@ -5,27 +5,20 @@ import { Card, Button, Alert } from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import ProfileReviews from '../components/ProfileReviews';
 import PrivateRoute from "../components/PrivateRoute"
-import '../css/Home.css';
-import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
 
 
-function MedPage ({ profileID }) {
+function ProfilePage ({ profileID }) {
 
   const history = useHistory();
   const [reviewsArray, setReviewsArray] = useState([]);
   const [noReviews, setNoReviews] = useState(true);
-  const [loaded, setLoaded] = useState(false);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [race, setRace] = useState("");
   const [sex, setSex] = useState("");
   const [email, setEmail] = useState("");
   
-  function onLoad() {
-    console.log('loaded');
-    setLoaded(true);
-  }
 
   useEffect(() => {
     async function getData() {
@@ -45,35 +38,9 @@ function MedPage ({ profileID }) {
             [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName}]]
           );
         })
-
-      // calculate average rating
-      let total = 0;
-      let index = 0;
-      reviewsSnapshot.forEach((doc) => {
-        index = index + 1;
-      })
-      if(index === 0){
-        setNoReviews(true);
-      }
     }
     getData();
   }, [profileID]); 
-
-
-  // helper function to round ratings to nearest tenths place
-  function roundTenths(num, place) {
-    if( !place) place = 0;
-    let pow = Math.pow(10,place);
-    return Math.round(num*pow)/pow;
-}
-
-  // // helper functions to standardize text caseing
-  async function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase();
-  }
-  async function titleCase(str) {
-    return str.replace(/[^\ \/\-\_]+/g, capitalize);
-  }
 
     return (<div className="med-page-container">
         <div>
@@ -112,4 +79,4 @@ function MedPage ({ profileID }) {
           </div>
         </div >)}
 
-export default MedPage;
+export default ProfilePage;

@@ -27,15 +27,12 @@ const Home = () => {
     const getData = async () => {
       // searches through docs for query match in 'genericName' first. If no matches, searches for query match in 'brandNames' next, and so on.
       if (query !== "" ) {
-        let querySnapshot = await db.collection("drug").where("genericName", '==', query.toLowerCase()).get();
+        let querySnapshot = await db.collection("drug").where("genericName", '==', titleCase(query)).get();
         if (querySnapshot.empty) {
-          console.log("No matching genericName docs");
           querySnapshot = await db.collection("drug").where("brandName", '==', titleCase(query)).get()
           if (querySnapshot.empty) {
-            console.log("No matching brandName docs");
             querySnapshot = await db.collection("drug").where("indication", '==', titleCase(query)).get()
             if (querySnapshot.empty) {
-              console.log("No matching indication docs")
               setAlertMessage("No matching medications found!")
               return;
             }
@@ -52,7 +49,7 @@ const Home = () => {
           if (reviewsAmt === undefined) { reviewsAmt = 0 };
 
           setResultsArray(resultsArray => 
-            [...resultsArray, ...[{medId: doc.id, genericName: titleCase(doc.data().genericName), brandName: doc.data().brandName, indication: doc.data().indication, rating:rating, reviewsAmt: reviewsAmt}]]
+            [...resultsArray, ...[{medId: doc.id, genericName: doc.data().genericName, brandName: doc.data().brandName, indication: doc.data().indication, rating:rating, reviewsAmt: reviewsAmt}]]
           );
         })
         setAlertMessage("")
@@ -174,8 +171,7 @@ const Home = () => {
                                                             .sort((a, b) => b.rating - a.rating)
                                                             .map(med => <MedCard key={uuidv4()} med={med} />)}
         </CardDeck>
-
-
+        
         <div>
           <HowItWorks/>
         </div> 
