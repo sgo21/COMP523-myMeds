@@ -31,7 +31,8 @@ export default function ReviewForm() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    async function getUserData() {
+    // getting data for current logged in user and the generic name of the med they're posting review for
+    async function getData() {
       const userDoc = await db.collection('User').doc(currentUser.email).get();
       setName(userDoc.data().name);
       setRace(userDoc.data().race);
@@ -41,7 +42,7 @@ export default function ReviewForm() {
       const medDoc = await db.collection('drug').doc(medId).get();
       setGenericName(medDoc.data().genericName);
     }
-      getUserData();
+      getData();
   }, [currentUser.email, medId]); 
 
   
@@ -53,7 +54,7 @@ export default function ReviewForm() {
     const location = window.location.href.split("/");
     const medId = location[location.length - 1]
 
-    //doc(currentUser.email).set
+    // storing the review's data to both the drug and user firebase collections 
     db.collection('drug').doc(medId).collection("Review").doc(currentUser.email).set({
       name: name,
       age: age,

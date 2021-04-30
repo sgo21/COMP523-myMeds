@@ -27,7 +27,6 @@ export default function RequestForm() {
         setAge(userDoc.data().age);
         setRace(userDoc.data().race);
         setSex(userDoc.data().sex);
-
       }
         getUserData();
     }, [currentUser.email]);  

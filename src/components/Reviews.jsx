@@ -13,6 +13,8 @@ import { useAuth } from "../contexts/AuthContext";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Reviews({ review }) {
+
+  const history = useHistory();
   const reviewId = review.user;
   const name = review.name;
   const age = review.age;
@@ -21,6 +23,8 @@ function Reviews({ review }) {
   const symptom = review.symptom;
   const rating = review.rating;
   const reviewDescrip = review.review;
+  const [likeNumber, setlikeNumber] = useState(review.likeNumber);
+  const likeUsers = review.likeUsers;
   const time = review.time.toDate();
   const timeFormat =
     ("0" + (time.getMonth() + 1)).slice(-2) +
@@ -29,36 +33,34 @@ function Reviews({ review }) {
     "/" +
     time.getFullYear();
 
-  const [likeNumber, setlikeNumber] = useState(review.likeNumber);
-  const likeUsers = review.likeUsers;
-
   const { currentUser } = useAuth();
-
   const checkEmail = currentUser == null ? 'no email' : currentUser.email
-
-
+  
+  // hook to track of whether the current logged in user has liked a review
   const [likeState, setlikeState] = useState(
     likeUsers.includes(checkEmail) ? true : false
   );
 
-  const history = useHistory();
-
+  /* based on current user toggling the lieks button, updating the med's "likes" count and 
+  adding/removing the current user's email as a "liker" in the database */
   async function handleLiking() {
 
+    // redirecting to log in page if user is not signing/unregistered with an account
     if (checkEmail == 'no email') {
       return history.push("/log-in")
     } else {
     setlikeState(!likeState);
-
+    
+    // grabbing the firebase document ID of the med being reviewed from the url path
     const location = window.location.href.split("/");
-    const ids = location[location.length - 1];
+    const medId = location[location.length - 1];
 
     const reviewRef = db
       .collection("drug")
-      .doc(ids)
+      .doc(medId)
       .collection("Review")
       .doc(reviewId);
-
+    
     if (!likeState) {
       reviewRef.update({
         likeNumber: update.increment(1),
@@ -84,12 +86,6 @@ function Reviews({ review }) {
   }
   }
 
-  const routeChange = () =>{ 
-    console.log(reviewId + " button clicked")
-    let path = "home/user/" + reviewId; 
-    history.replace("/" + path);
-  }
-
   return (
     <div className="bg-light p-4 w-75 border-bottom justify-contents-center" style={{borderRadius:5}}>
       <Media as="li">
@@ -112,7 +108,7 @@ function Reviews({ review }) {
               width: "80%",
             }}
           >
-             <Typography component="legend"> {timeFormat} </Typography>
+            <Typography component="legend"> {timeFormat} </Typography>
             <Typography component="legend">
               <strong>Demographic:</strong> {age}, {sex}, {race}
               <br></br>
@@ -129,6 +125,7 @@ function Reviews({ review }) {
               edge = "start"
               onClick={handleLiking}
               className="likeButton"
+              style={{fontSize:'20px'}}
             >
               {likeState ? <ThumbUpIcon /> : <ThumbUpAltOutlinedIcon />}
               {likeNumber}

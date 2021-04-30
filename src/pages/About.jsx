@@ -21,11 +21,9 @@ const About = () => {
             demographic background or medical history— think of it like a “Yelp” for medicine!
         </div>
 
-
         <div>
           <Footer/>
         </div> 
-
       </div>)
 }
 

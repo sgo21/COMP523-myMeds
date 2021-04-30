@@ -75,15 +75,18 @@ const Home = () => {
           <Form onSubmit={onSubmit}>
           <Form.Row className="align-items-center">
             <Col>
-               {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
+              {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
+              
               <h3 className="display-4 text-center mb-4">Find & Share Reviews on Medicine</h3>
+              
               <Form.Row className="justify-content-center align-items-center text-center">
                 <Form.Control size="lg" className="search-bar text-center"
                 placeholder='Enter a Medication Name or Symptom to Find Reviews'
                 value={query} 
                 onChange={onChange}/> 
+
                 <Form.Row className="justify-content-center" >
-                  <Button type='submit' className="mt-3 mb-3" size="lg" >
+                  <Button type='submit' className="search-button mt-3 mb-3" size="lg">
                     <CapsuleIcon width="29" height="29"/>
                   </Button>
                 </Form.Row>
@@ -100,10 +103,7 @@ const Home = () => {
                 </Form.Group>
               </Form.Row>
             
-              {/* <Form.Row className="justify-content-center" >
-                <Button type='submit' className="mt-3" size="lg" style={{borderRadius:25}} >Search</Button>
-              </Form.Row> */}
-               <Form.Row className="justify-content-center">
+              <Form.Row className="justify-content-center">
                 { (currentUser !== null) ? <RequestForm/> 
                   : <Button onClick={() => history.push('/log-in')} className="mt-3 " variant="link"> 
                       Request a Medication
@@ -114,6 +114,7 @@ const Home = () => {
             </Form.Row>
           </Form>
         </div>
+        
         <CardDeck className="med-search-card-deck align-items-center mb-3">
           {resultsArray !== [] && sortBy === '' && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
           {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray

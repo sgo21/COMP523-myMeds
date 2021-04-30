@@ -19,8 +19,8 @@ export default function MyProfile() {
   const [sex, setSex] = useState("");
   const [reviewsArray, setReviewsArray] = useState([]);
 
-
   useEffect(() => {
+    //getting current logged in user's demographic data
     async function getUserData() {
       const userDoc = await db.collection('User').doc(currentUser.email).get();
       setName(userDoc.data().name);
@@ -28,21 +28,20 @@ export default function MyProfile() {
       setRace(userDoc.data().race);
       setSex(userDoc.data().sex);
 
-      // getting all the reviews posted by current logged in user
-      const reviewsSnapshot = await db.collection("User").doc(currentUser.email).collection("Review").get();
-      setReviewsArray([]);
-      reviewsSnapshot.forEach((doc) => {
-          setReviewsArray(reviewsArray => 
-            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName}]]
-          );
-      })
-    }
-      getUserData();
+    // getting all the reviews posted by current logged in user
+    const reviewsSnapshot = await db.collection("User").doc(currentUser.email).collection("Review").get();
+    setReviewsArray([]);
+    reviewsSnapshot.forEach((doc) => {
+      setReviewsArray(reviewsArray => 
+        [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName}]]
+      );
+    })
+  }
+    getUserData();
   }, [currentUser.email]);  
 
   async function handleLogout() {
     setError("")
-
     try {
       await logout()
       history.push("/")
