@@ -5,7 +5,7 @@ import '../css/Footer.css';
 const Footer = () => {
     return (
     <footer>        
-        <Navbar bg="primary" variant="dark" fixed="bottom" className="navbar py-3">
+        <Navbar bg="primary" variant="dark" className="navbar py-3">
             <Navbar.Collapse className="pr-3" id="responsive-navbar-nav">
                 <Nav className="nav m-auto">
                     <Nav.Link href="/">2021 MyMeds, Inc</Nav.Link>

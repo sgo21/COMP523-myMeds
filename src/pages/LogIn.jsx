@@ -85,9 +85,9 @@ export default function Login() {
         Need an account? <Link to="/sign-up">Sign Up</Link>
       </div>
 
-      {/* <div>
+      <div>
         <Footer/>
-      </div>  */}
+      </div> 
     </>
   )
 }

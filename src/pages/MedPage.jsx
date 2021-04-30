@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom";
 import {db} from '../firebase'
-import { Button } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import Footer from '../components/Footer'
 import ReviewForm from 'components/ReviewForm';
@@ -50,7 +50,7 @@ function MedPage ({ medId }) {
       setDescription(doc.data().description);
 
       // getting all the reviews for this page's medicine 
-      const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
+      const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").orderBy('createdAt', 'desc').get();
       setReviewsArray([]);
       reviewsSnapshot.forEach((doc) => {
           setReviewsArray(reviewsArray => 
@@ -127,7 +127,7 @@ function MedPage ({ medId }) {
                       Write a Review
                     </Button>
                 }
-            </div>
+            </div>           
             
             <div className="reviews-container text-left">
               <ul className="list-unstyled">

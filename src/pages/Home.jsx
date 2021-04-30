@@ -3,20 +3,19 @@ import {db} from '../firebase'
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import '../css/Home.css';
-import { Form, Button, Row, ToggleButton, ToggleButtonGroup, Col, Alert, CardDeck} from "react-bootstrap"
+import { Form, Button, Col, Alert, CardDeck} from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import MedCard from '../components/MedCard'
-import ProfileCard from '../components/ProfileCard'
 import { v4 as uuidv4 } from 'uuid';
 import RequestForm from '../components/RequestForm'
 import Footer from '../components/Footer'
 import HowItWorks from '../components/HowItWorks'
 import { titleCase } from '../helpers/formatting.jsx';
-
+import SearchIcon from '@material-ui/icons/Search';
+import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
 
 const Home = () => {
     const [query, setQuery] = useState("");
-    const [search, setSearch] = useState();
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
     const [sortBy, setSortBy] = useState("");
@@ -31,7 +30,7 @@ const Home = () => {
         if (querySnapshot.empty) {
           querySnapshot = await db.collection("drug").where("brandName", '==', titleCase(query)).get()
           if (querySnapshot.empty) {
-            querySnapshot = await db.collection("drug").where("indication", '==', titleCase(query)).get()
+            querySnapshot = await db.collection("drug").where("indicationArray", 'array-contains', titleCase(query)).get()
             if (querySnapshot.empty) {
               setAlertMessage("No matching medications found!")
               return;
@@ -56,32 +55,6 @@ const Home = () => {
       }
     }
 
-    // const getDataProfiles = async () => {
-    //   if (query !== "") {
-    //     // for now, only spacing matters
-    //     // let querySnapshot = await db.collection("User").where("name", "!=", "").get();
-    //     // console.log(query)
-    //     // console.log("Here!" + titleCase(query))
-    //     let querySnapshot = await db.collection("User").where("name", '==', titleCase(query)).get();
-    //     if (querySnapshot.empty) {
-    //       console.log("No users with that name found");
-    //     }
-    //     setResultsArray([]);
-    //     querySnapshot.forEach((doc) => {
-    //       setResultsArray(resultsArray =>
-    //         [...resultsArray, ...[{email: doc.id, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex}]]
-    //       );
-    //     })
-    //   }
-    //   console.log(resultsArray);
-    // }
-
-    // const handleChange = e => {
-    //   setQuery("")
-    //   console.log(e)
-    //   setSearch(e)
-    //   // setSearch(e.target.value)
-    // }
     const onChange = e => {
       setQuery(e.target.value);
     }
@@ -109,6 +82,11 @@ const Home = () => {
                 placeholder='Enter a Medication Name or Symptom to Find Reviews'
                 value={query} 
                 onChange={onChange}/> 
+                <Form.Row className="justify-content-center" >
+                  <Button type='submit' className="mt-3 mb-3" size="lg" >
+                    <CapsuleIcon width="29" height="29"/>
+                  </Button>
+                </Form.Row>
               </Form.Row >
 
               <Form.Row className="sort-by-dropdown text-center mt-3">
@@ -121,23 +99,9 @@ const Home = () => {
                       </Form.Control>
                 </Form.Group>
               </Form.Row>
-
-              {/* <Col className="text-center">
-                <ToggleButtonGroup type="radio" name="options" defaultValue={1} onChange={handleChange} id="filter">
-                  <ToggleButton value={1}>Medications</ToggleButton>
-                  <ToggleButton value={2}>Profiles</ToggleButton>
-                </ToggleButtonGroup>
-              </Col> */}
             
-              <Form.Row className="justify-content-center" >
-                <Button type='submit' className="mt-3" size="lg" style={{borderRadius:25}} >Search</Button>
-              </Form.Row>
-
               {/* <Form.Row className="justify-content-center" >
-                <Button onClick={onClick} className="mt-3 " variant="link"> Request a Medication</Button>
-              </Form.Row>
-              <Form.Row className="justify-content-center">
-                { showRequestForm ? <PrivateRoute component={RequestForm}></PrivateRoute>  : null } 
+                <Button type='submit' className="mt-3" size="lg" style={{borderRadius:25}} >Search</Button>
               </Form.Row> */}
                <Form.Row className="justify-content-center">
                 { (currentUser !== null) ? <RequestForm/> 
@@ -150,18 +114,6 @@ const Home = () => {
             </Form.Row>
           </Form>
         </div>
-
-        {/* <CardDeck className="med-search-card-deck align-items-center">
-          {resultsArray !== [] && search !== 2 && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
-          {resultsArray !== [] && search === 2 && resultsArray.map(profile => <ProfileCard key={profile.email} profile={profile} />)}
-          {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray
-                                                            .sort((a, b) => a.rating - b.rating)
-                                                            .map(med => <MedCard key={uuidv4()} med={med} />)}
-          {resultsArray !== [] && sortBy === 'desc-rating' && resultsArray
-                                                            .sort((a, b) => b.rating - a.rating)
-                                                            .map(med => <MedCard key={uuidv4()} med={med} />)}
-        </CardDeck> */}
-
         <CardDeck className="med-search-card-deck align-items-center mb-3">
           {resultsArray !== [] && sortBy === '' && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
           {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray

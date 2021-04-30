@@ -6,6 +6,7 @@ import '../css/MyProfile.css';
 import {db} from '../firebase'
 import NavbarContainer from '../components/NavbarContainer'
 import ProfileReviews from '../components/ProfileReviews';
+import Footer from '../components/Footer';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export default function MyProfile() {
@@ -97,6 +98,10 @@ export default function MyProfile() {
         <Button variant="link" onClick={handleLogout}>
           Log Out
         </Button>
+
+        <div>
+          <Footer/>
+        </div> 
       </div>
     </>
   )

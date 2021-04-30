@@ -44,4 +44,4 @@ function MedCard ({ med }) {
           </Card> 
         </div>)}
 
-export default MedCard;        
+export default MedCard;

@@ -91,7 +91,7 @@ function Reviews({ review }) {
   }
 
   return (
-    <div>
+    <div className="bg-light p-4 w-75 border-bottom justify-contents-center" style={{borderRadius:5}}>
       <Media as="li">
 
         <AccountCircleIcon 
@@ -100,8 +100,6 @@ function Reviews({ review }) {
         />
 
         <Media.Body>
-          {/* <Button onClick={routeChange} variant="link" >{name}</Button>
-          <Button onClick={() => history.replace("/home/user/" + reviewId)} variant="link">{name}</Button> */}
           <h5><Link to={"/home/user/" + reviewId}>{name}</Link></h5>
 
           <Box
@@ -114,23 +112,14 @@ function Reviews({ review }) {
               width: "80%",
             }}
           >
+             <Typography component="legend"> {timeFormat} </Typography>
             <Typography component="legend">
-              Demographic: {age}, {sex}, {race}
+              <strong>Demographic:</strong> {age}, {sex}, {race}
               <br></br>
-              Symptom: {symptom}
+              <strong>Symptom:</strong> {symptom}
             </Typography>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              <Rating name="read-only" value={rating} readOnly />
-              <Typography component="legend">
-                {timeFormat}
-              </Typography>
-            </div>
+           
+            <Rating name="read-only" value={rating} readOnly />
 
             <p>{reviewDescrip}</p>
 

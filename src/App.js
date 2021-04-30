@@ -13,6 +13,7 @@ import UpdateProfile from './pages/UpdateProfile.jsx';
 import Faq from './pages/Faq.jsx';
 import ReviewForm from "./components/ReviewForm"
 import ProfilePage from "./pages/ProfilePage"
+import About from "./pages/About"
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/sign-up" component={Signup} />
           <Route exact path="/log-in" component={LogIn} />
           <Route exact path="/faq" component={Faq} />
+          <Route exact path="/about" component={About} />
           <PrivateRoute exact path="/my-profile" component={MyProfile}></PrivateRoute>
           <PrivateRoute exact path="/update-profile" component={UpdateProfile}></PrivateRoute>
           <PrivateRoute component={ReviewForm}></PrivateRoute>

@@ -12,7 +12,7 @@ strings detailing the reason the input parameter did not match the regular expre
 */
 
 export function validateString(inputString) {
-    const stringRegex = /[^a-zA-Z]/;
+    const stringRegex = /[^a-zA-Z\x20]/;
     if (inputString.length !== 0 && !stringRegex.test(inputString)) {
         return true;
     } else {
