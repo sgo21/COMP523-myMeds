@@ -13,12 +13,17 @@ import HowItWorks from '../components/HowItWorks'
 import { titleCase } from '../helpers/formatting.jsx';
 import SearchIcon from '@material-ui/icons/Search';
 import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
+import useAutocomplete from 'use-autocomplete';
+import autocompletions from '../helpers/autocompletions.jsx';
 
 const Home = () => {
     const [query, setQuery] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
     const [resultsArray, setResultsArray] = useState([]);
     const [sortBy, setSortBy] = useState("");
+
+    const [autoquery, setAutoQuery] = useState("");
+    const [completions] = useAutocomplete(query, autocompletions);
     
     const history = useHistory()
     const {currentUser} = useAuth();
@@ -51,17 +56,26 @@ const Home = () => {
             [...resultsArray, ...[{medId: doc.id, genericName: doc.data().genericName, brandName: doc.data().brandName, indication: doc.data().indication, rating:rating, reviewsAmt: reviewsAmt}]]
           );
         })
+        setAutoQuery("");
         setAlertMessage("")
       }
     }
 
     const onChange = e => {
       setQuery(e.target.value);
+      setAutoQuery(e.target.value);
+      if (e.target.value === "") {
+        document.getElementsByClassName("popout-container")[0].style.display = "none";
+      } else {
+        document.getElementsByClassName("popout-container")[0].style.display = "inline-block";
+      }
     }
 
     // when search button is pressed, calls getData() to fetch the search results
     const onSubmit = e => {
       e.preventDefault();
+      let popoutContainer= document.getElementsByClassName("popout-container")[0];
+      popoutContainer.style.display = "none";
       getData();
     }
 
@@ -84,7 +98,9 @@ const Home = () => {
                 placeholder='Enter a Medication Name or Symptom to Find Reviews'
                 value={query} 
                 onChange={onChange}/> 
-
+            <div className="popout-container"> 
+              {completions.slice(0,10).map((val, index) => ( <button id ="autocomplete-selection" value = {val} onClick={e => {setQuery(val); setAutoQuery(val);}} type= "submit" key={index}>{val}</button>))}
+            </div> 
                 <Form.Row className="justify-content-center" >
                   <Button type='submit' className="search-button mt-3 mb-3" size="lg">
                     <CapsuleIcon width="29" height="29"/>

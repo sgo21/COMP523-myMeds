@@ -31,3 +31,25 @@
     border-radius: 35px;
 
 }
+
+.popout-container {
+    border-radius: 5px;
+    margin: auto;
+    width: 59%;
+    position: absolute;
+    display: none;
+    z-index: 10;
+    transform: translateY(200px)
+  }
+  
+  
+  #autocomplete-selection {
+    background:white;
+    opacity: 1;
+    color: black;
+    cursor: pointer;
+    width: 99%;
+    border: thin solid rgba(112, 105, 105, 0.123);
+    padding: 5px;
+  }
+  
