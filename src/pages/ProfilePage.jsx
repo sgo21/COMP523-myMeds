@@ -8,6 +8,7 @@ import PrivateRoute from "../components/PrivateRoute"
 import Rating from '@material-ui/lab/Rating';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useAuth } from "../contexts/AuthContext"
+import Footer from "../components/Footer"
 
 
 function ProfilePage ({ profileID }) {
@@ -51,15 +52,15 @@ function ProfilePage ({ profileID }) {
       setReviewsArray([]);
       reviewsSnapshot.forEach((doc) => {
           setReviewsArray(reviewsArray => 
-            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName, time: doc.data().createdAt, likeNumber: doc.data().likeNumber,}]]
+            [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName, time: doc.data().createdAt, likeNumber: doc.data().likeNumber}]]
           );
         })
 
     // getting data for this current user's demographics for percent matching
-      const currentUserDoc = await db.collection('User').doc(currentUser.email).get();
-      setCurrentAge(currentUserDoc.data().age);
-      setCurrentRace(currentUserDoc.data().race);
-      setCurrentSex(currentUserDoc.data().sex);
+    //   const currentUserDoc = await db.collection('User').doc(currentUser.email).get();
+    //   setCurrentAge(currentUserDoc.data().age);
+    //   setCurrentRace(currentUserDoc.data().race);
+    //   setCurrentSex(currentUserDoc.data().sex);
     }; 
     
      /* calculates percent match between the demographics of the current logged in user 
@@ -161,6 +162,9 @@ function ProfilePage ({ profileID }) {
           {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
         </ul>
       </Card>
+      <div>
+        <Footer/>
+      </div>
     </>
   )}
 

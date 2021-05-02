@@ -96,7 +96,7 @@ function MedPage ({ medId }) {
           <Button onClick={e => {history.replace("/")}} className="my-3" variant="primary" > Back to Home</Button>
         </div>
            
-        <div className="med-page-content text-left">
+        <div className="med-page-content text-left w-75 bg-white">
             <h1 className="display-4 show-whitespace">
               <CapsuleIcon width="55" height="55"/> {genericName}
             </h1> 
@@ -117,7 +117,7 @@ function MedPage ({ medId }) {
             <strong>Medicine Type:</strong> <span className="lead">{indication}</span>
             <br/>
             <br/>
-            {description}
+            <strong>Description:</strong> <span className="lead">{description}</span>
 
             <div className="med-page-review-form-container mb-5">
               {/* <Button onClick={onClick} className="rounded-button mt-3"> Write a Review </Button>

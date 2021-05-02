@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import '../css/Reviews.css';
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import {timeNow} from '../firebase';
 
 function ProfileReviews ({ review }) {
     const name = review.name;

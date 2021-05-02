@@ -106,6 +106,7 @@ export default function ReviewForm() {
         reviews:indexRating,
       }, 
       {merge: true})
+      window.location.reload(true);
     })
     .catch(error => {
       // alert(error.mesage);

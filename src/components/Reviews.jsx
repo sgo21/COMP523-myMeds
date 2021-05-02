@@ -83,6 +83,27 @@ function Reviews({ review }) {
 
       setlikeNumber(likeNumber - 1);
     }
+
+    const userRef = db
+    .collection("User")
+    .doc(reviewId)
+    .collection("Review")
+    .doc(medId);
+
+    if (!likeState) {
+      userRef.update({
+        likeNumber: update.increment(1),
+      });
+
+      setlikeNumber(likeNumber + 1);
+
+    } else if (likeState) {
+      userRef.update({
+        likeNumber: update.increment(-1),
+      });
+
+      setlikeNumber(likeNumber - 1);
+    }
   }
   }
 

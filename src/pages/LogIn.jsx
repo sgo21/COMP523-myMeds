@@ -23,7 +23,7 @@ export default function Login() {
       setAlert("")
       setLoading(true)
       await login(email, password)
-      history.push("/my-profile")
+      history.goBack()
     } catch {
       setAlert("Invalid email or password")
     }

@@ -33,7 +33,7 @@ export default function MyProfile() {
     setReviewsArray([]);
     reviewsSnapshot.forEach((doc) => {
       setReviewsArray(reviewsArray => 
-        [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName}]]
+        [...reviewsArray, ...[{user: doc.id, rating: doc.data().rating, review: doc.data().review, symptom: doc.data().symptom, age: doc.data().age, name: doc.data().name, race: doc.data().race, sex: doc.data().sex, genericName: doc.data().genericName, time: doc.data().createdAt, likeNumber: doc.data().likeNumber}]]
       );
     })
   }
@@ -97,7 +97,9 @@ export default function MyProfile() {
         <Button variant="link" onClick={handleLogout}>
           Log Out
         </Button>
-
+        <br/>
+        <br/>
+        <br/>
         <div>
           <Footer/>
         </div> 
