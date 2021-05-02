@@ -4,7 +4,7 @@ import '../css/Footer.css';
 
 const Footer = () => {
     return (
-    <footer>        
+    <footer data-testid="footer">        
         <Navbar bg="primary" variant="dark" className="navbar py-3">
             <Navbar.Collapse className="pr-3" id="responsive-navbar-nav">
                 <Nav className="nav m-auto">
