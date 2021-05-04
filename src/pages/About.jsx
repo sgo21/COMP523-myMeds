@@ -15,7 +15,7 @@ const About = () => {
         <h2 className="display-4 m-5 text-center">About</h2>
         <hr className="w-75"/>
         <Jumbotron className="p-5 rounded-0 bg-white">
-          <div className="About-content text-center">
+          <div data-testid="about-content" className="about-content text-center">
               By pooling together users’ reviews of medicine in an openly accessible space, 
               the My Meds aims to bridge this disconnect and enable people 
               to take charge and make educated decisions regarding their own health. 

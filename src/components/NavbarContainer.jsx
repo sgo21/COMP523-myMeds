@@ -5,10 +5,13 @@ import { ReactComponent as Logo } from '../img/logo.svg';
 import { useAuth } from "../contexts/AuthContext"
 
 export default function NavbarContainer() {
-    const {currentUser} = useAuth();
-    if(currentUser !== null) {
+    let { currentUser } = useAuth();
+
+    /* only displaying Navbar with "My Profile" link when user is logged in, 
+        otherwise displaying Navbar with log in & sign up links */
+    if (currentUser !== null) {
         return (
-            <div className="navbar-header">        
+            <div data-testid="navbar" className="navbar-header">        
                 <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
                     <Navbar.Brand className="pl-3" href="/">
                         <Logo width="75" height="75" className="d-inline-block mb-3"/> 
@@ -27,7 +30,7 @@ export default function NavbarContainer() {
         )
     } else {
         return (
-            <div className="navbar-header">        
+            <div data-testid="navbar" className="navbar-header">        
                 <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
                     <Navbar.Brand className="pl-3" href="/">
                         <Logo width="75" height="75" className="d-inline-block mb-3"/> 
@@ -40,7 +43,6 @@ export default function NavbarContainer() {
                             <Nav.Link href="/sign-up">Sign Up</Nav.Link>
                             <Nav.Link href="/about">About</Nav.Link>
                             <Nav.Link href="/faq">FAQ</Nav.Link>
-
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

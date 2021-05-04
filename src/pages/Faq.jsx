@@ -12,7 +12,7 @@ const Faq = () => {
           <NavbarContainer/>
         </div>  
         
-        <div className="faq-content">
+        <div data-testid="faq-content" className="faq-content">
             <h2 className="display-4 m-5 text-center">Frequently Asked Questions (FAQ)</h2>
             <Accordion className="m-5" style={{backgroundColor: '#FFFFFF'}}>
             <div className= "text-left mx-auto">

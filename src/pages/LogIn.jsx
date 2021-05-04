@@ -6,14 +6,16 @@ import NavbarContainer from '../components/NavbarContainer'
 import Footer from '../components/Footer'
 
 export default function Login() {
+  const [alert, setAlert] = useState("")
+  const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const emailRef = useRef()
   const passwordRef = useRef()
+
   const { login } = useAuth()
-  const [alert, setAlert] = useState("")
-  const [loading, setLoading] = useState(false)
+
   const history = useHistory()
 
   async function handleSubmit(e) {
@@ -36,19 +38,19 @@ export default function Login() {
       <div>
         <NavbarContainer/>
       </div> 
-      <Card className="sign-up text-left mt-5 mx-auto border-0" bg="light"> 
+      <Card data-testid='login' className="sign-up text-left mt-5 mx-auto border-0" bg="light"> 
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
 
           <hr/>
-          <p className="text-center">Log into your MyMeds account to start posting reviews, view your profile, 
+          <p data-testid="login-help-text" className="text-center">Log into your MyMeds account to start posting reviews, view your profile, 
             and access other features such as requesting new medications to be included on MyMeds!</p>
           <hr/>
 
           {alert && <Alert className="text-center" variant="danger">{alert}</Alert>}
           
-          <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
+          <Form data-testid="login-form" onSubmit={handleSubmit}>
+            <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control 
                 type="email" 
@@ -58,7 +60,7 @@ export default function Login() {
               />
             </Form.Group>
             
-            <Form.Group id="password">
+            <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control 
                 type="password" 
@@ -68,7 +70,7 @@ export default function Login() {
               />
             </Form.Group>
             
-            <Button type="submit" disabled={loading} className="w-100 mt-3" style={{borderRadius:20}}>
+            <Button data-testid="login-button" type="submit" disabled={loading} className="w-100 mt-3" style={{borderRadius:20}}>
               Log In
             </Button>
           </Form>

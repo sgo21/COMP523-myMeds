@@ -10,7 +10,6 @@ export function capitalize(inputString) {
     return inputString.charAt(0).toUpperCase() + inputString.substring(1, inputString.length).toLowerCase();
 }
 
-
 export function titleCase(inputString) {
     let stringArray = inputString.split(" ");
     let titleCaseArray = [];
@@ -24,7 +23,6 @@ export function titleCase(inputString) {
     }
     return titleCaseArray.join(' ');
 }
-
 
 export function roundTenths(num, place) {
     if( !place) place = 0;
