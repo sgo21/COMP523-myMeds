@@ -30,3 +30,23 @@ it('Render necessary Navbar links and logo regardless of whether user logged in 
     expect(aboutLink).toBeInTheDocument()
 });
 
+it('Route user to LogIn Page when clicked on the login link in NavBar', () => {
+  expect(screen.getByText("Log In")).toHaveAttribute('href', '/log-in');
+});
+
+it('Route user to Signup Page when clicked on the signup link in NavBar', () => {
+  expect(screen.getByText("Sign Up")).toHaveAttribute('href', '/sign-up');
+});
+
+it('Route user to About Page when clicked on the About Page link in NavBar', () => {
+  expect(screen.getByText("About")).toHaveAttribute('href', '/about');
+});
+
+it('Route user to FAQ Page when clicked on the FAQ link in NavBar', () => {
+  expect(screen.getByText("FAQ")).toHaveAttribute('href', '/faq');
+});
+
+it('Route user to Home Page when clicked on the logo in NavBar', () => {
+  expect(screen.getByTestId("logolink")).toHaveAttribute('href', '/');
+});
+

@@ -87,7 +87,7 @@ function MedPage ({ medId }) {
   {merge: true})
 
     return (
-      <div className="med-page-container">
+      <div data-testid='medpage' className="med-page-container">
         <div>
           <NavbarContainer/>
         </div>

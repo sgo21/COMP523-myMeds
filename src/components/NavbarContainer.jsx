@@ -13,7 +13,7 @@ export default function NavbarContainer() {
         return (
             <div data-testid="navbar" className="navbar-header">        
                 <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
-                    <Navbar.Brand className="pl-3" href="/">
+                    <Navbar.Brand data-testid='logolink' className="pl-3" href="/">
                         <Logo width="75" height="75" className="d-inline-block mb-3"/> 
                         <h1 className="logo-text">My Meds</h1>
                     </Navbar.Brand>
@@ -32,7 +32,7 @@ export default function NavbarContainer() {
         return (
             <div data-testid="navbar" className="navbar-header">        
                 <Navbar bg="primary" variant="dark" sticky="top" className="navbar" expand="md" collapseOnSelect>
-                    <Navbar.Brand className="pl-3" href="/">
+                    <Navbar.Brand data-testid='logolink' className="pl-3" href="/">
                         <Logo width="75" height="75" className="d-inline-block mb-3"/> 
                         <h1 className="logo-text">My Meds</h1>
                     </Navbar.Brand>

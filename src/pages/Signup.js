@@ -54,7 +54,7 @@ export default function Signup() {
         <NavbarContainer/>
       </div>
       <Card className="sign-up text-left mt-5 mx-auto border-0" bg="light">
-        <Card.Body>
+        <Card.Body data-testid="help">
           <h2 className="text-center mb-4">Sign Up</h2>
 
           <hr/>
@@ -65,9 +65,9 @@ export default function Signup() {
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
-            <FormGroup id="Name">
+            <FormGroup data-testid="name" id="Name">
               <Label>Name</Label>
-              <Input
+              <Input data-testid="name-input"
                 type="text"
                 value={name} 
                 onChange={(e) => setName(e.target.value)}
@@ -77,9 +77,9 @@ export default function Signup() {
 
             <Row form>
               <Col> 
-                <FormGroup id="Age">
+                <FormGroup data-testid="age" id="Age">
                   <Label>Age</Label>
-                  <Input
+                  <Input  data-testid="age-input"
                     value={age} 
                     onChange={(e) => setAge(e.target.value)}
                     valid={validateNumeric(age)}
@@ -91,9 +91,9 @@ export default function Signup() {
               </Col>
 
               <Col>
-                <FormGroup id="Race">
+                <FormGroup data-testid="race" id="Race">
                   <Label>Race</Label>
-                  <Input
+                  <Input data-testid="race-input"
                     value={race} 
                     onChange={(e) => setRace(e.target.value)}
                     valid={validateString(race)}
@@ -102,7 +102,7 @@ export default function Signup() {
               </Col>
 
               <Col>
-                <FormGroup id="Sex">
+                <FormGroup data-testid="sex" id="Sex"> 
                     <Label>Sex</Label>
                     <Input type="select" ref={sexRef} onChange ={e => setSex(e.target.value)}>
                       <option key='defaultView' value='' hidden></option>
@@ -114,9 +114,9 @@ export default function Signup() {
               </Col>
             </Row>
 
-            <FormGroup id="email">
+            <FormGroup data-testid="email" id="email">
               <Label>Email</Label>
-              <Input 
+              <Input data-testid="email-input"
                 placeholder="youremail@domain.com" 
                 type="email" 
                 onChange={(e) => setEmail(e.target.value)}
@@ -132,9 +132,9 @@ export default function Signup() {
 
             <Row form>
               <Col>
-                <FormGroup id="password">
+                <FormGroup data-testid="pass" id="password">
                   <Label>Password</Label>
-                  <Input 
+                  <Input data-testid="pass-input"
                     type="password" 
                     ref={passwordRef} 
                     onChange={(e) => setPassword(e.target.value)}
@@ -142,16 +142,16 @@ export default function Signup() {
                     invalid={password.length > 0 && !validatePassword(password)}
                     required 
                   />
-                  <FormFeedback>
+                  <FormFeedback data-testid="pass-val">
                     {validatePasswordFeedback(password)}
                   </FormFeedback>                  
                 </FormGroup>
               </Col>
 
               <Col>
-                <FormGroup id="password-confirm">
+                <FormGroup data-testid="pass-conf" id="password-confirm">
                   <Label>Confirm Password</Label>
-                  <Input 
+                  <Input data-testid="pass-conf-input"
                     type="password" 
                     ref={passwordConfirmRef} 
                     onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -159,14 +159,14 @@ export default function Signup() {
                     invalid={(passwordConfirm.length > 0) && (!(password === passwordConfirm) || !validatePassword(passwordConfirm))}
                     required  
                   />
-                  <FormFeedback>
+                  <FormFeedback data-testid="pass-conf-inval">
                     Passwords do not match
                   </FormFeedback>   
                 </FormGroup>
               </Col>
             </Row>
 
-            <Button 
+            <Button data-testid="button"
               type="submit"
               disabled={loading 
                 || (age.length > 0 && !validateNumeric(age)) 

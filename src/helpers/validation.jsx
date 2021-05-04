@@ -21,7 +21,7 @@ export function validateString(inputString) {
 };
 
 export function validateNumeric(inputNumber) {
-    const numberRegex = /[0-9]/;
+    const numberRegex = /^[1-9]\d*$/;
     if (numberRegex.test(inputNumber)) {
         return true;
     } else {

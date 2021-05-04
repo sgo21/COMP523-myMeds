@@ -19,7 +19,7 @@ it('Render Login form inputs and button correctly', () => {
     const loginHelpText = screen.getByTestId('login-help-text')
     const emailInput = screen.getByLabelText('Email')
     const passwordInput = screen.getByLabelText('Password')
-    const loginButton = screen.getByTestId('login-button')
+    const loginButton = screen.getByTestId('button')
 
     expect(loginHelpText).toBeInTheDocument()
     expect(emailInput).toBeInTheDocument()
@@ -33,45 +33,14 @@ it("Login form allow user input interaction and submission", () => {
     const emailTestValue = "testing@gmail.com";
     const passwordInput = screen.getByLabelText('Password')
     const passwordTestValue = "Testing123!";
-    // const loginButton = screen.getByTestId('login-button')
-    // const handleSubmit = jest.fn()
+    const loginButton = screen.getByTestId('button')
 
     fireEvent.change(emailInput, { target: { value: emailTestValue } });
     fireEvent.change(passwordInput, { target: { value: passwordTestValue } });
     
     expect(screen.getByDisplayValue(emailTestValue) === emailInput).toBe(true)
     expect(screen.getByDisplayValue(passwordTestValue) === passwordInput).toBe(true)
-
+    
+    expect(loginButton).toBeEnabled();
     fireEvent.submit(loginForm);
-    // expect(handleSubmit).toHaveBeenCalled();
 });
-
-// it("Show alert when invalid email entered", () => {
-//     const loginForm = screen.getByTestId('login-form')
-//     const emailInput = screen.getByLabelText('Email')
-//     const passwordInput = screen.getByLabelText('Password')
-//     // const loginButton = screen.getByTestId('login-button')
-
-//     fireEvent.change(emailInput, { target: { value: "invalidEmail@domain.com" } });
-//     fireEvent.change(passwordInput, { target: { value: "Testing123!" } });
-//     // fireEvent.click(loginButton);
-
-//     fireEvent.submit(loginForm);
-//     expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
-// });
-
-// it("Show alert when invalid password entered", () => {
-//     const loginForm = screen.getByTestId('login-form')
-//     const emailInput = screen.getByLabelText('Email')
-//     const passwordInput = screen.getByLabelText('Password')
-//     // const loginButton = screen.getByTestId('login-button')
-
-//     fireEvent.change(emailInput, { target: { value: "testing@gmail.com" } });
-//     fireEvent.change(passwordInput, { target: { value: "wrongpassword" } });
-//     // fireEvent.click(loginButton);
-
-//     fireEvent.submit(loginForm);
-//     expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
-// });
-
-

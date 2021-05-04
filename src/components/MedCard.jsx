@@ -22,24 +22,24 @@ function MedCard ({ med }) {
     //   history.push(path);
     // }
 
-    return (<div>
+    return (<div data-testid='medcard'>
           <Card bg="light" className="text-center my-3" border="primary" style={{ width: '18rem' }}>
             <Card.Body>
               {(reviewsAmt > 0) && (rating <= 2) && <Alert severity="warning" color="error">This medication is red flagged for low reviews</Alert>}
-              <Card.Title className="mt-3"><strong>{genericName}</strong></Card.Title>
+              <Card.Title data-testid='title' className="mt-3"><strong>{genericName}</strong></Card.Title>
               <Card.Text className="med-card-rating-display" style={{ fontSize: '15px' }}>
-                <Rating name="read-only" precision={0.5} value={rating} readOnly />
+                <Rating data-testid='rating' name="read-only" precision={0.5} value={rating} readOnly />
                 <br/>
                 Based on {reviewsAmt} reviews
               </Card.Text>
               <hr/>
-              <Card.Text>
+              <Card.Text data-testid='brandname'>
                 <strong>Brand Names:</strong> {brandName}
               </Card.Text>
-              <Card.Text>
+              <Card.Text data-testid='medicinetype'>
                 <strong>Medicine Type:</strong> {indication}
               </Card.Text>
-              <Button onClick={e => { history.push("home/med/"+ medId); }} variant="primary">View Reviews & More Info</Button>
+              <Button data-testid='button' onClick={e => { history.push("home/med/"+ medId); }} variant="primary">View Reviews & More Info</Button>
             </Card.Body>
           </Card> 
         </div>)}

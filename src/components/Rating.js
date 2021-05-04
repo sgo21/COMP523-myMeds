@@ -33,3 +33,5 @@ export default function SimpleRating() {
     </div>
   );
 }
+
+// line 173 ProfilePage.jsx

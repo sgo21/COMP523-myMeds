@@ -72,7 +72,7 @@ const Home = () => {
         </div>  
         
         <div className="med-search-form mt-5">
-          <Form onSubmit={onSubmit}>
+          <Form data-testid="med-search-form" onSubmit={onSubmit}>
           <Form.Row className="align-items-center">
             <Col>
               {alertMessage !== "" &&  <Alert className="text-center" variant='danger'>{alertMessage}</Alert>}
@@ -80,32 +80,33 @@ const Home = () => {
               <h3 className="display-4 text-center mb-4">Find & Share Reviews on Medicine</h3>
               
               <Form.Row className="justify-content-center align-items-center text-center">
-                <Form.Control size="lg" className="search-bar text-center"
+                <Form.Control data-testid="search-bar" size="lg" className="search-bar text-center"
                 placeholder='Enter a Medication Name or Symptom to Find Reviews'
                 value={query} 
                 onChange={onChange}/> 
 
                 <Form.Row className="justify-content-center" >
-                  <Button type='submit' className="search-button mt-3 mb-3" size="lg">
+                  <Button data-testid="search-button" type='submit' className="search-button mt-3 mb-3" size="lg">
                     <CapsuleIcon width="29" height="29"/>
                   </Button>
                 </Form.Row>
               </Form.Row >
 
               <Form.Row className="sort-by-dropdown text-center mt-3">
-                <Form.Group>
-                      <Form.Control defaultValue='' as="select" onChange ={e => setSortBy(e.target.value)}>
-                          <option key='noSortSelected' value='' hidden>Sort By</option>
-                          <option value=''>Sort By: None</option>
-                          <option value="asc-rating">Sort By: Ascending Rating</option>
-                          <option value="desc-rating">Sort By: Descending Rating</option>
-                      </Form.Control>
+                <Form.Group controlId="sort-by">
+                  <Form.Label srOnly>Sort-By</Form.Label>
+                    <Form.Control defaultValue='' as="select" onChange ={e => setSortBy(e.target.value)}>
+                      <option data-testid="no-sort-selected" key='noSortSelected' value='' hidden>Sort By</option>
+                      <option data-testid="none-selected" value=''>Sort By: None</option>
+                      <option data-testid="asc-selected" value="asc-rating">Sort By: Ascending Rating</option>
+                      <option data-testid="desc-selected" value="desc-rating">Sort By: Descending Rating</option>
+                    </Form.Control>
                 </Form.Group>
               </Form.Row>
             
               <Form.Row className="justify-content-center">
                 { (currentUser !== null) ? <RequestForm/> 
-                  : <Button onClick={() => history.push('/log-in')} className="mt-3 " variant="link"> 
+                  : <Button data-testid="request-button" onClick={() => history.push('/log-in')} className="mt-3 " variant="link"> 
                       Request a Medication
                     </Button>
                 }

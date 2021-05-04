@@ -10,3 +10,5 @@ const Header = () => {
 }
 
 export default Header;
+
+//line 37 Rating.js

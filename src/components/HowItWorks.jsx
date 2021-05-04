@@ -6,7 +6,7 @@ import '../css/HowItWorks.css';
 const HowItWorks = () => {
     return (
         <section>
-            <Jumbotron className="p-5 rounded-0">
+            <Jumbotron data-testid='howitworks'className="p-5 rounded-0">
                 <h2 className="how-to-title display-4 text-center mb-5">How It Works</h2>
                 <CardDeck className="justify-content-center text-center mb-5">
                     <Card className="how-to-card text-center mx-3" border="primary">

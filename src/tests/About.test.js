@@ -8,6 +8,7 @@ beforeEach(async () => {
     render(<About />);
   });
 });
+
 afterEach(cleanup);
 
 it('Render About page content', async () => {

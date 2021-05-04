@@ -70,14 +70,11 @@ export default function Login() {
               />
             </Form.Group>
             
-            <Button data-testid="login-button" type="submit" disabled={loading} className="w-100 mt-3" style={{borderRadius:20}}>
+            <Button data-testid="button" type="submit" disabled={loading} className="w-100 mt-3" style={{borderRadius:20}}>
               Log In
             </Button>
           </Form>
           
-          <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
         </Card.Body>
       </Card>
 

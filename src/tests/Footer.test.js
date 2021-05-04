@@ -9,3 +9,4 @@ it('Render Footer component', () => {
   const { getByTestId } = render(<Footer />); 
   expect(getByTestId("footer")).toBeInTheDocument()
 });
+

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { render, cleanup } from '@testing-library/react';
 import Faq from '../pages/Faq'
 import "@testing-library/jest-dom/extend-expect";
 import { render, cleanup, act, screen } from './test-utils';

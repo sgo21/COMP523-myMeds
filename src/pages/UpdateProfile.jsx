@@ -56,7 +56,7 @@ export default function RequestForm() {
           <Card.Body>
             <h2 className="text-center mb-4">Update My Profile</h2>
 
-            <Form onSubmit={handleSubmit}>
+            <Form data-testid="update-profile-form" onSubmit={handleSubmit}>
               <FormGroup id="Name">
                 <Label>Name</Label>
                 <Input 
@@ -112,6 +112,7 @@ export default function RequestForm() {
                 </FormGroup>
 
               <Button 
+                data-testid="button"
                 type="submit"
                 disabled={(age.length > 0 && !validateNumeric(age)) || (race.length > 0 && !validateString(race))} 
                 className="w-100 mt-3" 

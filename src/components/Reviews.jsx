@@ -40,7 +40,7 @@ function Reviews({ review }) {
   const [likeState, setlikeState] = useState(
     likeUsers.includes(checkEmail) ? true : false
   );
-
+  // line 14 Header.jsx  
   /* based on current user toggling the lieks button, updating the med's "likes" count and 
   adding/removing the current user's email as a "liker" in the database */
   async function handleLiking() {
