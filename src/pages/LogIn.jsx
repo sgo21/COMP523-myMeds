@@ -8,9 +8,9 @@ import Footer from '../components/Footer'
 export default function Login() {
   const [alert, setAlert] = useState("")
   const [loading, setLoading] = useState(false)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const emailRef = useRef()
   const passwordRef = useRef()
 
@@ -29,7 +29,6 @@ export default function Login() {
     } catch {
       setAlert("Invalid email or password")
     }
-
     setLoading(false)
   }
 
@@ -43,8 +42,10 @@ export default function Login() {
           <h2 className="text-center mb-4">Log In</h2>
 
           <hr/>
-          <p data-testid="login-help-text" className="text-center">Log into your MyMeds account to start posting reviews, view your profile, 
-            and access other features such as requesting new medications to be included on MyMeds!</p>
+          <p data-testid="login-help-text" className="text-center">
+            Log into your MyMeds account to start posting reviews, view your profile, 
+            and access other features such as requesting new medications to be included on MyMeds!
+          </p>
           <hr/>
 
           {alert && <Alert className="text-center" variant="danger">{alert}</Alert>}

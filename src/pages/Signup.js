@@ -27,7 +27,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-
+  // using the sign up form data to create a new user account and storing that data in the "User" firebase collection
   async function handleSubmit(e) {
     e.preventDefault()
     try {

@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from "react-router-dom";
 import {db} from '../firebase'
-import { Button, Form } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import NavbarContainer from '../components/NavbarContainer'
 import Footer from '../components/Footer'
 import ReviewForm from 'components/ReviewForm';
 import Reviews from '../components/Reviews';
-import PrivateRoute from "../components/PrivateRoute"
 import '../css/MedPage.css';
 import Rating from '@material-ui/lab/Rating';
 import Alert from '@material-ui/lab/Alert';
-import { titleCase, capitalize, roundTenths } from '../helpers/formatting.jsx';
+import { roundTenths } from '../helpers/formatting.jsx';
 import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
 import { v4 as uuidv4 } from 'uuid';
+
+/* MedPage component takes in a string "medId" as a prop and renders the page containing the 
+ information and reviews for the medication corresponding to that "medId" */ 
 
 function MedPage ({ medId }) {
   const {currentUser} = useAuth();
@@ -21,22 +23,11 @@ function MedPage ({ medId }) {
   const [genericName, setGenericName] = useState("Generic Name");
   const [brandName, setBrandName] = useState("Brand Name");
   const [indication, setIndication] = useState("Med Type");
-  const [rating, setRating] = useState(0);
-  const [reviewsAmt, setReviewsAmt] = useState(0);
   const [reviewsArray, setReviewsArray] = useState([]);
-  const [showReviewForm, setShowReviewForm] = useState(false)
   const [averageOverallRating, setAverageOverallRating] = useState(0);
   const [indexRating, setindexRating] = useState(0);
   const [noReviews, setNoReviews] = useState(true);
   const [description, setDescription] = useState("");
-  
-  const onClick = () => {
-    if (showReviewForm) {
-      setShowReviewForm(false);
-    } else { 
-      setShowReviewForm(true)
-    }
-  }
 
   useEffect(() => {
     async function getData() {
@@ -45,8 +36,6 @@ function MedPage ({ medId }) {
       setGenericName(doc.data().genericName);
       setBrandName(doc.data().brandName);
       setIndication(doc.data().indication);
-      setRating(doc.data().rating);
-      setReviewsAmt(doc.data().reviews);
       setDescription(doc.data().description);
 
       // getting all the reviews for this page's medicine 
@@ -119,9 +108,9 @@ function MedPage ({ medId }) {
             <br/>
             <strong>Description:</strong> <span className="lead">{description}</span>
 
+            {/* if user is logged in, button triggers rendering of ReviewForm modal component 
+            as pop up on page, otherwise, button redirects to LogIn.jsx */}
             <div className="med-page-review-form-container mb-5">
-              {/* <Button onClick={onClick} className="rounded-button mt-3"> Write a Review </Button>
-              { showReviewForm ? <PrivateRoute component={ReviewForm}></PrivateRoute> : null } */}
                 { (currentUser !== null) ? <ReviewForm/> 
                   : <Button onClick={() => history.push('/log-in')} className="rounded-button mt-3 "> 
                       Write a Review

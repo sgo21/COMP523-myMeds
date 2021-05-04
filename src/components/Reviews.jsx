@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { Button, Media } from "react-bootstrap";
+import { Media } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Rating from "@material-ui/lab/Rating";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import "../css/Reviews.css";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import { db, update } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
+/* Reviews component takes in a prop which is a single "review" object from MedPage.jsx
+  and returns the review as a neat box with the information to be displayed on the MedPage.jsx */ 
 
 function Reviews({ review }) {
 
@@ -26,6 +28,8 @@ function Reviews({ review }) {
   const [likeNumber, setlikeNumber] = useState(review.likeNumber);
   const likeUsers = review.likeUsers;
   const time = review.time.toDate();
+
+  //changing the time format into MM/DD/YYYY
   const timeFormat =
     ("0" + (time.getMonth() + 1)).slice(-2) +
     "/" +
@@ -33,6 +37,7 @@ function Reviews({ review }) {
     "/" +
     time.getFullYear();
 
+  //checking if user is logged in or not  
   const { currentUser } = useAuth();
   const checkEmail = currentUser == null ? 'no email' : currentUser.email
   
@@ -40,18 +45,18 @@ function Reviews({ review }) {
   const [likeState, setlikeState] = useState(
     likeUsers.includes(checkEmail) ? true : false
   );
-  // line 14 Header.jsx  
+  
   /* based on current user toggling the lieks button, updating the med's "likes" count and 
   adding/removing the current user's email as a "liker" in the database */
   async function handleLiking() {
 
     // redirecting to log in page if user is not signing/unregistered with an account
-    if (checkEmail == 'no email') {
+    if (checkEmail === 'no email') {
       return history.push("/log-in")
     } else {
     setlikeState(!likeState);
     
-    // grabbing the firebase document ID of the med being reviewed from the url path
+  // extracting medId from path URL to use later, as document ID when fetching from the firebase
     const location = window.location.href.split("/");
     const medId = location[location.length - 1];
 
@@ -61,6 +66,7 @@ function Reviews({ review }) {
       .collection("Review")
       .doc(reviewId);
     
+    // increment or decrement the like number and keep track of which user like the comment
     if (!likeState) {
       reviewRef.update({
         likeNumber: update.increment(1),
@@ -90,6 +96,7 @@ function Reviews({ review }) {
     .collection("Review")
     .doc(medId);
 
+    // update the like and which user like the comment in the user collection
     if (!likeState) {
       userRef.update({
         likeNumber: update.increment(1),

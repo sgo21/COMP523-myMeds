@@ -5,6 +5,9 @@ import { Form, Button, Alert, Modal } from "react-bootstrap"
 import '../css/Home.css';
 import '../css/MedPage.css';
 
+/* RequestForm component is a form for user to request for a new medication to be added to 
+website and stores request form data in database upon submission */
+
 export default function RequestForm() {
     const { currentUser } = useAuth()
 
@@ -19,14 +22,16 @@ export default function RequestForm() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
   
+    //collecting the name of the user who is sumbitting a request via firebase
     useEffect(() => {
       async function getUserData() {
         const userDoc = await db.collection('User').doc(currentUser.email).get();
         setName(userDoc.data().name);
       }
         getUserData();
-    }, []);  
+    }, );  
   
+    // storing as form data as a document in the "Requests" firebase collection upon submission collection 
     const handleSubmit =(e) => {
       e.preventDefault();
       setAlert("")

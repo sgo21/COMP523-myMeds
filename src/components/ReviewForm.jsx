@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { roundTenths } from '../helpers/formatting.jsx';
 
+/* ReviewForm component is a form for user to write a review for a 
+  medication and store in database upon submission */
+
 export default function ReviewForm() {
   const { currentUser } = useAuth();
   const [name, setName] = useState("");
@@ -24,9 +27,11 @@ export default function ReviewForm() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false)
 
+  // extracting medId from path URL to use later, as document ID when fetching from the firebase
   const location = window.location.href.split("/");
   const medId = location[location.length - 1]
 
+  // handlers to trigger modal open and close toggling
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -51,10 +56,7 @@ export default function ReviewForm() {
     setLoading(true)
     handleClose();
 
-    const location = window.location.href.split("/");
-    const medId = location[location.length - 1]
-
-    // storing the review's data to both the drug and user firebase collections 
+    // storing the review's data in the drug firebase collection
     db.collection('drug').doc(medId).collection("Review").doc(currentUser.email).set({
       name: name,
       age: age,
@@ -67,6 +69,7 @@ export default function ReviewForm() {
       likeUsers: [],
       likeNumber: 0,
     })
+    // storing the review's data in the user firebase collection
     db.collection('User').doc(currentUser.email).collection("Review").doc(medId).set({
       name: name,
       age: age,
@@ -100,16 +103,13 @@ export default function ReviewForm() {
       }
       updateAverageRating();
 
-      // pushing the updated average rating to the database
+      // pushing the updated average rating to the drug firebase collection
       db.collection("drug").doc(medId).set({
         rating:averageOverallRating,
         reviews:indexRating,
       }, 
       {merge: true})
       window.location.reload(true);
-    })
-    .catch(error => {
-      // alert(error.mesage);
     })
   };
     
@@ -145,13 +145,6 @@ export default function ReviewForm() {
                 value={review} 
                 onChange={(e) => setReview(e.target.value)}/>
             </Form.Group>
-        
-            {/* <Form.Group id="Rating">
-                <Form.Control
-                placeholder='Select your rating'
-                value={rating} 
-                onChange={(e) => setRating(e.target.value)}/>
-            </Form.Group> */}
 
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Typography component="legend">Rating:</Typography>
@@ -169,7 +162,7 @@ export default function ReviewForm() {
               disabled = { loading 
                 || (review.length <= 0) 
                 || (symptom.length <= 0) 
-                || (rating == undefined)}
+                || (rating === undefined)}
               >
               Post Review
             </Button>

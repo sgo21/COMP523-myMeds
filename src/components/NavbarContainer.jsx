@@ -4,11 +4,12 @@ import '../css/NavbarContainer.css'
 import { ReactComponent as Logo } from '../img/logo.svg';
 import { useAuth } from "../contexts/AuthContext"
 
+/* NavbarContainer component selectively only displays the Navbar with "My Profile" 
+link when user is logged in, otherwise displays Navbar with log in & sign up links */
+
 export default function NavbarContainer() {
     let { currentUser } = useAuth();
 
-    /* only displaying Navbar with "My Profile" link when user is logged in, 
-        otherwise displaying Navbar with log in & sign up links */
     if (currentUser !== null) {
         return (
             <div data-testid="navbar" className="navbar-header">        

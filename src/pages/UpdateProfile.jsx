@@ -9,19 +9,18 @@ import '../css/MedPage.css';
 import NavbarContainer from '../components/NavbarContainer'
 import { validateString, validateNumeric } from '../helpers/validation.jsx';
 
-export default function RequestForm() {
+export default function UpdateProfile() {
     const { currentUser } = useAuth()
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
     const [race, setRace] = useState("");
     const [sex, setSex] = useState("")
-    // const sexRef = useRef();
     
     const history = useHistory()
-
+    
     useEffect(() => {
+      // getting the current logged in user's data from the database
       async function getUserData() {
-        // You can await here
         const userDoc = await db.collection('User').doc(currentUser.email).get();
         setName(userDoc.data().name);
         setAge(userDoc.data().age);
@@ -33,6 +32,7 @@ export default function RequestForm() {
   
     const handleSubmit =(e) => {
       e.preventDefault();
+      // replacing the user's data in the database with the values from the form
       db.collection('User').doc(currentUser.email).set({
         name:name,
         sex:sex,
@@ -43,10 +43,9 @@ export default function RequestForm() {
         history.replace("/my-profile")
       })
       .catch(error => {
-        // alert(error.mesage);
       })
     };
-      
+     
     return (
       <div>
         <div>
@@ -92,14 +91,6 @@ export default function RequestForm() {
                 />
               </FormGroup>
 
-              {/* <FormGroup controlId="exampleInputSelect1">
-                <Label>Sex</Label>
-                <Input as="select" ref={sexRef}>
-                  <option>Female</option>
-                  <option>Male</option>
-                  <option>Other</option>
-                </Input>
-              </FormGroup> */}
 
               <FormGroup id="Sex">
                     <Label>Sex</Label>

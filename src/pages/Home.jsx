@@ -11,7 +11,6 @@ import RequestForm from '../components/RequestForm'
 import Footer from '../components/Footer'
 import HowItWorks from '../components/HowItWorks'
 import { titleCase } from '../helpers/formatting.jsx';
-import SearchIcon from '@material-ui/icons/Search';
 import { ReactComponent as CapsuleIcon } from '../img/capsule.svg';
 
 const Home = () => {
@@ -104,6 +103,8 @@ const Home = () => {
                 </Form.Group>
               </Form.Row>
             
+            {/* if user is logged in, button triggers rendering of RequestForm modal component 
+            as pop up on page, otherwise, button redirects to LogIn.jsx */}
               <Form.Row className="justify-content-center">
                 { (currentUser !== null) ? <RequestForm/> 
                   : <Button data-testid="request-button" onClick={() => history.push('/log-in')} className="mt-3 " variant="link"> 
@@ -116,6 +117,7 @@ const Home = () => {
           </Form>
         </div>
         
+        {/* renders search results as MedCard components with order depending on the user's sort by option select */}
         <CardDeck className="med-search-card-deck align-items-center mb-3">
           {resultsArray !== [] && sortBy === '' && resultsArray.map(med => <MedCard key={uuidv4()} med={med} />)}
           {resultsArray !== [] && sortBy === 'asc-rating' && resultsArray

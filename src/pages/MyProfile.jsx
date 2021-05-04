@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { Card, Button, Alert, Row, Col } from "react-bootstrap"
+import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import '../css/MyProfile.css';
 import {db} from '../firebase'
 import NavbarContainer from '../components/NavbarContainer'
 import ProfileReviews from '../components/ProfileReviews';
 import Footer from '../components/Footer';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function MyProfile() {
   const [error, setError] = useState("")
@@ -83,7 +83,7 @@ export default function MyProfile() {
         <h5 className="text-center mx-4 mb-4"><strong>My Reviews:</strong></h5> 
         {reviewsArray.length === 0 && <Card.Text className="text-center">No Reviews Yet!</Card.Text>}
         <ul>
-          {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
+          {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews key={uuidv4()} review={ review } />)}
         </ul>
       </Card>
 

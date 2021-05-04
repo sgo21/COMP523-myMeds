@@ -1,15 +1,17 @@
 import React, { useContext, useState, useEffect } from "react"
 import { auth } from "../firebase"
 
-const AuthContext = React.createContext()
+//initialize a new instance of a context 
+const AuthContext = React.createContext();
 
 export function useAuth() {
   return useContext(AuthContext)
 }
 
+//handle the login, logout and signout with Firebase Authentication when props are passed into the function and update the currentUser to use locally.
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState()
-  const [loading, setLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
@@ -21,18 +23,6 @@ export function AuthProvider({ children }) {
 
   function logout() {
     return auth.signOut()
-  }
-
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
-
-  function updateEmail(email) {
-    return currentUser.updateEmail(email)
-  }
-
-  function updatePassword(password) {
-    return currentUser.updatePassword(password)
   }
 
   useEffect(() => {
@@ -49,9 +39,6 @@ export function AuthProvider({ children }) {
     login,
     signup,
     logout,
-    resetPassword,
-    updateEmail,
-    updatePassword
   }
 
   return (

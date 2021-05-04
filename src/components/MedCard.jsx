@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Alert from '@material-ui/lab/Alert';
 
+/* MedCard component reads in a "med" object as prop 
+  (passed on to it from Home.jsx) and renders a card to be displayed as a search result */
 
 function MedCard ({ med }) {
     
@@ -15,12 +17,6 @@ function MedCard ({ med }) {
     const reviewsAmt = med.reviewsAmt;
 
     const history = useHistory();
-
-    // const routeChange = () =>{ 
-    //   console.log(medId + " button clicked")
-    //   let path = "/med/"+ medId; 
-    //   history.push(path);
-    // }
 
     return (<div data-testid='medcard'>
           <Card bg="light" className="text-center my-3" border="primary" style={{ width: '18rem' }}>

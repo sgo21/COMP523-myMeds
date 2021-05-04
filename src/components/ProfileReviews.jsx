@@ -1,15 +1,16 @@
 import React, {} from 'react';
 import { Media } from "react-bootstrap"
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import '../css/Reviews.css';
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import {timeNow} from '../firebase';
+
+/* ProfileReviews (represents the reviews posted by other users) takes in a parameter 
+which is a single review from Profile Page and it return the review into an neat box 
+with the information to be displayed on the Profile Page */ 
 
 function ProfileReviews ({ review }) {
-    const name = review.name;
     const age = review.age;
     const sex = review.sex;
     const race = review.race;
