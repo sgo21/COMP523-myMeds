@@ -3,7 +3,6 @@ import { render, cleanup, screen, act, fireEvent } from './test-utils';
 import Login from '../pages/LogIn'
 import "@testing-library/jest-dom/extend-expect";
 
-
 beforeEach(async () => {
   await act(async () => {
     render(<Login />);
