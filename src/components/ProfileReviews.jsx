@@ -40,7 +40,7 @@ function ProfileReviews ({ review }) {
                         <strong>Symptom:</strong> {symptom}
                         </Typography>
                         <Rating name="read-only" value={rating} readOnly className="mt-2"/>
-                        <p> {reviewDescrip} </p>
+                        <p className="w-75"> {reviewDescrip} </p>
                         <Typography component="legend"> 
                             <ThumbUpIcon style={{fontSize:'20px'}}/> {likeNumber} Likes
                         </Typography>

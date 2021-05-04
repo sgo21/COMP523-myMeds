@@ -5,6 +5,7 @@ import NavbarContainer from '../components/NavbarContainer'
 import ProfileReviews from '../components/ProfileReviews';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Footer from "../components/Footer"
+import { v4 as uuidv4 } from 'uuid';
 
 /* ProfilePage component takes in a string "profileId" as a prop and renders the page containing the 
  information and reviews for the user corresponding to that "profileId" */ 
@@ -67,7 +68,7 @@ function ProfilePage ({ profileId }) {
         <h5 className="text-center mx-4 mb-4"><strong>{name}'s Reviews:</strong></h5> 
         {reviewsArray.length === 0 && <Card.Text className="text-center">No Reviews Yet!</Card.Text>}
         <ul>
-          {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews review={ review } />)}
+          {reviewsArray !== [] && reviewsArray.map(review => <ProfileReviews key={uuidv4()} review={ review } />)}
         </ul>
       </Card>
       <div>
