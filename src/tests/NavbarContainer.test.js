@@ -1,5 +1,4 @@
 import React from "react"
-// import { render, cleanup, screen } from '@testing-library/react';
 import { render, cleanup, screen, act } from './test-utils';
 import NavbarContainer from '../components/NavbarContainer'
 import "@testing-library/jest-dom/extend-expect";
