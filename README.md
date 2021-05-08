@@ -49,18 +49,20 @@ npm install
   * The process in detail 
     * https://firebase.google.com/docs/hosting/quickstart
   * To deploy an updated version of the web application, run the following in the command line:
-   1. Make sure you are inside of the project folder by running `cd COMP523-myMeds` in the command line
-    2. Type `firebase login` to login with our Firebase credentials
-    3. Type `firebase init`
-    4. Then type 'Y' in response to the question 'Are you ready to proceed?'
-    5. Use the arrow keys to navigate to the option 'Hosting: Configure and deploy Firebase Hosting sites' from the menu, and press space to select that option and enter to confirm.
-    6. Then you will be presented with a series of questions, one by one. Type in the following answers to those questions, and make sure to press enter to move on to each next question:
+  1. Make sure you are inside of the project folder by running `cd COMP523-myMeds` in the command line
+  2.  Type `firebase login` to login with our Firebase credentials
+  3.  Type `firebase init`
+  4.  Then type 'Y' in response to the question 'Are you ready to proceed?'
+  5.  Use the arrow keys to navigate to the option 'Hosting: Configure and deploy Firebase Hosting sites' from the menu, and press space to select that option and enter to confirm.
+  6.  Then you will be presented with a series of questions, one by one. Type in the following answers to those questions, and make sure to press enter to move on to each next question:
       * What do you want to use as your public directory? **build**
-      * Configure as a single-page app (rewrite all urls to /index.html)? **Yes**
+      *  Configure as a single-page app (rewrite all urls to /index.html)? **Yes**
       * Set up automatic builds and deploys with GitHub? **No**
       * File build/index.html already exists. Overwrite? **Yes**
-    7. Then, run `npm run build`.
-    8. Finally, run `firebase deploy` to finish the deployment.
+  7.   Then, run `npm run build`.
+  8.   Finally, run `firebase deploy` to finish the deployment.
+
+   
 
 
 ## Languages/Technologies used:
