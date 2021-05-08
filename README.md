@@ -11,12 +11,13 @@ It is a website for people to share their experiences and leave reviews for medi
   * Install Node.js  https://nodejs.org/en/ 
 
 * **Running locally:**
-  1. In the command line, use `git clone` to clone the repository and run `npm install` to install the required packages for this project.
-			```
-      git clone https://github.com/chipduy/COMP523-myMeds.git
-			cd COMP523-myMeds
-			npm install
-			```
+  1. In the command line, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
+```bash
+git clone https://github.com/chipduy/COMP523-myMeds.git
+cd COMP523-myMeds
+npm install
+```
+
   2. Run `npm start` in the command line from inside of the project folder to start the web application
 		* To make sure you are inside of the project folder run `cd COMP523-myMeds`
   
