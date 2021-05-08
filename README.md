@@ -5,7 +5,7 @@ By pooling together users’ reviews of medicine in an openly accessible space, 
 It is a website for people to share their experiences and leave reviews for medicine they have taken, as well as view ratings and first-hand testimonials for medication from other users of similar demographic background or medical history— think of it like a “Yelp” for medicine!
 
 
-## Setting up:
+## Setting Up:
 
 ### Prerequisites/Installing:
 Make sure the following are installed:
@@ -65,7 +65,7 @@ npm install
    
 
 
-## Languages/Technologies used:
+## Languages/Technologies Used:
 
   * **Frontend**: ReactJS, React Bootstrap, Material UI (all using HTML, CSS, JavaScript as the languages)
   * **Backend**:  Node.js (using JavaScript as the language)
