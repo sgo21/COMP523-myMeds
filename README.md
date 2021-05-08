@@ -57,7 +57,7 @@ npm install
   * **Testing**:  React Testing Library, jest-dom for React Testing Library
 
 
-## Directory Layout/Architexture:
+## Directory Layout/Architecture:
 
 ```bash
 ├── .firebase/                     
