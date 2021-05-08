@@ -1,11 +1,11 @@
-## My Meds:
+# My Meds
 
 By pooling together users’ reviews of medicine in an openly accessible space, the My Meds web app aims to bridge the disconnect and enable people to take charge and make educated decisions regarding their own health. 
 
 It is a website for people to share their experiences and leave reviews for medicine they have taken, as well as view ratings and first-hand testimonials for medication from other users of similar demographic background or medical history— think of it like a “Yelp” for medicine!
 
 
-### Setting up:
+## Setting up:
 
 * **Installing:** 
   * Install Node.js  https://nodejs.org/en/ 
@@ -22,14 +22,14 @@ npm install
 		* To make sure you are inside of the project folder run `cd COMP523-myMeds`
   
 
-### Testing:
+## Testing:
 
   1. Run `npm install` will automatically install the **React Testing Library** packages.
  
   2. Then, type `npm test` in the command line to run the tests
 
 
-### Deployment:
+## Deployment:
 
   * This project is deployed using **Firebase Hosting**.
   * The process in detail 
@@ -38,7 +38,7 @@ npm install
     1. Make sure you are inside of the project folder by running `cd COMP523-myMeds` in the command line
     2. Type `firebase login` to login with our Firebase credentials
     3. Type `firebase init`
-    4. Then press `Y` in response to the question 'Are you ready to proceed?'
+    4. Then type 'Y' in response to the question 'Are you ready to proceed?'
     5. Select 'Hosting' from the menu
     6. Then you will be asked a series of questions. Type in the following answers to those questions:
       * What do you want to use as your public directory? **build**
@@ -49,7 +49,7 @@ npm install
     8. Finally, run `firebase deploy` to finish the deployment.
 
 
-### Languages/Technologies used:
+## Languages/Technologies used:
 
   * **Frontend**: ReactJS, React Bootstrap, Material UI (all using HTML, CSS, JavaScript as the languages)
   * **Backend**:  Node.js (using JavaScript as the language)
@@ -57,7 +57,7 @@ npm install
   * **Testing**:  React Testing Library, jest-dom for React Testing Library
 
 
-### Directory Layout/Architexture:
+## Directory Layout/Architexture:
 
 ```bash
 ├── .firebase/                     
@@ -84,7 +84,7 @@ npm install
 ```
 
 
-### Authors:
+## Authors:
 
 * **Duy Nguyen** 
 
@@ -95,7 +95,7 @@ npm install
 * **Usman Raja** 
 
 
-### Client:
+## Client:
 
 * **Nash Philbeck** 
 
