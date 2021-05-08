@@ -7,32 +7,40 @@ It is a website for people to share their experiences and leave reviews for medi
 
 ## Setting up:
 
-### Prereqisties/Installing:
+### Prerequisites/Installing:
 Make sure the following are installed:
   * Install Node.js  https://nodejs.org/en/ 
   * Install Git https://git-scm.com/downloads
   * Install an IDE that supports JavaScript (i.e. VSCode https://code.visualstudio.com/)
+  * Install the Firebase CLI tools https://firebase.google.com/docs/cli#install_the_firebase_cli
   
 In order to access the database, log in to the Google account associated with this project's Firebase console https://console.firebase.google.com/
   * If you do not have the login credentials to access the database, please contact the client or one of the team members. Note that you do not need to be logged into the Firebase in order to install and run the web app locally, or to modify the code. 
+  
+  * Always you running any of the commands detailed throughout this README from inside this project's folder. To make sure you are inside of the project folder run `cd COMP523-myMeds`, before running any other commands.
 
 ### Running locally:
-  1. In the command line, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
+  1. In the command line/terminal, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
 ```bash
 git clone https://github.com/chipduy/COMP523-myMeds.git
 cd COMP523-myMeds
 npm install
 ```
 
-  2. Run `npm start` in the command line from inside of the project folder to start the web application
-		* To make sure you are inside of the project folder run `cd COMP523-myMeds`
+  2. Run `npm start` in the command line/terminal from inside of the project folder to start the web application
+  		* To make sure you are inside of the project folder run `cd COMP523-myMeds`
+  		
+		
+  3. To stop running locally, press 'CTRL + c' in the command line/terminal to stop the local server
+
+
   
 
 ## Testing:
 
-  1. Run `npm install` will automatically install the **React Testing Library** packages.
+  1. Running `npm install` in the command line/terminal would have automatically installed the **React Testing Library** packages (see step 1 under **Running Locally**)
  
-  2. Then, type `npm test` in the command line to run the tests
+  2. Then, type `npm test` in the command line/terminal to run the tests
 
 
 ## Deployment:
@@ -41,12 +49,12 @@ npm install
   * The process in detail 
     * https://firebase.google.com/docs/hosting/quickstart
   * To deploy an updated version of the web application, run the following in the command line:
-    1. Make sure you are inside of the project folder by running `cd COMP523-myMeds` in the command line
+   1. Make sure you are inside of the project folder by running `cd COMP523-myMeds` in the command line
     2. Type `firebase login` to login with our Firebase credentials
     3. Type `firebase init`
     4. Then type 'Y' in response to the question 'Are you ready to proceed?'
-    5. Select 'Hosting' from the menu
-    6. Then you will be asked a series of questions. Type in the following answers to those questions:
+    5. Use the arrow keys to navigate to the option 'Hosting: Configure and deploy Firebase Hosting sites' from the menu, and press space to select that option and enter to confirm.
+    6. Then you will be presented with a series of questions, one by one. Type in the following answers to those questions, and make sure to press enter to move on to each next question:
       * What do you want to use as your public directory? **build**
       * Configure as a single-page app (rewrite all urls to /index.html)? **Yes**
       * Set up automatic builds and deploys with GitHub? **No**
