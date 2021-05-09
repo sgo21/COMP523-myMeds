@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Button, Card, Alert } from "react-bootstrap"
+import {Form, FormGroup, FormText, Input, Label, FormFeedback, Row, Col } from 'reactstrap'
 import { useAuth } from "../contexts/AuthContext.js"
 import { Link, useHistory } from "react-router-dom"
 import '../css/SignUp.css';
 import NavbarContainer from '../components/NavbarContainer'
-import Header from '../components/Header'
+import {db} from '../firebase'
+import { validateString, validateNumeric, validatePassword,validateEmail,validatePasswordFeedback } from '../helpers/validation.jsx';
 
 export default function Signup() {
   const emailRef = useRef()
@@ -15,22 +17,32 @@ export default function Signup() {
   const [loading, setLoading] = useState(false)
   const history = useHistory()
 
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [race, setRace] = useState("");
+  const [sex, setSex] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  // using the sign up form data to create a new user account and storing that data in the "User" firebase collection
   async function handleSubmit(e) {
     e.preventDefault()
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match")
-    }
-
     try {
       setError("")
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+      await signup(email, password)
+      db.collection('User').doc(email).set({
+        email:email,
+        name:name,
+        race:race,
+        sex:sex,
+        age:age,
+      })
+      history.replace("/")
     } catch {
-      setError("Failed to create an account")
+      setError("Failed to Create an Account")
     }
-
     setLoading(false)
   }
 
@@ -39,32 +51,139 @@ export default function Signup() {
       <div>
         <NavbarContainer/>
       </div>
-      <Card className="sign-up text-left m-5 mx-auto border-0">
-        <Card.Body>
+      <Card className="sign-up text-left mt-5 mx-auto border-0" bg="light">
+        <Card.Body data-testid="help">
           <h2 className="text-center mb-4">Sign Up</h2>
+
+          <hr/>
+          <p className="text-center">Create a MyMeds account to start posting reviews, view your profile, 
+            and access other features such as requesting new medications to be included on MyMeds!</p>
+          <hr/>
+
           {error && <Alert variant="danger">{error}</Alert>}
+
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <FormGroup data-testid="name" id="Name">
+              <Label>Name</Label>
+              <Input data-testid="name-input"
+                type="text"
+                value={name} 
+                onChange={(e) => setName(e.target.value)}
+              />
+              <FormText>E.g. your full name, or feel free to use just your first name, nickname, pseudonym, etc.</FormText>          
+            </FormGroup>
+
+            <Row form>
+              <Col> 
+                <FormGroup data-testid="age" id="Age">
+                  <Label>Age</Label>
+                  <Input  data-testid="age-input"
+                    value={age} 
+                    onChange={(e) => setAge(e.target.value)}
+                    valid={validateNumeric(age)}
+                    invalid={age.length > 0 && !validateNumeric(age)}/>
+                  <FormFeedback>
+                      Age must be a numeric value
+                  </FormFeedback>
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup data-testid="race" id="Race">
+                  <Label>Race</Label>
+                  <Input data-testid="race-input"
+                    value={race} 
+                    onChange={(e) => setRace(e.target.value)}
+                    valid={validateString(race)}
+                    invalid={race.length > 0 && !validateString(race)}/>
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup data-testid="sex" id="Sex"> 
+                    <Label>Sex</Label>
+                    <Input type="select" ref={sexRef} onChange ={e => setSex(e.target.value)}>
+                      <option key='defaultView' value='' hidden></option>
+                      <option value='Female'>Female</option>
+                      <option value='Male'>Male</option>
+                      <option value='Other'>Other</option>
+                    </Input>
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <FormGroup data-testid="email" id="email">
+              <Label>Email</Label>
+              <Input data-testid="email-input"
+                placeholder="youremail@domain.com" 
+                type="email" 
+                onChange={(e) => setEmail(e.target.value)}
+                ref={emailRef} 
+                valid={validateEmail(email)}
+                invalid={email.length > 0 && !validateEmail(email)}
+                required 
+              />
+              <FormFeedback>
+                Email is invalid
+              </FormFeedback>
+            </FormGroup>
+
+            <Row form>
+              <Col>
+                <FormGroup data-testid="pass" id="password">
+                  <Label>Password</Label>
+                  <Input data-testid="pass-input"
+                    type="password" 
+                    ref={passwordRef} 
+                    onChange={(e) => setPassword(e.target.value)}
+                    valid={validatePassword(password)}
+                    invalid={password.length > 0 && !validatePassword(password)}
+                    required 
+                  />
+                  <FormFeedback data-testid="pass-val">
+                    {validatePasswordFeedback(password)}
+                  </FormFeedback>                  
+                </FormGroup>
+              </Col>
+
+              <Col>
+                <FormGroup data-testid="pass-conf" id="password-confirm">
+                  <Label>Confirm Password</Label>
+                  <Input data-testid="pass-conf-input"
+                    type="password" 
+                    ref={passwordConfirmRef} 
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                    valid={(password === passwordConfirm) && validatePassword(passwordConfirm)}
+                    invalid={(passwordConfirm.length > 0) && (!(password === passwordConfirm) || !validatePassword(passwordConfirm))}
+                    required  
+                  />
+                  <FormFeedback data-testid="pass-conf-inval">
+                    Passwords do not match
+                  </FormFeedback>   
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <Button data-testid="button"
+              type="submit"
+              disabled={loading 
+                || (age.length > 0 && !validateNumeric(age)) 
+                || (race.length > 0 && !validateString(race))
+                || (email.length > 0 && !validateEmail(email))
+                || (password.length > 0 && !validatePassword(password))
+                || ((passwordConfirm.length > 0) && (!(password === passwordConfirm) || !validatePassword(passwordConfirm)))
+              } 
+              className="w-100 mt-3" 
+              style={{borderRadius:20}}
+            >
               Sign Up
             </Button>
           </Form>
+          <div className="text-center m-4">
+            Already have an account? <Link to="/login">Log In</Link>
+          </div>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login">Log In</Link>
-      </div>
     </>
   )
 }

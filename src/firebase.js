@@ -12,6 +12,8 @@ firebase.initializeApp({
 });
   
 var db = firebase.firestore();
+var update = firebase.firestore.FieldValue;
 var auth = firebase.auth()
+var timeNow = firebase.firestore.Timestamp.now();
 
-export {db, auth};
+export {db, update, auth, timeNow};

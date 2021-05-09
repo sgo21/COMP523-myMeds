@@ -1,4 +1,12 @@
 .med-page-content {
     margin: auto;
-    padding: 10px
+    padding-left: 100px;
+}
+
+.show-whitespace {
+    white-space: pre;
+}
+
+.rounded-button {
+    border-radius: 20px;
 }

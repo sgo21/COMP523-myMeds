@@ -1,97 +1,145 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import {db} from '../firebase'
+import { useAuth } from "../contexts/AuthContext"
+import {db, timeNow} from '../firebase'
+import { Form, Button, Modal } from "react-bootstrap"
 import '../css/Home.css';
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext"
 import '../css/MedPage.css';
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import { roundTenths } from '../helpers/formatting.jsx';
 
+/* ReviewForm component is a form for user to write a review for a 
+  medication and store in database upon submission */
 
-export default function ReviewForm({medId}) {
-  const [error, setError] = useState("")
-  const { currentUser } = useAuth()
-  const history = useHistory()
+export default function ReviewForm() {
+  const { currentUser } = useAuth();
+  const [name, setName] = useState("");
+  const [race, setRace] = useState("");
+  const [sex, setSex] = useState("");
+  const [age, setAge] = useState("");
+  const [symptom, setSymptom] = useState("");
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [genericName, setGenericName] = useState("");
+  const [indexRating, setindexRating] = useState(0);
+  const [averageOverallRating, setAverageOverallRating] = useState(0);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-    const [name, setName] = useState("Generic Name");
-    const [idName, setidName] = useState("DocID Name");
-    const [race, setRace] = useState("");
-    const [sex, setSex] = useState("");
-    const [age, setAge] = useState("");
-    const [symtpom, setSymptom] = useState("");
-    const [rating, setRating] = useState("");
-    const [review, setReview] = useState("");
+  // extracting medId from path URL to use later, as document ID when fetching from the firebase
+  const location = window.location.href.split("/");
+  const medId = location[location.length - 1]
 
+  // handlers to trigger modal open and close toggling
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    
-    const getData2 = async () => {
-      // You can await here
-      const doc2 = await db.collection('User').doc(currentUser.email).get();
-      setName(doc2.data().name);
-      setRace(doc2.data().race);
-      setSex(doc2.data().sex);
-      setAge(doc2.data().age);
-      }
-      getData2(); 
+  useEffect(() => {
+    // getting data for current logged in user and the generic name of the med they're posting review for
+    async function getData() {
+      const userDoc = await db.collection('User').doc(currentUser.email).get();
+      setName(userDoc.data().name);
+      setRace(userDoc.data().race);
+      setSex(userDoc.data().sex);
+      setAge(userDoc.data().age);
 
-      useEffect(() => {
-        async function getData() {
-          // You can await here
-          const doc = await db.collection('drug').doc(medId).get();
-          setidName(doc.id);
-        }
-        getData();
-      }, [medId]); 
+      const medDoc = await db.collection('drug').doc(medId).get();
+      setGenericName(medDoc.data().genericName);
+    }
+      getData();
+  }, [currentUser.email, medId]); 
 
-    const handleSubmit =(e) => {
-       e.preventDefault();
-<<<<<<< HEAD
   
-      db.collection('drug').doc(idName).collection("Review").add({
-        name:name,
-        age:age,
-        sex:sex,
-        race:race,
-        symtpom:symtpom,
-        review:review,
-        rating:rating,
-=======
-      
-      const location = window.location.href.split("/");
-      const ids = location[location.length - 1]
+  const handleSubmit=(e) => {
+    e.preventDefault();
+    setLoading(true)
+    handleClose();
 
-      
-      db.collection('drug').doc(ids).collection("Review").doc(currentUser.email).set({
-        name: name,
-        age: age,
-        sex: sex,
-        race: race,
-        symtpom: symtpom,
-        review: review,
-        rating: rating,
->>>>>>> parent of 1ed8964 (Final for 4/5)
-      })
-      .then(() => {
-        alert('Got It(');
-        console.log(name, age, sex, race, symtpom, race, review, rating, idName)
-      })
-      .catch(error => {
-        alert(error.mesage);
-      })
-    };
+    // storing the review's data in the drug firebase collection
+    db.collection('drug').doc(medId).collection("Review").doc(currentUser.email).set({
+      name: name,
+      age: age,
+      sex: sex,
+      race: race,
+      symptom: symptom,
+      review: review,
+      rating: rating,
+      createdAt: timeNow,
+      likeUsers: [],
+      likeNumber: 0,
+    })
+    // storing the review's data in the user firebase collection
+    db.collection('User').doc(currentUser.email).collection("Review").doc(medId).set({
+      name: name,
+      age: age,
+      sex: sex,
+      race: race,
+      symptom: symptom,
+      review: review,
+      rating: rating,
+      genericName: genericName,
+      createdAt: timeNow,
+      likeUsers: [],
+      likeNumber: 0,
+    })
+    .then(() => {
+      // re-calculating the average rating for this page's medicine after new rating has been added
+      async function updateAverageRating() {
+        let total = 0;
+        let index = 0;
+        const reviewsSnapshot = await db.collection("drug").doc(medId).collection("Review").get();
+        reviewsSnapshot.forEach((doc) => {
+          total = total + doc.data().rating;
+          index = index + 1;
+          setindexRating(index);
+        })
+
+        if(index !== 0){
+          let ratingAverage = total/index;
+          ratingAverage = roundTenths(ratingAverage, 2);
+          setAverageOverallRating(ratingAverage)
+        }
+      }
+      updateAverageRating();
+
+      // pushing the updated average rating to the drug firebase collection
+      db.collection("drug").doc(medId).set({
+        rating:averageOverallRating,
+        reviews:indexRating,
+      }, 
+      {merge: true})
+      window.location.reload(true);
+    })
+  };
     
   return (
-    <div>
-      <Card className="review text-left m-5 mx-auto border-0">
-        <Card.Body>
-          <h2 className="text-center mb-4">Review</h2>
+    <>
+      <Button onClick={handleShow} className="mt-3 " style={{borderRadius:25}}> 
+        Post a Review
+      </Button>
+      <Modal 
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <strong>Write a Review</strong>
+        </Modal.Header>
+        <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group id="Symptom">
+              <Form.Label>What symptom(s) were you treating?</Form.Label>
               <Form.Control 
-                placeholder='What symptom(s) were you treating?'
-                value={symtpom} 
+                value={symptom} 
                 onChange={(e) => setSymptom(e.target.value)}/>
             </Form.Group>
+
             <Form.Group id="Review">
+                <Form.Label>Review:</Form.Label>
                 <Form.Control
                 as = "textarea"
                 rows = {3} 
@@ -99,20 +147,30 @@ export default function ReviewForm({medId}) {
                 value={review} 
                 onChange={(e) => setReview(e.target.value)}/>
             </Form.Group>
-        
-            <Form.Group id="Rating">
-                <Form.Control
-                placeholder='Select your rating'
-                value={rating} 
-                onChange={(e) => setRating(e.target.value)}/>
-            </Form.Group>
 
-            <Button className="w-100" type="submit">
+            <Box component="fieldset" mb={3} borderColor="transparent">
+              <Typography component="legend">Rating:</Typography>
+               <Rating
+                name="simple-controlled"
+                value={rating}
+                onChange={(event, newRating) => {setRating(newRating);}}
+              />
+            </Box>
+
+            <Button 
+              type="submit" 
+              className="w-100" 
+              style={{borderRadius:20}} 
+              disabled = { loading 
+                || (review.length <= 0) 
+                || (symptom.length <= 0) 
+                || (rating === undefined)}
+              >
               Post Review
             </Button>
           </Form>
-        </Card.Body>
-      </Card>
-    </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
