@@ -31,7 +31,7 @@ function MedPage ({ medId }) {
 
   useEffect(() => {
     async function getData() {
-      // You can await here
+      // getting data for this page's medicine
       const doc = await db.collection('drug').doc(medId).get();
       setGenericName(doc.data().genericName);
       setBrandName(doc.data().brandName);

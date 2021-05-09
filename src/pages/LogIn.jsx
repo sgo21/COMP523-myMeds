@@ -22,7 +22,7 @@ export default function Login() {
     e.preventDefault()
 
     try {
-      setError("")
+      setAlert("")
       setLoading(true)
       await login(email, password)
       history.goBack()

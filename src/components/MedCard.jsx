@@ -1,5 +1,4 @@
 import React, {} from 'react';
-import '../css/Header.css';
 import {Button, Card} from "react-bootstrap"
 import { useHistory } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
