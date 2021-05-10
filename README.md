@@ -22,7 +22,7 @@ In order to access the database, log in to the Google account associated with th
 ### Cloning the Repository and Running Locally:
   1. In the command line/terminal, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
 ```bash
-git clone https://github.com/chipduy/COMP523-myMeds.git
+git clone https://github.com/hnashp/COMP523-myMeds.git
 cd COMP523-myMeds
 npm install
 ```
