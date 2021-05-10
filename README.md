@@ -19,7 +19,7 @@ In order to access the database, log in to the Google account associated with th
   
   * Always make sure you are running any of the commands detailed throughout this README from inside this project's folder. To make sure you are inside of the project folder run `cd COMP523-myMeds`, before running any other series of commands.
 
-### Cloning the Repository and Running locally:
+### Cloning the Repository and Running Locally:
   1. In the command line/terminal, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
 ```bash
 git clone https://github.com/chipduy/COMP523-myMeds.git
