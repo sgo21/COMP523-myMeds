@@ -17,7 +17,7 @@ Make sure the following are installed:
 In order to access the database, log in to the Google account associated with this project's Firebase console https://console.firebase.google.com/
   * If you do not have the login credentials to access the database, please contact the client or one of the team members. Note that you do not need to be logged into the Firebase in order to install and run the web app locally, or to modify the code. 
   
-  * Always you running any of the commands detailed throughout this README from inside this project's folder. To make sure you are inside of the project folder run `cd COMP523-myMeds`, before running any other series of commands.
+  * Always make sure you are running any of the commands detailed throughout this README from inside this project's folder. To make sure you are inside of the project folder run `cd COMP523-myMeds`, before running any other series of commands.
 
 ### Running locally:
   1. In the command line/terminal, use `git clone` to clone the repository and run `npm install` to install the required packages for this project:
